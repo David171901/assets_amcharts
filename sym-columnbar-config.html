@@ -1,0 +1,113 @@
+<div class="c-side-pane t-toolbar">
+	<span style="color:#fff; margin-left:10px;">Display Options</span>
+</div>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 16px;font-size:14px;">
+	<label>Text Size</label>
+	<input type="number" class="" style="margin-left: 36px" ng-model="config.fontSize">
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 8px;font-size:14px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.showTitle">Show title<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 8px;font-size:14px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.useCustomTitle">Use custom title<br />
+</label>
+<label style="margin-top:8px; margin-left: 20px;font-size:14px;" ng-show="config.useCustomTitle">
+	<br />
+	<input type="text" class="" style="text-align:center;margin-left:10px;" ng-model="config.customTitle">
+	<br />
+</label>
+
+<div class="config-option-single-row" style="margin-left:20px;margin-right:20px;font-size:14px;margin-top:8px;">
+	<div class="config-option-ie11-overflow-fix">
+		<div class="config-label">Chart Type</div>
+		<select ng-model="config.graphType" ng-model-options="{ getterSetter: true }" class="config-option-single-row-input ng-pristine ng-valid" style="margin-top: 10px;background-color:transparent;padding:4px;">
+			<option value="line">Line Chart</option>
+			<option value="column">Bar Chart</option>
+		</select>
+	</div>
+</div>
+<div class="config-option-single-row" style="margin-left:20px;margin-right:20px;font-size:14px;margin-top:8px;">
+	<div class="config-option-ie11-overflow-fix">
+		<div class="config-label">Value Axis Position</div>
+		<select ng-model="config.axisPosition" ng-model-options="{ getterSetter: true }" class="config-option-single-row-input ng-pristine ng-valid" style="margin-top: 10px;background-color:transparent;padding:4px;">
+			<option value="left">Left</option>
+			<option value="right">Right</option>
+		</select>
+	</div>
+</div>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="checkbox" class="c-config-checkbox"
+		   ng-model="config.useBarsInsteadOfColumns">Rotate 90 Degrees<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.useUniqueDataItemColors">Use Unique Data Item Colors<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.showLabels">Show Value Labels<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="number" style="margin-right:8px;text-align:center" ng-model="config.decimalPlaces">Decimal places<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.showCategoryAxisLabels">Show X-Axis Labels<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.includeElementName">Include Element Name<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.alternateEvenAndOddColors">Alternate Bar Colors<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 15px;">
+	<input type="checkbox" class="c-config-checkbox" ng-model="config.useFixedAxisRange">Use fixed Y-axis range<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 21px;font-size:14px;" ng-show="config.useFixedAxisRange">
+	<input type="number" class="" style="margin-right:8px;" ng-model="config.fixedYMin">Y-axis minimum<br />
+</label>
+<label class="flex-align-center" style="margin-top:8px; margin-left: 21px;font-size:14px;" ng-show="config.useFixedAxisRange">
+	<input type="number" class="" style="margin-right:8px;" ng-model="config.fixedYMax">Y-axis maximum<br />
+</label>
+<br />
+<div class="c-side-pane t-toolbar">
+	<span style="color:#fff; margin-left:10px;">Series Options</span>
+</div>
+<br />
+<div class="config-option-single-row" style="margin-left:20px;margin-right:20px;font-size:14px;" ng-show="config.graphType == 'column'">
+	<div class="config-option-ie11-overflow-fix">
+		<div class="config-label">Data Item Width</div>
+		<input class="config-option-single-row-input ng-pristine ng-untouched ng-valid" type="range" min="0" max="1" step="0.1" ng-model="config.columnWidth" ng-model-options="{ getterSetter: true }" style="width:100px; height:100%;margin-right:3px;">
+	</div>
+</div>
+<br />
+<div class="config-option-single-row" style="margin-left:20px;margin-right:20px;font-size:14px;">
+	<div class="config-option-ie11-overflow-fix">
+		<div class="config-label">Fill Opacity</div>
+		<input class="config-option-single-row-input ng-pristine ng-untouched ng-valid" type="range" min="0" max="1" step="0.1" ng-model="config.columnOpacity" ng-model-options="{ getterSetter: true }" style="width:100px; height:100%;margin-right:3px;">
+	</div>
+</div>
+<div class="c-side-pane t-toolbar">
+	<span style="color:#fff; margin-left:10px;">Colors</span>
+</div>
+<div class="config-option-format">
+	<pv-color-picker id="textColor" ng-model="config.textColor" config="config" colorkeyword="Text"></pv-color-picker>
+</div>
+<div class="config-option-format">
+	<pv-color-picker id="gridColor" ng-model="config.gridColor" config="config" colorkeyword="Grid"></pv-color-picker>
+</div>
+<div class="config-option-format">
+	<pv-color-picker id="backgroundColor" ng-model="config.backgroundColor" config="config" colorkeyword="Background"></pv-color-picker>
+</div>
+<div class="config-option-format">
+	<pv-color-picker id="plotAreaFillColor" ng-model="config.plotAreaFillColor" config="config" colorkeyword="Plot Area"></pv-color-picker>
+</div>
+<div class="config-option-format">
+	<pv-color-picker id="axesColor" ng-model="config.axesColor" config="config" colorkeyword="Axes"></pv-color-picker>
+</div>
+<div class="config-option-format" ng-show="!config.useUniqueDataItemColors">
+	<pv-color-picker id="seriesColor" ng-model="config.seriesColor" config="config" colorkeyword="Series"></pv-color-picker>
+</div>
+<div class="config-option-format" ng-show="config.alternateEvenAndOddColors">
+	<pv-color-picker id="seriesColor" ng-model="config.evenColor" config="config" colorkeyword="Even Bars"></pv-color-picker>
+</div>
+<div class="config-option-format" ng-show="config.alternateEvenAndOddColors">
+	<pv-color-picker id="seriesColor" ng-model="config.oddColor" config="config" colorkeyword="Odd Bars"></pv-color-picker>
+</div>	

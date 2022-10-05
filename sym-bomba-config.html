@@ -1,0 +1,26 @@
+<ul kendo-panel-bar class="t-side-panel-bgcolor" style="font-size: 14px;">
+    <li class="k-state-active">
+        <span class="panel-bar-label-no-wrap">Ver</span>
+        <div style="margin: 8px 0;">
+
+            <label  class="flex-align-center" style="margin-top:8px; margin-left: 35px;font-size:14px;"> Tamaño</label>
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 35px;font-size:14px;">
+                <input type="number" class="" style="margin-left:8px" ng-model="config.height">Alto
+            </label>
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 35px;font-size:14px;">			
+                <input type="number" class="" style="margin-left:8px" ng-model="config.width">Ancho
+            </label>
+
+        </div>
+    </li>
+
+    <li>
+        <span class="panel-bar-label-no-wrap">Colores</span>
+        <div style="margin: 8px 0;">
+            <div class="config-option-format">
+                <pv-color-picker id="textColor" ng-model="config.textColor" config="config" colorkeyword="Texto">
+                </pv-color-picker>
+            </div>
+        </div>
+    </li>
+</ul>

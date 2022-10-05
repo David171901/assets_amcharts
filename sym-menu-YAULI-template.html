@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/bootstrap-4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/css/custom.css">
+  <link href="https://fonts.googleapis.com/css?family=Zilla+Slab&display=swap" rel="stylesheet">
+  <title>Index Yauli</title>
+</head>
+<body>
+  <div onclick="removeActivatedMenuByEvent(event)">
+    <nav class="navbar navbar-expand-md navbar-light bg-light py-2">
+      <a class="navbar-brand" href="./#/Displays/40248/YAULI_MENU_PRINCIPAL">
+        <img style="height: 4em; width: 10em;" src="./Scripts/app/editor/symbols/ext/content/images/volcan-logo-dark.png" class="img-fluid" >
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" onclick="mainToggleFuntion()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">      
+          <li class="nav-item dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              ANDAYCHAGUA
+            </a>
+            <div class="dropdown-menu">
+              <h6 class="dropdown-header" style="font-size: 2em;">VENTILADORES</h6>
+              <a class="dropdown-item w-auto" href="./#/Displays/30192/YAULI_VENT_GEN_ANDAYCHAGUA" style="font-size: 2em;">General</a>
+              <a class="dropdown-item w-auto" href="./#/Displays/30190/YAULI_VENT_ANDAYCHAGUA" style="font-size: 2em;">Detalle</a>
+              <a class="dropdown-item w-auto" href="./#/Displays/30195/YAULI_VENT_ANDAYCHAGUA_SCADA" style="font-size: 2em;">Scada</a>
+              <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">ENERGIA</h6>
+              <a class="dropdown-item w-auto" href="./#/Displays/40300/YAULI_SS-EE_DETALLE" style="font-size: 2em;">Detalle Energia</a>
+              <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">PLANTA</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50327/YAULI_AND_PL_CHANCADO">Chancado</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50328/YAULI_AND_PL_MOLIENDA">Molienda</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;"href="./#/Displays/50329/YAULI_AND_PL_ESP_ZN-PB_DETALLE">Espesamiento</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50330/YAULI_AND_PL_REACTIVOS_DETALLE_BOMB">Reactivos</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50331/YAULI_AND_PL_AGUAS_ACIDAS">PNAA</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50332/YAULI_AND_PL_COURIER_DETALLE_PROMEDIO_DIARIO">Courier</a>
+            </div>
+          </li>
+
+
+          <li class="nav-item dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              CARAHUACRA
+            </a>
+            <div class="dropdown-menu">
+              <h6 class="dropdown-header" style="font-size: 2em;">VENTILADORES</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30171/YAULI_VENT_GEN_CARAHUACRA">General</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30168/YAULI_VENT_CARAHUACRA">Detalle</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/10169/Ventiladores_Carahuacra">Scada</a>
+              <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">EST HIDROMETRICAS</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30187/YAULI_EST_GENERAL">General</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30165/YAULI_EST_HIDRO">Detalle</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50441/EST_HIDRO_INDUSTRIAL">Industrial</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50440/EST_HIDRO_DOMESTICA">Domestica</a>
+              <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">ENERGIA</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40300/YAULI_SS-EE_DETALLE">Detalle Energia</a>
+              <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">DCT</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30179/RESUMEN_INDICADORES_GESTION_DCT">Resumen General</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30183/RESUMEN_DIA_DCT">Resumen Diario</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30172/YAULI_DCT_RUMICHACA">Scada</a>
+              <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">PLANTA</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40253/YAULI_CAR_PL_CHANCADO">Chancado</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40261/YAULI_CAR_PL_MOL">Molienda</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40265/YAULI_CAR_PL_ESP_ZN-PB_DETALLE">Espesamiento</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40259/YAULI_CAR_PL_REACTIVOS_DETALLE_BOMBA">Reactivos</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40278/YAULI_CAR_PL_AGUAS_ACIDAS">PNAA</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40255/YAULI_CAR_PL_COURRIER_DETALLE_PROMEDIO_DIARIO">Courier</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/PBDisplays/10150">Carahuacra</a>
+            </div>
+          </li>
+
+
+          <li class="nav-item dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              SAN CRISTOBAL
+            </a>
+            <div class="dropdown-menu">
+              <h6 class="dropdown-header" style="font-size: 2em;">VENTILADORES</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30193/YAULI_VENT_GEN_SCRISTOBAL">General</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30188/YAULI_VENT_SC">Detalle</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30196/YAULI_VENT_SCRISTOBAL_SCADA">Scada</a>
+              
+		          <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">ENERGIA</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/40300/YAULI_SS-EE_DETALLE">Detalle Energia</a>
+              
+              <div class="dropdown-divider"></div>
+
+              <h6 class="dropdown-header" style="font-size: 2em;">BOMBEO</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50305/YAU_SISTEMA-DE-BOMBEO_FERRAMINAS_DETALLE_NV390">Superficie</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50308/YAU_SISTEMA-DE-BOMBEO_FERRAMINAS_DETALLE_NV340D">Interior Mina</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50402/YAU_SISTEMA-DE-BOMBEO_INT_MINA_OVERVIEW">Overview</a>
+              
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50384/SC---BOMBEO---NV-630">Nivel 630</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50380/SC--BOMBA---NV-820">Nivel 820</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50381/SC---BOMBEO---NV920">Nivel 920</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50382/SC--BOMBA---NV-1020">Nivel 1020</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/50383/SC--BOMBA---NV-1070">Nivel 1070</a>
+
+            </div>
+          </li>
+          <li class="nav-item  dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              TICLIO
+            </a>
+            <div class="dropdown-menu">
+            <h6 class="dropdown-header" style="font-size: 2em;">VENTILADORES</h6>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30194/YAULI_VENT_GEN_TICLIO">General</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30191/YAULI_VENT_TICLIO">Detalle</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="./#/Displays/30198/YAULI_VENT_TICLIO_SCADA">Scada</a>
+            </div>
+          </li>
+          <li class="nav-item  dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar" href="./#/Displays/50379/Disponibilidad-y-Utilización---Equipos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              MANTENIMIENTO
+            </a>
+          </li>
+	        <li class="nav-item  dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar" href="./#/Displays/50317/YAULI_GERENCIAL_PLANTA" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              KPI GERENCIAL
+            </a>
+            <!--<div class="dropdown-menu">
+	    <a class="dropdown-item w-auto" href="./#/Displays/50317/YAULI_GERENCIAL_PLANTA">Gerencia</a>
+            -->
+            
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </nav>     
+  </div>
+  <script src="./Scripts/app/editor/symbols/ext/content/js/dropdowns.js"></script>
+</body>
+</html>

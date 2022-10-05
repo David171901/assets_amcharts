@@ -1,0 +1,50 @@
+<div style="width:100%;height:100%;display:block;">
+	<!-- overflow-y:auto;overflow-x:hidden-->
+	<table id="container" style="width:100%;height:100%;color:white;text-align:left;overflow-y:auto;padding:5px;display:block; display:table; border:3px solid {{config.outsideCourierBorderColor}};">
+	</table>
+	
+<div>
+	
+<style>
+	.rowCourierClass:nth-child(even) {
+		
+		background: {{config.evenCourierRowColor}}
+	}
+	.rowCourierClass:nth-child(odd) {
+		background: {{config.oddCourierRowColor}}
+	}
+	.rowCourierClass:hover { 
+		background: {{config.hoverCourierColor}}; 
+	}
+	
+	.cellCourierClass {
+		
+		padding-Left:  5px;
+		padding-Right: 5px;
+		padding-Top:   3px;
+		padding-Bottom:3px;
+		font-size: 2.4em;
+	}
+
+	.childrenCourierClass{
+		font-size: 2.2em;
+	}
+
+	.dataItemCourierCellClass {
+		color: {{config.dataItemCourierColumnColor}};
+		display: {{config.showDataItemCourierStyle}};
+	}
+	
+	.valueCourierCellClass {
+		color: {{config.valueCourierColumnColor}};
+		text-align:center;
+	}	
+	.headerCourierCellClass {
+		text-align: center;
+		border-bottom: 2px solid white;
+		background: {{config.headerCourierBackgroundColor}}; 
+		color: {{config.headerCourierTextColor}};
+		 
+	}	
+
+</style>

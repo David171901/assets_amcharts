@@ -1,0 +1,47 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/bootstrap-4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/css/custom.css">
+</head>
+<style>
+    .card__container{
+        border-radius: 20px;
+        border: 2.5px solid black;
+    }
+    .card__body{
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 2rem 1rem;
+    }
+    .card__title{
+        background: #3AB8A8;
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 10px;
+        color: white;
+        font-size: 2rem;
+        border: 2.5px solid black;
+        margin-bottom: 20px;
+    }
+    .card__value, .card__label{
+        font-size: 3rem;
+        text-align: center;
+        color: black;
+    }
+    .card__time{
+        text-align: center;
+    }
+</style>
+<!-- d-none -->
+<body style="overflow: hidden;">
+    <div class=" card__container" onclick="removeActivatedMenuByEvent(event)">
+        <div class="card__body">
+          <div class="card__title" id="card__title"></div>
+          <p class="card__label" id="card__subtitle"></p>
+          <p class="card__value" id="card__value"></p>
+          <p class="card__time" id="card__time"></p>
+        </div>
+    </div>
+    <script src="./Scripts/app/editor/symbols/ext/content/js/dropdowns.js"></script>
+</body>
+

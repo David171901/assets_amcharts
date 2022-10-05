@@ -1,0 +1,41 @@
+﻿<ul kendo-panel-bar class="t-side-panel-bgcolor" style="font-size: 14px;">
+    <li class="k-state-active">
+        <span class="panel-bar-label-no-wrap">Ver</span>
+        <div style="margin: 8px 0;">
+
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 35px;font-size:14px;">
+                <label>Tamaño texto</label>
+            <input type="number" class="" style="margin-left:8px" ng-model="config.fontSize">
+            </label>
+           
+            <!---->
+            <div class="config-option-single-row" style="margin: 10px 15px 0 15px;">
+                <div class="config-label">
+                    {{::res.ValueConfigTextAlignment}}
+                </div>
+                <select ng-model="config.TextAlignment" 
+                        class="config-option-list" style="width: 95px; float: right; text-align: right;">
+                    <option value="left">{{::res.ValueConfigTextAlignmentLeft}}</option>
+                    <option value="center">{{::res.ValueConfigTextAlignmentCenter}}</option>
+                    <option value="right">{{::res.ValueConfigTextAlignmentRight}}</option>
+                </select>
+            </div>
+
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 14px;font-size:14px;">
+                <input type="number" style="margin-right:8px;text-align:center" ng-model="config.decimalPlaces">Número de decimales<br />
+            </label>
+
+        </div>
+    </li>
+
+    <li>
+        <span class="panel-bar-label-no-wrap">Colores</span>
+        <div style="margin: 8px 0;">
+            <div class="config-option-format">
+                <pv-color-picker id="textColor" ng-model="config.textColor" config="config" colorkeyword="Texto">
+                </pv-color-picker>
+            </div>
+        </div>
+    </li>
+
+</ul>

@@ -1,0 +1,29 @@
+﻿<table style="background:#2F9084;color: white;padding: 20px;height: 100%;width: 100%;display: flex;justify-items: center;align-items: center;border-radius: 20px;">
+    <tr>
+        <td style="background-color: transparent; text-align:left; font-size: 2.1em;">Mes:&nbsp;</td>
+        <td><select id="monthSelector" ng-model="timeED.month" ng-model-options="{ getterSetter: true }" class="ng-pristine ng-valid" style="background-color: white; text-align: center; font-size: 2.1em;">
+                <option style="font-size: .5em" id="month1" value="1">Enero</option>
+                <option style="font-size: .5em" id="month2" value="2">Febrero</option>
+                <option style="font-size: .5em" id="month3" value="3">Marzo</option>
+                <option style="font-size: .5em" id="month4" value="4">Abril</option>
+                <option style="font-size: .5em" id="month5" value="5">Mayo</option>
+                <option style="font-size: .5em" id="month6" value="6">Junio</option>
+                <option style="font-size: .5em" id="month7" value="7">Julio</option>
+                <option style="font-size: .5em" id="month8" value="8">Agosto</option>
+                <option style="font-size: .5em" id="month9" value="9">Setiembre</option>
+                <option style="font-size: .5em" id="month10" value="10">Octubre</option>
+                <option style="font-size: .5em" id="month11" value="11">Noviembre</option>
+                <option style="font-size: .5em" id="month12" value="12">Diciembre</option>
+            </select>
+        </td>
+        <td style="background-color: transparent; color:transparent">In</td>
+        <td style="background-color: transparent; text-align:left; font-size: 30px;">Año:&nbsp;</td>
+        <td>
+            <input type="text" style="text-align: center; font-size: 1.9em;" class="text-input receiver" ng-model="timeED.year" maxlength="4" size="4" />
+        </td>
+        <td style="background-color: transparent; color:transparent">In</td>
+        <td>
+            <button type="button" ng-click="search()" style="text-align:center; background-color: #236960; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px; font-size: 2em;color: white;padding: 5px;border-radius: 10px;"> <b>BUSCAR</b></button>
+        </td>
+    </tr>
+</table>

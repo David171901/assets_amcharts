@@ -1,0 +1,69 @@
+<div style="width:100%;height:100%;display:block;">
+	<!-- overflow-y:auto;overflow-x:hidden-->
+	<table id="container" style="width:100%;height:100%;color:white;text-align:left;overflow-y:auto;padding:5px;display:block; display:table; border:3px solid {{config.outsideBorderColor}};">
+	</table>
+	
+<div>
+	
+<style>
+	.balMetalRowClass:nth-child(even) {
+		
+		background: {{config.evenBalMetalRowColor}};
+	}
+	.balMetalRowClass:nth-child(odd) {
+		background: {{config.oddBalMetalRowColor}};
+	}
+	.balMetalRowClass:hover { 
+		background: {{config.balMetalhoverColor}}; 
+	}
+	
+	.balMetalCellClass {
+		
+		padding-Left:  5px;
+		padding-Right: 5px;
+		padding-Top:   3px;
+		padding-Bottom:3px;
+
+		text-align: center;
+	}
+
+	.balMetalValueCellClass {
+		color: {{config.valueBalMetalColumnColor}};
+		text-align:center;
+		font-size: 2em;
+	}
+	
+	.balMetalNegative {
+		color: red;
+		text-align:center;
+		font-size: 2em;
+	}
+	.balMetalPositive {
+		color: #1eaa0c;
+		text-align:center;
+		font-size: 2em;
+	}
+
+	.balMCien{
+		background: #04ff00e5 ;
+	}
+	
+
+	.balMNoventa{
+		background: #eeff00d7 ;
+	}
+	
+	
+	.balMOchenta{
+		background: #ff0000b2 ;
+	}
+	
+	.balMetalHeaderCellClass {
+		text-align: center;
+		font-size: 1.9em;
+		border-bottom: 2px solid white;
+		background: {{config.headerBalMetalBackgroundColor}}; 
+		color: {{config.balMetalHeaderTextColor}};
+	}	
+
+</style>

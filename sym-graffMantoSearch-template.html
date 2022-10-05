@@ -1,0 +1,125 @@
+<div style="width:20%; height:10%; display:block; border-radius: 10px; float: left;">
+	<table style="position: fixed" >
+		<tr >
+			<td style="background-color: transparent; color:cadetblue; text-align:left; font-size: 2.5em;">Mina:&nbsp;</td>
+			
+			<td style="background-color: transparent; color:transparent">In</td>
+			<td><select id="unitSelector" ng-model="unit.mine" class="ng-pristine ng-valid"  ng-model-options="{ getterSetter: true }" style="background-color: white; text-align: center; font-size: 30px;">
+					<option style="font-size: 0.5em" id="mine1" value="MSCR">SAN CRISTOBAL</option>
+					<option style="font-size: 0.5em" id="mine2" value="MCAR">CARAHUACRA</option>
+					<option style="font-size: 0.5em" id="mine2" value="">SCR-CAR</option>
+				</select>
+			</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+
+			<td style="background-color: transparent; color:cadetblue; text-align:left; font-size: 2.5em;">Guardia:&nbsp;&nbsp;</td>
+			<td><select id="unitSelector" ng-model="unit.turn"  ng-model-options="{ getterSetter: true }" class="ng-pristine ng-valid" style="background-color: white; text-align: center; font-size: 30px;">
+					<option style="font-size: 0.5em" id="turn1" value="DIA">DIA</option>
+					<option style="font-size: 0.5em" id="turn2" value="NOCHE">NOCHE</option>
+					<option style="font-size: 0.5em" id="turn3" value="">AMBOS</option>
+				</select>
+			</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+			<td>
+				<button type="button" ng-click="searchDaySelected()" style="text-align:center; background-color: cadetblue; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px; font-size: 2em;"> <b>POR DIAS</b></button>
+			</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+			<td>
+				<button type="button" ng-click="searchDay()" style="text-align:center; background-color: cadetblue; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px; font-size: 2em;"> <b>DIARIO</b></button>
+			</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+			<td>
+				<button type="button" ng-click="searchWeek()" style="text-align:center; background-color: cadetblue; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px; font-size: 2em;"> <b>SEMANAL</b></button>
+			</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+			<td>
+				<!--ng-click="searchMonth()"-->
+				<a id="monthBtn" role="button" type="button" href="./#/Displays/" style="text-align:center; background-color: cadetblue; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px; font-size: 2em; color:black"> <b>MENSUAL</b></a>
+			</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+			<td>
+				<!--ng-click="searchYear()"-->
+				<a id="yearBtn" role="button" type="button" href="./#/Display/" style="text-align:center; background-color: cadetblue; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px; font-size: 2em; color: black"> <b>ANUAL</b></a>
+			</td>
+				
+			<td style="background-color: transparent; color:transparent">In</td>
+			
+		</tr>
+	</table>
+</div>
+
+<div style="width:20%; height:10%; display:block; border-radius: 10px; float: right;">	
+	<table style="position: fixed" >
+		<tr>
+			<td style="background-color: transparent; color:cadetblue; text-align:left; font-size: 2.5em;">Mes:</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+			<td><select id="monthSelector" ng-model="timeED.month" ng-model-options="{ getterSetter: true }" class="ng-pristine ng-valid" style="background-color: white; font-size: 30px;">
+					<option style="font-size: 0.5em;" id="month1" value="1">Enero</option>
+					<option style="font-size: 0.5em;" id="month2" value="2">Febrero</option>
+					<option style="font-size: 0.5em;" id="month3" value="3">Marzo</option>
+					<option style="font-size: 0.5em;" id="month4" value="4">Abril</option>
+					<option style="font-size: 0.5em;" id="month5" value="5">Mayo</option>
+					<option style="font-size: 0.5em;" id="month6" value="6">Junio</option>
+					<option style="font-size: 0.5em;" id="month7" value="7">Julio</option>
+					<option style="font-size: 0.5em;" id="month8" value="8">Agosto</option>
+					<option style="font-size: 0.5em;" id="month9" value="9">Setiembre</option>
+					<option style="font-size: 0.5em;" id="month10" value="10">Octubre</option>
+					<option style="font-size: 0.5em;" id="month11" value="11">Noviembre</option>
+					<option style="font-size: 0.5em;" id="month12" value="12">Diciembre</option>
+				</select>
+			</td>
+			<td style="background-color: transparent; color:transparent">In</td>
+			<td style="background-color: transparent; color:cadetblue; text-align:left; font-size: 2.5em;">A&ntilde;o:</td>
+			<td style="background-color: transparent; color:transparent">In&nbsp;</td>
+			<td>
+				<input style="font-size: 2em;" type="text" class="text-input receiver" ng-model="timeED.year" maxlength="4" size="4" />
+			</td>
+			<td style="background-color: transparent; color:transparent">In</td>
+			<td>
+				<button type="button" ng-click="search()" style="text-align:center; background-color: cadetblue; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px;font-size: 2em;"> <b>BUSCAR</b></button>
+			</td>
+		</tr>
+
+	</table>
+</div>
+</br>
+
+<div style="width:10%; height:10%; display:block; border-radius: 10px; margin-top: 5px; margin-bottom: 2px;">
+	<table id="listDays">
+	
+	</table>
+</div>
+
+
+<div style="width:100%; height: 100%; margin-top: 3%;">
+      
+    <div id="container1" style=" width: 24%; height: 80%;margin-left: 1%; float: left;">
+    </div>
+	
+    <div id="container2" style=" width: 39%; height: 80%; float: left" >
+    </div>
+	
+    <div id="container3" style=" width: 28%; height: 80%; float: left; margin-left: 4%;" >
+    </div>
+
+</div>
+
+<style>
+	.mttoHeaderCellClass {
+		text-align: center;
+		font-size: 1.9em;
+		border-bottom: 2px solid white;
+		background: cadetblue;
+		color: black;
+	}	
+	
+	.mttoCellClass {
+		
+		padding-Left:  5px;
+		padding-Right: 5px;
+		padding-Top:   3px;
+		padding-Bottom:3px;
+
+		text-align: center;
+	}
+</style>

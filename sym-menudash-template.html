@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link__navbar rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/bootstrap-4.4.1/css/bootstrap.min.css">
+  <link__navbar rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/css/custom.css">
+  <link__navbar href="https://fonts.googleapis.com/css?family=Zilla+Slab&display=swap" rel="stylesheet">
+  <title>Index Yauli</title>
+</head>
+<style>
+img{
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 80%;
+}
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+a{
+  color: white;
+}
+.logo__navbar{
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #236960;
+}
+.container__navbar{
+   max-width:600px;
+   background:#2F9084;
+   padding:0px 0px 20px 0px;
+   border:1px solid #111;
+   border-radius:4px;
+   box-shadow:0px 4px 5px rgba(0, 0, 0, 0.75);
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+.navbar__header{
+  background: #236960;
+}
+.link__navbar{
+   font-size: 2rem;
+   font-weight:300;
+   text-align:center;
+   position:relative;
+   height:70px;
+   line-height:40px;
+   margin-top:10px;
+   overflow:hidden;
+   width:90%;
+   margin-left:5%;
+   cursor:pointer;
+   color: white;
+}
+.link__navbar .text{
+  padding: 10px;
+  border: 2px solid #111 ;
+  border-radius: 10px;
+  transition-delay: all 0.5s;
+  transition: all 0.5s;
+}
+.link__navbar .text:hover{
+  background: #236960;
+  color: white;
+}
+.link__footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight:300;
+  text-align:center;
+  position:relative;
+  height:100px;
+  line-height:40px;
+  margin-top:10px;
+  overflow:hidden;
+  width:90%;
+  margin-left:5%;
+  cursor:pointer;
+  color: white;
+}
+.link__footer .text{
+  margin-left: 25px;
+}
+.link__navbar--active{
+  background: #236960;
+}
+
+</style>
+<body>
+  <div onclick="removeActivatedMenuByEvent(event)" style="width: 100%; height:100%;">
+    <div class="container__navbar" style="width: 100%; height:100%;">
+      <div class="navbar__header">
+        <div class="logo__navbar">
+          <a href="https://pivision.volcan.com.pe/PIVision/#/Displays/50497/YAULI_MTTO_MOLINO_PRIMARIO_"><img src="https://www.volcan.com.pe/wp-content/themes/volcan_seek/img/logo-volcan-blanco.svg" alt="Volcan Logo"></a>
+        </div>
+      </div>
+      <div class="navbar__main">
+        <div class="link__navbar">
+          <a href="https://pivision.volcan.com.pe/PIVision/#/Displays/50498/YAULI_MTTO_MOLINO_PRIMARIO_2">
+            <div class="text" id="kpi">
+              KPIS
+            </div>
+          </a>
+        </div>
+        <div class="link__navbar">
+          <a href="https://pivision.volcan.com.pe/PIVision/#/Displays/50501/YAULI_MTTO_MOLINO_PRIMARIO_3">
+            <div class="text" id="disponibilidad">
+              Disponibilidad
+            </div>
+          </a>
+        </div>
+        <div class="link__navbar">
+          <a href="https://pivision.volcan.com.pe/PIVision/#/Displays/50502/YAULI_MTTO_MOLINO_PRIMARIO_4">
+            <div class="text" id="eventos">
+              Eventos
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="navbar__footer">
+        <a href="https://pivision.volcan.com.pe/PIVision/#/Displays/50497/YAULI_MTTO_MOLINO_PRIMARIO_">
+          <div class="link__footer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width: 24px;color: white;"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
+            <div class="text">Inicio</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="./Scripts/app/editor/symbols/ext/content/js/dropdowns.js"></script>
+</body>
+</html>

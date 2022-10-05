@@ -1,0 +1,60 @@
+<div style="width:100%;height:100%;display:block;">
+	<!-- overflow-y:auto;overflow-x:hidden-->
+	<table id="container" style="width:100%;height:100%;color:white;text-align:left;overflow-y:auto;padding:5px;display:block; display:table; border:3px solid {{config.outsideBorderColor}};">
+	</table>
+	
+<div>
+	
+<style>
+	.myCustomRowClass:nth-child(even) {
+		
+		background: {{config.evenRowColor}}
+	}
+	.myCustomRowClass:nth-child(odd) {
+		background: {{config.oddRowColor}}
+	}
+	.myCustomRowClass:hover { 
+		background: {{config.hoverColor}}; 
+	}
+	
+	.myCustomCellClass {
+		
+		padding-Left:  5px;
+		padding-Right: 5px;
+		padding-Top:   3px;
+		padding-Bottom:3px;
+		font-size: 1.5em;
+	}
+
+	.childCellClass{
+		font-size: 1.5em;
+	}
+	.myCustomDataItemCellClass {
+		color: {{config.dataItemColumnColor}};
+		display: {{config.showDataItemNameCheckboxStyle}};
+	}
+	.myCustomTimestampCellClass {
+		color: {{config.timestampColumnColor}};
+		display: {{config.showTimestampCheckboxStyle}};
+	}
+	.myCustomValueCellClass {
+		color: {{config.valueColumnColor}};
+		text-align:center;
+	}	
+	.myCustomHeaderCellClass {
+		text-align: center;
+		border-bottom: 2px solid white;
+		background: {{config.headerBackgroundColor}}; 
+		color: {{config.headerTextColor}};
+		 
+	}	
+
+	.myCustomSecondHeaderCellClass {
+		font-size: 1.5em;
+		text-align: center;
+		border-bottom: 2px solid white;
+		background: {{config.headerBackgroundColor}}; 
+		color: {{config.headerTextColor}};
+		 
+	}
+</style>
