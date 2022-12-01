@@ -63,43 +63,34 @@
                     
                     $('#' + syContElement1.id).empty();
                      
-                    let zeroHeaders = ['Ruta', 'Skips A','Skips B','Tot. Skips', ' P. Neto TCH A', 'P. Neto TCH B', ' Tot. TCH','P. Neto TCS' ];
+                    let zeroHeaders = ['Skips','P. Neto'];
 
-                    let ruteSCAND = ['SCR -> P.AND'] ;
-                    ruteSCAND = formatData(dataToPush(ruteSCAND, data, 0, 7));
+                    let ruteSCAND = [] ;
+                    ruteSCAND = dataToPush(ruteSCAND, data, 0, 2);
                     
-                    let ruteCARAND = ['CAR -> P.AND'];
-                    ruteCARAND = formatData(dataToPush(ruteCARAND, data, 7, 14));
+                    let ruteCARAND = [];
+                    ruteCARAND = dataToPush(ruteCARAND, data, 2, 4);
 
                     let totalMINE = [];
                     totalMINE = getTotalData(totalMINE, ruteSCAND, ruteCARAND);
  
                     let headersRow = syContElement1.insertRow(-1);
                     
-                    generatedRow( 'UNIDAD MINERA', headersRow ,zeroHeaders, 'headerAPCellClass cellAPClass', 'center', true);
-                    generatedRow('San Cristóbal', headersRow , ruteSCAND, 'cellAPClass myValueCellClass', 'center', false);
-                    generatedRow('Carahuacra', headersRow , ruteCARAND, 'cellAPClass myValueCellClass', 'center', false);
-
-                    generatedRow('Total de Mina', headersRow, totalMINE, 'myCustomRightHeaderCellClass cellAPClass myValueCellClass', 'center', true);
+                    generatedRow( '', headersRow ,zeroHeaders, 'headerAPCellClass cellAPClass', 'center', true);
+                    generatedRow('Turno día', headersRow , ruteSCAND, 'cellAPClass myValueCellClass', 'center', false);
+                    generatedRow('Turno noche', headersRow , ruteCARAND, 'cellAPClass myValueCellClass', 'center', false);
+                    generatedRow('Total', headersRow, totalMINE, 'myCustomRightHeaderCellClass cellAPClass myValueCellClass', 'center', true);
                 }
                    
             }
 
             function getTotalData(totalOfArrays , arrayUnitOne , arrayUnitTwo){
-                totalOfArrays.push('+');
-                for(let index = 1 ; index < arrayUnitOne.length; index++){
-                    index == 3|| index ==6 || index == 7 ?  
-                    totalOfArrays.push((parseFloat(arrayUnitOne[index])+parseFloat(arrayUnitTwo[index])).toFixed(scope.config.numberOfDecimalPlaces)):
-                    totalOfArrays.push(' ');
+                console.log(" ~ file: sym-tableskips.js ~ line 88 ~ getTotalData ~ arrayUnitTwo", arrayUnitTwo)
+                console.log(" ~ file: sym-tableskips.js ~ line 88 ~ getTotalData ~ arrayUnitOne", arrayUnitOne)
+                for(let index = 0 ; index < arrayUnitOne.length; index++){
+                    totalOfArrays.push((parseFloat(arrayUnitOne[index])+parseFloat(arrayUnitTwo[index])).toFixed(scope.config.numberOfDecimalPlaces));
                 };
                 return totalOfArrays;
-            }
-
-            function formatData(arrayColector){
-                arrayColector[3] =  (parseFloat(arrayColector[1]) + parseFloat(arrayColector[2])).toString();
-                arrayColector[6] =  (parseFloat(arrayColector[4]) + parseFloat(arrayColector[5])).toString();
-    
-                return arrayColector;
             }
 
             function dataToPush(arrayColector,data, indexMin, indexMax){

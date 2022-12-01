@@ -61,7 +61,7 @@
         this.onConfigChange = myCustomConfigurationChangeFunction;
         scope.config.FormatType = null;
 	    
-        console.log('lines2tags loaded');
+        console.log('[+] lines2tags loaded v3');
         var chart = initChart();
         var dataArray = [];
 
@@ -70,7 +70,7 @@
             if (!data || !chart) return;
 
             if (data !== null && data.Data) {
-                // console.log(data)
+                console.log(" ~ file: sym-lines2tagsv3.js ~ line 73 ~ myCustomDataUpdateFunction ~ data", data)
                 dataArray = [];
                 var hasSecondData = data.Data[1] ? true : false;
                 var firstData = data.Data[0];
@@ -112,9 +112,11 @@
                 
                 
                 let startDate = new Date(timeProvider.displayTime.start);
-                const endDate = new Date();
+                // let todayDate = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
+                const endDate = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date((new Date()).getFullYear(), (new Date()).getMonth(),28);
+                // console.log(" ~ file: sym-lines2tagsv3.js ~ line 117 ~ myCustomDataUpdateFunction ~ endDate", endDate)
 
-                while (startDate.getTime() < endDate.getTime()){
+                while (startDate.getTime() <= endDate.getTime()){
 
                     var tiempo1, firstValue, tiempo2, secondValue;
                     tiempo1 = tiempo2 = "";
@@ -152,12 +154,12 @@
                         "value2": secondValue,
                     };
                     dataArray.push(newDataObject);
-
+                    
                     startDate.setDate(startDate.getDate()+1);
                 };
-
-
-
+                
+                console.log(" ~ file: sym-lines2tagsv3.js ~ line 157 ~ myCustomDataUpdateFunction ~ dataArray", dataArray)
+                
                 chart.dataProvider = dataArray;
                 chart.validateData();
             }
@@ -175,6 +177,22 @@
 
         function getMonthFromTime(timeValue) {
             return timeValue.getMonth()+1;
+        }
+
+        function getDaysOfMonth(numMonth, numYear) {
+            let daysOfMonth = 31;
+            numMonth = parseInt(numMonth);
+            numYear = parseInt(numYear);
+            if (numMonth == 4 || numMonth == 6 || numMonth == 9 || numMonth == 11) {
+                daysOfMonth = 30;
+            }
+            if (numMonth == 2) {
+                daysOfMonth = 28;
+                if (numYear % 4 == 0) {
+                    daysOfMonth = 29;
+                }
+            }
+            return daysOfMonth;
         }
 
         function getMinDay(firstDataDay, secondDataDay) {

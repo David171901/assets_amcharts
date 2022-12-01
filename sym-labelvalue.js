@@ -18,6 +18,8 @@
                 fontSize: 16,
                 Height: 500,
                 Width: 300,
+                unit: '',
+                color: '#3AB8A8',
             }
         },
         configOptions: function() {
@@ -51,13 +53,13 @@
         this.onConfigChange = myCustomConfigurationChangeFunction;
 
         function myCustomDataUpdateFunction(data) {
-            // console.log('label value',data);
+            console.log('label value',data);
             let depuredData = getDepuredData(data);
             let subtitleElement = $(`#${symbolCardSubtitle.id}`);
             let valueElement = $(`#${symbolCardValue.id}`);
             let timeElement = $(`#${symbolCardTime.id}`);
             subtitleElement.html(`${depuredData.Label.split('|')[0]}`)
-            valueElement.html(`${parseFloat(depuredData.Value).toFixed(2)}${depuredData.Units}`)
+            valueElement.html(`${parseFloat(depuredData.Value).toFixed(2)}${scope.config.unit}`)
             timeElement.html(`${depuredData.Time}`)
         }
 

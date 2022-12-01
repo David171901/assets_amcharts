@@ -33,4 +33,12 @@
     <label>Tamaño texto</label>
     <input type="number" class="" style="margin-left:8px" ng-model="config.fontSize">
 </label>
-<br />
+<label class="flex-align-center" style="margin-top:8px; margin-left: 8px;font-size:14px;">
+    <label>Units (*)</label>
+    <input type="text" class="" style="text-align:center;margin-left:10px;" ng-model="config.unit">
+</label>
+<div class="config-option-format">
+    <pv-color-picker id="color" ng-model="config.color" config="config" colorkeyword="Color">
+    </pv-color-picker>
+</div>
+<br/>

@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/bootstrap-4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/css/custom.css">
+  <link href="https://fonts.googleapis.com/css?family=Zilla+Slab&display=swap" rel="stylesheet">
+  <title>Index Yauli</title>
+</head>
+<body>
+  <div onclick="removeActivatedMenuByEvent(event)" style="background:#2F9084;color: white;padding: 20px;height: 100%;width: 100%;display: flex;justify-items: center;align-items: center;border-top-left-radius: 20px;border-bottom-left-radius: 20px;">
+    <nav class="navbar navbar-expand-md py-2 d-flex justify-content-between" style="background:#2F9084;color: white; display: grid; grid-template-columns: repeat(2,50%);">
+      <a class="navbar-brand text-light" href="/" style="font-size: 2em;font-weight: bold;" id="navbar__title"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" onclick="mainToggleFuntion()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div style="width: 500px;"> 
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">      
+          <li class="nav-item dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle text-light" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              CHANCADORAS
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item w-auto" href="/" style="font-size: 2em;">CHANCADORA 1</a>
+              <a class="dropdown-item w-auto" href="/" style="font-size: 2em;">CHANCADORA 2</a>
+              <a class="dropdown-item w-auto" href="/" style="font-size: 2em;">CHANCADORA 3</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle text-light" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               ZARANDA
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="/">ZAR 01</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle text-light" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               FAJAS
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="/">FAJ 01</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown" style="font-size: 2em;">
+            <a class="nav-link comm-navbar dropdown-toggle text-light" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               MOLINOS
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="/">MOLINO 8x6</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="/">MOLINO KOPPER</a>
+              <a class="dropdown-item w-auto" style="font-size: 2em;" href="/">MOLINO PRIMARIO</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>     
+  </div>
+  <script src="./Scripts/app/editor/symbols/ext/content/js/dropdowns.js"></script>
+</body>
+</html>

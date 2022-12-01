@@ -74,9 +74,8 @@
         var dataArray = [];
 
         function myCustomDataUpdateFunction(data) {
-                   
-            
-           
+            console.log(" ~ file: sym-lines2tagsv2.js ~ line 77 ~ myCustomDataUpdateFunction ~ data", data)
+        
             if (!data || !chart) return;
 
             if (data !== null && data.Data) {

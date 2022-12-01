@@ -80,7 +80,7 @@
   
             <label class="flex-align-center" style="margin-top:8px; margin-left: 8px;font-size:14px;">
                 <label>Units (*)</label>
-            <input type="text" class="" style="text-align:center;margin-left:10px;" ng-model="config.unit">
+                <input type="text" class="" style="text-align:center;margin-left:10px;" ng-model="config.unit">
             </label>
 
             <label class="flex-align-center" style="margin-top:8px; margin-left: 8px;font-size:14px;">
@@ -88,6 +88,17 @@
             <input type="number" class="" style="text-align:center;margin-left:10px;" ng-model="config.valueInterval">
             </label>
             
+            <div class="config-option-ie11-overflow-fix">
+                <label class="flex-align-center" style="margin-top:8px; margin-left: 8px;font-size:14px;">Types (*)
+                    <select ng-model="config.type" ng-model-options="{ getterSetter: true }" style="margin-left: 20px;font-size:12px;">
+                        <option value="mttr">MTTR</option>
+                        <option value="mtbf">MTBF</option>
+                        <option value="mtbs">MTBS</option>
+                        <option value="default">Default</option>
+                    </select>
+                </label>
+            </div>
+
             <section style="margin-top: 20px;">
                 <p  class="flex-align-center"  style="margin-top:8px; margin-left: 8px;font-size:14px;">
                     - BottomTextYOffset: Desplazamiento Y del texto inferior. (Number)

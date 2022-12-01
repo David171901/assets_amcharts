@@ -1,9 +1,10 @@
 (function(CS) {
     var myGaugeDefinition = {
         typeName: 'GaugeGeneric',
-        displayName: 'GaugeGeneric',
+        displayName: 'Diagrama Gauge',
         datasourceBehavior: CS.Extensibility.Enums.DatasourceBehaviors.Multiple,
         visObjectType: symbolVis,
+        iconUrl: '/Scripts/app/editor/symbols/ext/icons/gaugeCOMM.png',
         getDefaultConfig: function() {
             return {
                 DataShape: 'TimeSeries',
@@ -32,7 +33,9 @@
                 bottomTextYOffset: -175,
                 labelOffset: 90,
                 unit: '',
-                valueInterval: 10, 
+                valueInterval: 10,
+                // Type
+                type: "mttf",
             };
         },
         configOptions: function() {
@@ -59,18 +62,64 @@
         symbolContainerDiv1.id = newUniqueIDString1;
         var chart;
         var dataArray = [];
+        var paradas = ['Actividad Operacional', 'Influencia Externa','Otros','Funcionamiento','Mantenimiento Planificable','Seguridad','Stand By'];
+        var fallas = ['Averias de Instrumentos','Averias Electricas','Averias Mecanicas'];
+        var mttr = ['Averias de Instrumentos','Averias Electricas','Averias Mecanicas'];
 
         function myCustomDataUpdateFunction(data) {
-            console.log(" ~ file: sym-GaugeGeneric.js ~ line 64 ~ myCustomDataUpdateFunction ~ data", data)
-            const datainfo = getDataProvider(data);
+            // console.log(" ~ file: sym-GaugeGeneric.js ~ line 70 ~ myCustomDataUpdateFunction ~ data", data)
+            const datainfo = getDataProvider(data)
             dataArray.push(datainfo);
             !chart ? chart =  generateChart(dataArray, scope) : refreshChart(chart, dataArray);
-            
         }
 
         function getDataProvider(data){
-            var lastValue = data.Data[0].Values.at(-1)?.Value
-            return lastValue
+            let Total;
+            let valuesFilter;
+            let disponibilidad;
+            switch (scope.config.type) {
+                case 'mttr':
+                    valuesFilter = data.Data[0].Values.filter(element => {
+                        for (let index = 0; index < mttr.length; index++) {
+                            if(element.Value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mttr[index])) return true;
+                        }
+                    }).filter(element => !(element.Time.includes('T00:00:00Z')));
+                    let sumTotal = valuesFilter.reduce(
+                        (previousValue, currentValue) => previousValue + parseInt(currentValue.Value.split('||')[2]),
+                        0
+                    );
+                    Total = (sumTotal/60) / valuesFilter.length
+                    Total = (isNaN(Total) ? 0 : Total)
+                    break;
+                case 'mtbf':
+                    disponibilidad = data.Data[1].Values.slice(1, data.Data[1].Values.length).reduce((previousValue, currentValue) => previousValue + currentValue.Value,0);
+                    valuesFilter = data.Data[0].Values.filter(element => {
+                        for (let index = 0; index < fallas.length; index++) {
+                            if(element.Value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(fallas[index])) return true;
+                        }
+                    }).filter(element => !(element.Time.includes('T00:00:00Z')));
+                    Total = disponibilidad / valuesFilter.length;
+                    Total = (((Total == 'Infinity') || isNaN(Total)) ? disponibilidad : Total);
+                    break;
+                case 'mtbs':
+                    disponibilidad = data.Data[1].Values.slice(1, data.Data[1].Values.length).reduce((previousValue, currentValue) => previousValue + currentValue.Value,0);
+                    valuesFilter = data.Data[0].Values.filter(element => {
+                        for (let index = 0; index < paradas.length; index++) {
+                            if(element.Value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(paradas[index])) return true;
+                        }
+                    }).filter(element => !(element.Time.includes('T00:00:00Z')));
+                    Total = disponibilidad / valuesFilter.length;
+                    Total = (((Total == 'Infinity') || isNaN(Total)) ? disponibilidad : Total);
+                    break;
+                case 'default':
+                    Total = data.Data[0].Values.at(-1).Value
+                    break;
+            
+                default:
+                    break;
+            }
+
+            return Total
         };
 
         function refreshChart(chart, dataArray){

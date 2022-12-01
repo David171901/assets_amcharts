@@ -1,37 +1,42 @@
 ﻿(function(CS) {
-    
+
+    function symbolVis() {}
+    CS.deriveVisualizationFromBase(symbolVis);
+
     var myCustomSymbolDefinition = {
         typeName: 'tablaparetto',
-        displayName: 'Tabla Paretto',
+        displayName: 'Tabla Eventos',
         datasourceBehavior: CS.Extensibility.Enums.DatasourceBehaviors.Multiple,
         visObjectType: symbolVis,
-        inject: ['timeProvider'],
-        supportsCollections: true,
+        iconUrl: '/Scripts/app/editor/symbols/ext/icons/TablaEventosCOMM.png',
+        // inject: ['timeProvider'],
+        // supportsCollections: true,
         supportsDynamicSearchCriteria: true,
         
         getDefaultConfig: function() {
             return {
                 DataShape: 'TimeSeries',
-                DataQueryMode: CS.Extensibility.Enums.DataQueryMode.ModePlotValues,
+                // DataQueryMode: CS.Extensibility.Enums.DataQueryMode.ModePlotValues,
                 Height: 300,
                 Width: 400,
                 Intervals: 1000,
-                Mode: 'Compressed',
+                // Mode: 'Compressed',
+                FormatType: null,
                 showDataItemNameCheckboxValue: true,
                 showHeaderRightCheckboxValue: true,
                 showDataItemNameCheckboxStyle: "table-cell",
                 showTimestampCheckboxStyle: "table-cell",
                 numberOfDecimalPlaces: 0,
                 dataItemColumnColor: "black",
-                headerRightTextColor: "black",
+                headerRightTextColor: "#0A1C1A",
 		        headerRightColumnColor: "white",
                 valueColumnColor: "black",
                 hoverColor: "lightgreen",
                 evenRowColor: "darkgray",
                 oddRowColor: "none",
                 outsideBorderColor: "none",
-                headerBackgroundColor: "black",
-                subheaderBackgroundColor: "#50555A",
+                headerBackgroundColor: "#50555A",
+                subheaderBackgroundColor: "#297C72",
                 headerTextColor: "white",
                 fontSize: '16',
                 unitFontSize: 'px'
@@ -47,13 +52,12 @@
 
   
     
-    function symbolVis() {}
-    CS.deriveVisualizationFromBase(symbolVis);
+    
     symbolVis.prototype.init = function(scope, elem, timeProvider) {
             
             this.onDataUpdate = myCustomDataUpdateFunction;
             this.onConfigChange = myCustomConfigurationChangeFunction;
-            console.log('\t[+]Table Paretto');
+            console.log('\t[+]Tabla Eventos');
             var syContElement1 = elem.find('#container')[0];
             var newUniqueIDString1 = "myCustomSymbol_1" + Math.random().toString(36).substr(2, 16);
             syContElement1.id = newUniqueIDString1;
@@ -61,15 +65,16 @@
 
             function myCustomDataUpdateFunction(data) {
                 
-                let dataFormat = data.Data[0].Values
-        
+                let dataFormat = data.Data[0].Values;
+
                 let arrayData = [...new Set(dataFormat.map(el => el.Value.split('||')[0])) ].map(element => Object({
                         Label: element,
-                        Incidents: dataFormat.map(elem => elem.Value).filter(el => el.includes(element)), 
+                        Incidents: dataFormat.filter(el => el.Value.includes(element)), 
                     })
                 ).map(element => Object({
                         ...element,
-                        Incidents: [...new Set(element.Incidents.map(el=> `${el}`.split('||')[1]))] 
+                        Incidents: [...new Set(element.Incidents.map(el=> `${el.Value}`.split('||')[1]))],
+                        Branch: (element.Incidents.filter(el => `${el.Time}`.includes('T00:00:00Z'))),
                     })
                 ).map(element => Object({
                         ...element,
@@ -82,32 +87,39 @@
                 ).map(element => Object({
                     ...element,
                     Values: element.Incidents.map(el=> Object({
-                        Value: `${el}||${element.Values.filter(elem => elem.Incidents == el)[0].Count}||${element.Values.filter(elem => elem.Incidents == el)[0].Time}`,
+                        Value: `${el}||${element.Values.filter(elem => elem.Incidents == el)[0].Count}||${element.Values.filter(elem => elem.Incidents == el)[0].Time}||${formatTime(element.Values.filter(elem => elem.Incidents == el)[0].Time)}`,
                     })),
                     Time: new Date().toLocaleString()
-                }))
+                })).map(element => {
+                    return Object({
+                        ...element,
+                        Quantity: element.Values.reduce((previousValue, currentValue) => previousValue + parseInt(currentValue.Value.split('||')[1]),0),
+                        Minutes: element.Values.reduce((previousValue, currentValue) => previousValue + parseInt(currentValue.Value.split('||')[2]),0),
+                        MinutesFormat: formatTime(element.Values.reduce((previousValue, currentValue) => previousValue + parseInt(currentValue.Value.split('||')[2]),0)),
+                    })
+                })
         
                 let data_ = {
-                    Data: arrayData,
+                    Data: arrayData.sort((a,b) => - a.Minutes + b.Minutes).filter(element => element.Label != 'No Data'),
                     SymbolName: "Symbol1"
                 }
-                console.log(" ~ file: sym-tablaparetto.js ~ line 94 ~ myCustomDataUpdateFunction ~ data_", data_)
+                console.log(" ~ file: sym-tablaparetto.js ~ line 116 ~ myCustomDataUpdateFunction ~ data_", data_)
 
                 if (data) {
                     
                     $('#' + syContElement1.id).empty();
                      
-                    let zeroHeaders = ['Subtipo de Falla', 'Cantidad', 'Tiempo'];
+                    let zeroHeaders = ['SINTOMA / ACTIVIDAD', 'CANTIDAD', 'TIEMPO (dias horas:min )'];
 
                     let headersRow = syContElement1.insertRow(-1);
                     
-                    generatedRow( 'TIPO DE FALLA', headersRow ,zeroHeaders, 'headerAPCellClass cellAPClass', 'center', true, false);
+                    generatedRow( 'TIPO DE EVENTOS', headersRow ,zeroHeaders, 'headerAPCellClass cellAPClass', 'center', true, false);
 
                     for (let index = 0; index < data_.Data.length; index++) {
                         generatedMultiRow(data_.Data[index].Label, headersRow , dataToPush(data_,index));
-                        
+                        generatedRow('', headersRow, ['Subtotal',data_.Data[index].Quantity,data_.Data[index].MinutesFormat], 'subtotalAPCellClass cellAPClass', 'center', false);
                     }
-
+                    generatedRow('', headersRow, ['Total',data_.Data.reduce((previousValue, currentValue) => previousValue + currentValue.Quantity,0),formatTime(data_.Data.reduce((previousValue, currentValue) => previousValue + currentValue.Minutes,0))], 'headerAPCellClass cellAPClass', 'center', false);
                 }
             }
 
@@ -125,8 +137,15 @@
                 data = data.Data[index].Values.sort((a,b)=> {
                     return - parseInt(a.Value.split('||')[2]) + parseInt(b.Value.split('||')[2])
                 })
-                return data.map(element => [element.Value.split('||')[0],element.Value.split('||')[1],element.Value.split('||')[2]])
+                return data.map(element => [element.Value.split('||')[0],element.Value.split('||')[1],element.Value.split('||')[3]])
             };
+
+            function formatTime(time){
+                var day = Math.floor (time / (24*60)); 
+                var hour = Math.floor( (time - day*24*60)/60); 
+                var minute = Math.floor( (time - day*24*60 - hour*60)); 
+                return `${day == 0 ? '': `${day}d `}${hour}:${minute}`
+            }
 
             function generatedRow(firstElement, insertRow, dataArray, nameClass, align, isHeader, isSubHeader){
                 

@@ -30,10 +30,11 @@
         var count = 0;
         
         function myCustomDataUpdateFunction(data) {
-            
+            console.log(data);   
             if(isLoaded == 'primero'){
-
+                console.log('primero');
                 dataTotal = data;
+
 
                 let ultimoValue =  dataTotal.Data[0].Values[dataTotal.Data[0].Values.length-1].Value;
                
@@ -48,6 +49,7 @@
                 scope.timeED = { month: "", year: "" };
                
                 currentStringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
+                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:51 ~ myCustomDataUpdateFunction ~ currentStringTimeED", currentStringTimeED)
                 timeProvider.requestNewTime(currentStringTimeED.startTimeED, currentStringTimeED.endTimeED, true);
                 
                 scope.timeED.month = ultimoValue.toString();
@@ -64,6 +66,10 @@
                     count++;
                     
                     if(count == 1){
+
+
+
+
                         dataTotal = data;
                     }
 
@@ -78,7 +84,8 @@
                         let yearNow = parseInt(initialDate.split('/')[2]);
                         stringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
                     }
-
+                    console.log(" ~ file: sym-searchfilterDynamicDatev2.js:80 ~ myCustomDataUpdateFunction ~ stringTimeED", stringTimeED)
+                    
                     timeProvider.requestNewTime(stringTimeED.startTimeED, stringTimeED.endTimeED, true);
                     
                     isLoaded = 'stop';
@@ -87,17 +94,48 @@
             }
 
             if(isLoaded == 'stop'){
-                
+                console.log('stop');
+                if(data.Data[0].Values) {
+                    data  = {
+                        Data: [
+                            {
+                                "Values": [
+                                    {
+                                        "Value": "11",
+                                        "Time": "25/11/2022 00:00:00"
+                                    },
+                                    {
+                                        "Value": "11",
+                                        "Time": "26/11/2022 00:00:00"
+                                    },
+                                    {
+                                        "Value": "12",
+                                        "Time": "30/11/2022 00:00:00"
+                                    }
+                                ],
+                                "StartTime": "31/10/2022 19:00:00",
+                                "EndTime": "1/12/2022 09:28:48.977",
+                                "Minimum": "0",
+                                "Maximum": "100",
+                                "DisplayDigits": -5,
+                                "Label": "BALANZAS|CODIGO MES",
+                                "Path": "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\02 MOLIENDA\\BALANZAS|CODIGO MES"
+                            }
+                        ]
+                    }
+                }
                 let initialDate = data.Data[0];
+
+
+                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:99 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                 
-                let monthChange = parseInt(initialDate.Values[initialDate.Values.length-1].Value) 
-                - parseInt(currentStringTimeED.startTimeED.split('-')[1]) == 2? true : false;
+                let monthChange = parseInt(initialDate.Values[initialDate.Values.length-1].Value) - parseInt(currentStringTimeED.startTimeED.split('-')[1]) == 2? true : false;
 
                 monthChange ? isLoaded='primero' : isLoaded;
             }
 
             function getStartEndTimeForLoad(month, year, day) {
-
+                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:100 ~ getStartEndTimeForLoad ~ month, year, day", month, year, day)
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
                 
@@ -114,14 +152,14 @@
                 let startMonth = startDate.getMonth() + 1;
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
                 
-                
                 return {
-                    startTimeED: `${startDate.getFullYear()}-${startStringMonth}-${28}${initialTime}`,
+                    startTimeED: `${startDate.getFullYear()}-${startStringMonth}-${getDaysOfMonth(startMonth,startDate.getFullYear())}${initialTime}`,
                     endTimeED: "*"
                 };
             }
 
             function getStartEndTimeForSearch(month, year, day) {
+                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:126 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
 
                 // START
                 let currentDate = new Date();
@@ -152,7 +190,7 @@
                 let daysOfMonth = getDaysOfMonth(endMonth,endDate.getFullYear())
 
                 return {
-                    startTimeED: `${startDate.getFullYear()}-${startStringMonth}-${28}${initialTime}`,
+                    startTimeED: `${startDate.getFullYear()}-${startStringMonth}-${getDaysOfMonth(startMonth,startDate.getFullYear())}${initialTime}`,
                     endTimeED: `${endDate.getFullYear()}-${endStringMonth}-${daysOfMonth}T19:00:00`
                 };
             }
