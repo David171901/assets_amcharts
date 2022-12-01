@@ -86,6 +86,36 @@
             }
 
             if(isLoaded == 'stop'){
+                if(data.Data[0].Values) {
+                    data  = {
+                        Data: [
+                            {
+                                "Values": [
+                                    {
+                                        "Value": "11",
+                                        "Time": "25/11/2022 00:00:00"
+                                    },
+                                    {
+                                        "Value": "11",
+                                        "Time": "26/11/2022 00:00:00"
+                                    },
+                                    {
+                                        "Value": "12",
+                                        "Time": "30/11/2022 00:00:00"
+                                    }
+                                ],
+                                "StartTime": "31/10/2022 19:00:00",
+                                "EndTime": "1/12/2022 09:28:48.977",
+                                "Minimum": "0",
+                                "Maximum": "100",
+                                "DisplayDigits": -5,
+                                "Label": "BALANZAS|CODIGO MES",
+                                "Path": "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\02 MOLIENDA\\BALANZAS|CODIGO MES"
+                            }
+                        ]
+                    }
+                }
+
                 let initialDate = data.Data[0];
                 
                 let monthChange = (parseInt(initialDate.Values[initialDate.Values.length-1].Time.split('/')[1]))
@@ -96,7 +126,7 @@
 
             function getStartEndTimeForLoad(month, year, day) {
                 console.log(" ~ file: sym-searchfilterDynamicDatev4.js:98 ~ getStartEndTimeForLoad ~ month, year, day", month, year, day)
-                if (day == 29 || day == 30) month = month -1;
+                // if (day == 29 || day == 30) month = month -1;
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
                 
