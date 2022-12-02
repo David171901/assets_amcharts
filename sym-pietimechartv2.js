@@ -41,7 +41,7 @@
   };
 
   symbolVis.prototype.init = function (scope, elem) {
-    console.log("\t[+]PieCharts v2");
+    console.log("\t[+]PieCharts Time v2");
     scope.config.FormatType = null;
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
@@ -173,10 +173,10 @@
     }
 
     function getNewChart(dataArray) {
-      if (
-        scope.config.password == password &&
-        linkAllowed.some((el) => el.includes(window.location.href))
-      ) {
+      // if (
+      //   scope.config.password == password &&
+      //   linkAllowed.some((el) => el.includes(window.location.href))
+      // ) {
         return AmCharts.makeChart(symbolContainerDiv.id, {
           type: "pie",
           dataProvider: dataArray,
@@ -219,18 +219,18 @@
             position: "bottom",
           },
         });
-      }
+      // }
 
-      return AmCharts.makeChart(symbolContainerDiv.id, {
-        type: "pie",
-        theme: "none",
-        dataProvider: [],
-        valueField: "litres",
-        titleField: "country",
-        balloon: {
-          fixedPosition: true,
-        },
-      });
+      // return AmCharts.makeChart(symbolContainerDiv.id, {
+      //   type: "pie",
+      //   theme: "none",
+      //   dataProvider: [],
+      //   valueField: "litres",
+      //   titleField: "country",
+      //   balloon: {
+      //     fixedPosition: true,
+      //   },
+      // });
     }
 
     function refreshChart(chart, dataArray) {

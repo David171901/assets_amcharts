@@ -59,6 +59,7 @@
             
 
             function myCustomDataUpdateFunction(data) {
+                console.log(data);
                 if (data) {
                     
                     $('#' + syContElement1.id).empty();

@@ -11,6 +11,7 @@
     getDefaultConfig: function(){ 
         return {
           Height: 1000,
+          Width: 200,
           hrefkpi: '',
           hrefdisponibilidad: '',
           hrefeventos: '',
