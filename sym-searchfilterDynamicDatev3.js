@@ -154,9 +154,9 @@
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
                 
-                if (month == 12){
-                    year-=1;
-                }
+                // if (month == 12){
+                //     year-=1;
+                // }
                 
                 let startDate = new Date(year, month-1, day);
 

@@ -32,7 +32,6 @@
         function myCustomDataUpdateFunction(data) {
             console.log(data);   
             if(isLoaded == 'primero'){
-                console.log('primero');
                 dataTotal = data;
 
 
@@ -43,13 +42,12 @@
                 
                 let initialDay = parseInt(initialDate.split('/')[0]) - 1;
                 let initialMonth = parseInt(initialDate.split('/')[1]);
-                
                 let yearNow = parseInt(initialDate.split('/')[2]);
                 
                 scope.timeED = { month: "", year: "" };
                
                 currentStringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
-                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:51 ~ myCustomDataUpdateFunction ~ currentStringTimeED", currentStringTimeED)
+                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:55 ~ myCustomDataUpdateFunction ~ currentStringTimeED", currentStringTimeED)
                 timeProvider.requestNewTime(currentStringTimeED.startTimeED, currentStringTimeED.endTimeED, true);
                 
                 scope.timeED.month = ultimoValue.toString();
@@ -66,10 +64,6 @@
                     count++;
                     
                     if(count == 1){
-
-
-
-
                         dataTotal = data;
                     }
 
@@ -84,7 +78,6 @@
                         let yearNow = parseInt(initialDate.split('/')[2]);
                         stringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
                     }
-                    console.log(" ~ file: sym-searchfilterDynamicDatev2.js:80 ~ myCustomDataUpdateFunction ~ stringTimeED", stringTimeED)
                     
                     timeProvider.requestNewTime(stringTimeED.startTimeED, stringTimeED.endTimeED, true);
                     
@@ -94,40 +87,36 @@
             }
 
             if(isLoaded == 'stop'){
-                console.log('stop');
-                if(data.Data[0].Values) {
-                    data  = {
-                        Data: [
-                            {
-                                "Values": [
-                                    {
-                                        "Value": "11",
-                                        "Time": "25/11/2022 00:00:00"
-                                    },
-                                    {
-                                        "Value": "11",
-                                        "Time": "26/11/2022 00:00:00"
-                                    },
-                                    {
-                                        "Value": "12",
-                                        "Time": "30/11/2022 00:00:00"
-                                    }
-                                ],
-                                "StartTime": "31/10/2022 19:00:00",
-                                "EndTime": "1/12/2022 09:28:48.977",
-                                "Minimum": "0",
-                                "Maximum": "100",
-                                "DisplayDigits": -5,
-                                "Label": "BALANZAS|CODIGO MES",
-                                "Path": "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\02 MOLIENDA\\BALANZAS|CODIGO MES"
-                            }
-                        ]
-                    }
-                }
+                // if(data.Data[0].Values) {
+                //     data  = {
+                //         Data: [
+                //             {
+                //                 "Values": [
+                //                     {
+                //                         "Value": "11",
+                //                         "Time": "25/11/2022 00:00:00"
+                //                     },
+                //                     {
+                //                         "Value": "11",
+                //                         "Time": "26/11/2022 00:00:00"
+                //                     },
+                //                     {
+                //                         "Value": "12",
+                //                         "Time": "30/11/2022 00:00:00"
+                //                     }
+                //                 ],
+                //                 "StartTime": "31/10/2022 19:00:00",
+                //                 "EndTime": "1/12/2022 09:28:48.977",
+                //                 "Minimum": "0",
+                //                 "Maximum": "100",
+                //                 "DisplayDigits": -5,
+                //                 "Label": "BALANZAS|CODIGO MES",
+                //                 "Path": "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\02 MOLIENDA\\BALANZAS|CODIGO MES"
+                //             }
+                //         ]
+                //     }
+                // }
                 let initialDate = data.Data[0];
-
-
-                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:99 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                 
                 let monthChange = parseInt(initialDate.Values[initialDate.Values.length-1].Value) - parseInt(currentStringTimeED.startTimeED.split('-')[1]) == 2? true : false;
 
@@ -135,13 +124,14 @@
             }
 
             function getStartEndTimeForLoad(month, year, day) {
-                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:100 ~ getStartEndTimeForLoad ~ month, year, day", month, year, day)
+                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:129 ~ getStartEndTimeForLoad ~ month, year, day 12 , 2022, 0", month, year, day)
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
+                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:130 ~ getStartEndTimeForLoad ~ year", year)
                 
-                if (month == 12){
-                    year-=1;
-                }
+                // if (month == 12){
+                //     year-=1;
+                // }
                 
                 let startDate = new Date(year, month-1, day);
 
@@ -151,7 +141,7 @@
 
                 let startMonth = startDate.getMonth() + 1;
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
-                
+                // startTimeED: `${startDate.getFullYear()}-${startStringMonth}-${getDaysOfMonth(startMonth,startDate.getFullYear())}${initialTime}`,
                 return {
                     startTimeED: `${startDate.getFullYear()}-${startStringMonth}-${getDaysOfMonth(startMonth,startDate.getFullYear())}${initialTime}`,
                     endTimeED: "*"
@@ -159,7 +149,6 @@
             }
 
             function getStartEndTimeForSearch(month, year, day) {
-                console.log(" ~ file: sym-searchfilterDynamicDatev2.js:126 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
 
                 // START
                 let currentDate = new Date();
