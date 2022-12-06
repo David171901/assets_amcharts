@@ -217,10 +217,10 @@
     }
 
     function getNewChart(dataArray) {
-      if (
-        scope.config.password == password &&
-        linkAllowed.some((el) => el.includes(window.location.href))
-      ) {
+      // if (
+      //   scope.config.password == password &&
+      //   linkAllowed.some((el) => el.includes(window.location.href))
+      // ) {
         return AmCharts.makeChart(symbolContainerDiv.id, {
           type: "serial",
           titles: createArrayOfChartTitles(),
@@ -296,22 +296,22 @@
             labelHeight: 150,
           },
         });
-      }
+      // }
 
-      return AmCharts.makeChart(symbolContainerDiv.id, {
-        type: "serial",
-        titles: createArrayOfChartTitles(),
-        hideCredits: true,
-        valueAxes: [],
-        startDuration: 1,
-        graphs: [],
-        categoryField: "Label",
-        categoryAxis: {
-          gridPosition: "start",
-          axisAlpha: 0,
-          tickLength: 0,
-        },
-      });
+      // return AmCharts.makeChart(symbolContainerDiv.id, {
+      //   type: "serial",
+      //   titles: createArrayOfChartTitles(),
+      //   hideCredits: true,
+      //   valueAxes: [],
+      //   startDuration: 1,
+      //   graphs: [],
+      //   categoryField: "Label",
+      //   categoryAxis: {
+      //     gridPosition: "start",
+      //     axisAlpha: 0,
+      //     tickLength: 0,
+      //   },
+      // });
     }
 
     function refreshChart(chart, dataArray) {
