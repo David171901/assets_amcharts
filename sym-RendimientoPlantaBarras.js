@@ -64,7 +64,6 @@
         var targetUP;
 
         function myCustomDataUpdateFunction(data) {
-            console.log(data)
             if (data !== null && data.Data) {
                 
                 dataArray = [];
@@ -184,9 +183,8 @@
 
 
         function getNewDataObject(dayIndex, firstTurnValue, secondTurnValue, total, firstTurnNew, secondTurnNew, totalnew) {
-
             return {
-                "timestamp": "D" + dayIndex.getDate(),
+                "timestamp": dayIndex.getDate() + "/" + (dayIndex.getMonth() + 1),
                 "turno1": firstTurnValue ? firstTurnValue.toFixed(scope.config.decimalPlaces) : firstTurnValue,
                 "turno2": secondTurnValue ? secondTurnValue.toFixed(scope.config.decimalPlaces) : secondTurnValue,
                 "total": total ? total.toFixed(scope.config.decimalPlaces) : total,
@@ -195,6 +193,28 @@
                 "totalnew": totalnew ? totalnew.toFixed(scope.config.decimalPlaces) : totalnew,
             }   
         }
+
+        function setTrendCategory () {
+            // console.log(timeProvider.displayTime.start);
+            // console.log(timeProvider.displayTime.end);
+            let endCategory = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
+            // console.log(" ~ file: sym-RendimientoPlantaBarras.js:201 ~ setTrendCategory ~ endCategory", endCategory)
+            let startCategory = new Date(timeProvider.displayTime.start);
+            // console.log(" ~ file: sym-RendimientoPlantaBarras.js:203 ~ setTrendCategory ~ startCategory", startCategory)
+            startCategory = addDays(startCategory,1);
+            chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
+            chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
+            chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
+            chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
+            chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
+            chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
+
+        }
+
+        function addDays(fecha, dias){
+            fecha.setDate(fecha.getDate() + dias);
+            return fecha;
+          }
 
         function refreshChart(chart, scope, monthNow) {
             if (!chart.chartScrollbar.enabled) {
@@ -344,8 +364,6 @@
 
         function getNewChart(symbolContainerDiv, monthNow, scope, stringUnitsFirst, stringUnitsSecond, stringUnitsFourth, dataArray) {
 
-            console.log("Grafica",targetDefault,targetDown,targetUP)
-
             return AmCharts.makeChart(symbolContainerDiv.id, {
                 "type": "serial",
                 "theme": "light",
@@ -357,9 +375,9 @@
                 "marginLeft": 1,
                 "trendLines": [
                     {
-                      finalCategory: "D29",
+                      finalCategory: "29/11",
                       finalValue: targetUP,
-                      initialCategory: "D31",
+                      initialCategory: "31/12",
                       initialValue: targetUP,
                       lineColor: "#f58e8e",
                       //tipe: "smoothedLine",
@@ -369,9 +387,9 @@
                       valueAxis: "Axis2",
                     },
                     {
-                      finalCategory: "D29",
+                      finalCategory: "29/11",
                       finalValue: targetDown,
-                      initialCategory: "D31",
+                      initialCategory: "31/12",
                       initialValue: targetDown,
                       lineColor: "#f58e8e",
                       lineThickness: 5,
@@ -380,9 +398,9 @@
                       valueAxis: "Axis2",
                     },
                     {
-                      finalCategory: "D29",
+                      finalCategory: "29/11",
                       finalValue: targetDefault,
-                      initialCategory: "D31",
+                      initialCategory: "31/12",
                       initialValue: targetDefault,
                       lineColor: "#5e8dff",
                       lineThickness: 5,
@@ -583,7 +601,10 @@
         }
 
         function myCustomConfigurationChangeFunction() {
+            console.log('Here');
+            setTrendCategory ();
             if (chart) {
+
                 chart.valueAxes[0].minimum = getCorrectChartMin();
                 chart.valueAxes[0].maximum = getCorrectChartMax();
                 chart.valueAxes[1].minimum = getCorrectChartMin();
