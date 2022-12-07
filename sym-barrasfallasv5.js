@@ -151,10 +151,13 @@
         let tenthTurn =
           DATA.Data.filter((el) => el.Label == Labels[9])[0] ||
           formatItem({ Incidents: [] });
-        // Disponibilidad
+        // segundo aset  --Tiempo total de operacion
         let eleventhTurn = data.Data[1];
         // Tonelaje seco
         let twelfthTurn = data.Data[2];
+        // Tonelaje 
+
+
         // Tonelaje humedo
         let thirteenthTurn = data.Data[3];
         // Target 
@@ -163,6 +166,7 @@
         let targetDown = data.Data[5]?.Values[0]?.Value || -10;
         // Target UP
         let targetUP = data.Data[6]?.Values[0]?.Value || -10;
+        
         let firstTurnReal = {};
         firstTurnReal.Values = [];
         let secondTurnReal = {};
@@ -789,8 +793,10 @@
       media,
       month
     ) {
+      console.log((twelfthTurnValue  ? ((twelfthTurnValue > 5623) ? twelfthTurnValue.toFixed(0) : null) : twelfthTurnValue) ||
+      null);
       return {
-        timestamp: "D" + dayIndex,
+        timestamp: dayIndex + "/" + month,
         turno1:
           (eleventhTurnValue
             ? eleventhTurnValue.toFixed(scope.config.decimalPlaces)
@@ -840,11 +846,17 @@
             ? firstTurnValue.toFixed(scope.config.decimalPlaces)
             : firstTurnValue) || null,
         turno12:
-          (twelfthTurnValue ? twelfthTurnValue.toFixed(0) : twelfthTurnValue) ||
-          null,
+        (twelfthTurnValue
+          ? twelfthTurnValue.toFixed(0)
+          : twelfthTurnValue) || null,
         turno13:
           (thirteenthTurn ? thirteenthTurn.toFixed(0) : thirteenthTurn) || null,
-        total: total ? total.toFixed(scope.config.decimalPlaces) : total,
+        // TARGET
+        turno14:
+        (twelfthTurnValue  ? ((twelfthTurnValue > 5623) ? twelfthTurnValue.toFixed(0) : null) : null),
+        turno15:
+        (twelfthTurnValue  ? ((twelfthTurnValue < 5296) ? twelfthTurnValue.toFixed(0) : null) : null),
+          total: total ? total.toFixed(scope.config.decimalPlaces) : total,
         media: media ? media.toFixed(scope.config.decimalPlaces) : media,
         description: formatBalloonText(secondTurnValue,
           thirdTurnValue,
@@ -892,6 +904,19 @@
       }
     }
 
+    function setTrendCategory () {
+      let endCategory = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
+      let startCategory = new Date(timeProvider.displayTime.start);
+      startCategory = addDays(startCategory,1);
+      chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
+      chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
+      chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
+      chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
+      chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
+      chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
+
+  }
+    
     function getTurnValue(
       turnArray,
       iterableDate,
@@ -1270,9 +1295,9 @@
           },
           trendLines: [
             {
-              finalCategory: "D29",
+              finalCategory: "29/11",
               finalValue: targetUP,
-              initialCategory: "D28",
+              initialCategory: "28/12",
               initialValue: targetUP,
               lineColor: "#f58e8e",
               //tipe: "smoothedLine",
@@ -1282,9 +1307,9 @@
               valueAxis: "Axis2",
             },
             {
-              finalCategory: "D29",
+              finalCategory: "29/11",
               finalValue: targetDown,
-              initialCategory: "D28",
+              initialCategory: "28/12",
               initialValue: targetDown,
               lineColor: "#f58e8e",
               lineThickness: 5,
@@ -1293,9 +1318,9 @@
               valueAxis: "Axis2",
             },
             {
-              finalCategory: "D29",
+              finalCategory: "29/11",
               finalValue: targetDefault,
-              initialCategory: "D28",
+              initialCategory: "28/12",
               initialValue: targetDefault,
               lineColor: "#5e8dff",
               lineThickness: 5,
@@ -1303,7 +1328,7 @@
               //labelText: 5460 + "Tn",
               valueAxis: "Axis2",
             },
-          ],
+        ],
           chartScrollbar: {
             graph: "g1",
             graphType: "line",
@@ -1555,9 +1580,9 @@
               valueAxis: "Axis2",
               balloonText:
                 "Toneladas Secas" + "</b><br/>[[turno12]]T",
-              fontSize: scope.config.fontSize + 6,
+              fontSize: scope.config.fontSize + 10,
               labelPosition: "top",
-              bullet: "round",
+              bullet: "triangleUp",
               lineThickness: 3,
               bulletBorderAlpha: 2,
               useLineColorForBulletBorder: true,
@@ -1566,9 +1591,52 @@
               title: "Toneladas Secas",
               valueField: "turno12",
               showBalloon: true,
-              color: "#0a0a0a",
-              bulletSize: 12,
-              //linecolor: "#154DD1",
+              linecolor: "#00c71b",
+              Color: "#000000",
+              bulletSize: 30,
+              lineAlpha: 0,
+            },
+            {
+              id: "Line3",
+              valueAxis: "Axis2",
+              balloonText:
+                "Toneladas Secas" + "</b><br/>[[turno14]]T",
+              fontSize: scope.config.fontSize + 10,
+              labelPosition: "top",
+              bullet: "triangleUp",
+              lineThickness: 3,
+              bulletBorderAlpha: 2,
+              useLineColorForBulletBorder: true,
+              bulletBorderThickness: 4,
+              labelText: "[[turno14]]",
+              title: "Toneladas Secas (superior)",
+              valueField: "turno14",
+              showBalloon: true,
+              linecolor: "#00c71b",
+              Color: "#CD6155",
+              bulletSize: 30,
+              lineAlpha: 0,
+            },
+            {
+              id: "Line4",
+              valueAxis: "Axis2",
+              balloonText:
+                "Toneladas Secas" + "</b><br/>[[turno15]]T",
+              fontSize: scope.config.fontSize + 10,
+              labelPosition: "top",
+              bullet: "triangleUp",
+              lineThickness: 3,
+              bulletBorderAlpha: 2,
+              useLineColorForBulletBorder: true,
+              bulletBorderThickness: 4,
+              labelText: "[[turno15]]",
+              title: "Toneladas Secas (inferior)",
+              valueField: "turno15",
+              showBalloon: true,
+              linecolor: "#00c71b",
+              Color: "#F4D03F",
+              bulletSize: 30,
+              lineAlpha: 0,
             },
             {//linea de codigo para el tarjet de tonelaje humedo o seco
               id: "Line2",
@@ -1580,7 +1648,7 @@
               valueField: "turno13",
               showBalloon: true,
               color: "#BFB8B8",
-              bulletSize: 6,
+              bulletSize: 12,
               lineColor: "#BFB8B8",
               type: "smoothedLine",
               bullet: "round",
@@ -1655,6 +1723,7 @@
     }
 
     function myCustomConfigurationChangeFunction() {
+      setTrendCategory ();
       if (chart) {
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
