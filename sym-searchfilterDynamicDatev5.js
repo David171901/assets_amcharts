@@ -13,15 +13,15 @@
         getDefaultConfig: function() {
             return {
                 DataShape: 'TimeSeries',
-                Height: 20,
-                Width: 320,
+                Height: 75,
+                Width: 650,
                 currentMonth: null,
             }
         }
     }
 
     symbolVis.prototype.init = function(scope, elem, timeProvider, $interval) {
-        console.log('[+] Search Filter Date Loaded v3');
+        console.log('[+] Buscador de fechas (Corte de Planta)');
         this.onDataUpdate = myCustomDataUpdateFunction;
         
         var isLoaded = 'primero';
@@ -126,13 +126,8 @@
 
             function getStartEndTimeForLoad(month, year, day) {
                 console.log(" ~ file: sym-searchfilterDynamicDatev4.js:98 ~ getStartEndTimeForLoad ~ month, year, day", month, year, day)
-                // if (day == 29 || day == 30) month = month -1;
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
-                
-                // if (month == 12){
-                //     year-=1;
-                // }
                 
                 let startDate = new Date(year, month-1, day);
 
@@ -143,8 +138,52 @@
                 let startMonth = startDate.getMonth() + 1;
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
                 
+                let startTime;
+
+                switch (month) {
+                    case 0:
+                        startTime = `${startDate.getFullYear()}-01-01T19:00:00`;
+                        break;
+                    case 1:
+                        startTime = `${startDate.getFullYear()}-01-29T19:00:00`;
+                        break;
+                    case 2:
+                        startTime = `${startDate.getFullYear()}-02-26T19:00:00`;
+                        break;
+                    case 3:
+                        startTime = `${startDate.getFullYear()}-03-29T19:00:00`;
+                        break;
+                    case 4:
+                        startTime = `${startDate.getFullYear()}-04-28T19:00:00`;
+                        break;
+                    case 5:
+                        startTime = `${startDate.getFullYear()}-05-29T19:00:00`;
+                        break;
+                    case 6:
+                        startTime = `${startDate.getFullYear()}-06-28T19:00:00`;
+                        break;
+                    case 7:
+                        startTime = `${startDate.getFullYear()}-07-29T19:00:00`;
+                        break;
+                    case 8:
+                        startTime = `${startDate.getFullYear()}-08-29T19:00:00`;
+                        break;
+                    case 9:
+                        startTime = `${startDate.getFullYear()}-09-28T19:00:00`;
+                        break;
+                    case 10:
+                        startTime = `${startDate.getFullYear()}-10-29T19:00:00`;
+                        break;
+                    case 11:
+                        startTime = `${startDate.getFullYear()}-11-28T19:00:00`;
+                        break;
+                    default:
+                        break;
+                }
+
+
                 return {
-                    startTimeED: `${startDate.getFullYear()}-${startStringMonth}-28${initialTime}`,
+                    startTimeED: startTime,
                     endTimeED: "*"
                 };
             }
@@ -153,6 +192,7 @@
                 console.log(" ~ file: sym-searchfilterDynamicDatev4.js:122 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
 
                 // START
+
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
                 
@@ -178,11 +218,68 @@
                 let endMonth = endDate.getMonth() + 1;
                 let endStringMonth = endMonth > 9 ? `${endMonth}` : `0${endMonth}`;
 
-                let daysOfMonth = getDaysOfMonth(endMonth,endDate.getFullYear())
+                let daysOfMonth = getDaysOfMonth(endMonth,endDate.getFullYear());
+
+                let startTime;
+                let endTime;
+
+                switch (month) {
+                    case 0:
+                        startTime = `${startDate.getFullYear()}-01-01T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-01-28T19:00:00`;
+                        break;
+                    case 1:
+                        startTime = `${startDate.getFullYear()}-01-29T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-02-25T19:00:00`;
+                        break;
+                    case 2:
+                        startTime = `${startDate.getFullYear()}-02-26T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-03-28T19:00:00`;
+                        break;
+                    case 3:
+                        startTime = `${startDate.getFullYear()}-03-29T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-04-27T19:00:00`;
+                        break;
+                    case 4:
+                        startTime = `${startDate.getFullYear()}-04-28T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-05-28T19:00:00`;
+                        break;
+                    case 5:
+                        startTime = `${startDate.getFullYear()}-05-29T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-06-27T19:00:00`;
+                        break;
+                    case 6:
+                        startTime = `${startDate.getFullYear()}-06-28T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-07-28T19:00:00`;
+                        break;
+                    case 7:
+                        startTime = `${startDate.getFullYear()}-07-29T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-08-28T19:00:00`;
+                        break;
+                    case 8:
+                        startTime = `${startDate.getFullYear()}-08-29T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-09-27T19:00:00`;
+                        break;
+                    case 9:
+                        startTime = `${startDate.getFullYear()}-09-28T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-10-28T19:00:00`;
+                        break;
+                    case 10:
+                        startTime = `${startDate.getFullYear()}-10-29T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-11-27T19:00:00`;
+                        break;
+                    case 11:
+                        startTime = `${startDate.getFullYear()}-11-28T19:00:00`;
+                        endTime = `${endDate.getFullYear()}-12-31T19:00:00`;
+                        break;
+                
+                    default:
+                        break;
+                }
 
                 return {
-                    startTimeED: `${startDate.getFullYear()}-${startStringMonth}-28${initialTime}`,
-                    endTimeED: `${endDate.getFullYear()}-${endStringMonth}-${28}T19:00:00`
+                    startTimeED: startTime,
+                    endTimeED: endTime
                 };
             }
 

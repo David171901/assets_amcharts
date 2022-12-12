@@ -65,10 +65,13 @@
     var targetDefault;
     var targetDown;
     var targetUP;
-    var maxLabelRight = 2000;
+    var maxLabelRight = 10000;
 
     function myCustomDataUpdateFunction(data) {
-      console.log(" ~ file: sym-RendimientoPlantaBarras.js:70 ~ myCustomDataUpdateFunction ~ data", data)
+      console.log(
+        " ~ file: sym-RendimientoPlantaBarras.js:70 ~ myCustomDataUpdateFunction ~ data",
+        data
+      );
       if (data !== null && data.Data) {
         dataArray = [];
 
@@ -163,7 +166,7 @@
             dryTonnageReal,
             wetTonnageReal
           );
-          
+
           setValueAxisYToMargin(dataArray);
         }
 
@@ -212,11 +215,13 @@
       let daysOfPreviewMonth = getDaysOfMonth(start.getMonth() + 1);
       let moreDays = daysOfPreviewMonth - start.getDate();
       todayDate.setDate(todayDate.getDate() + 1);
-      for (let dayIndex = 1; dayIndex <= daysOfMonth + moreDays; dayIndex++) {
+
+      let daysOfMonth_ = setDaysCalendarMine(todayDate.getMonth());
+
+      for (let dayIndex = 1; dayIndex <= daysOfMonth_ + moreDays; dayIndex++) {
         iterableDate.setDate(iterableDate.getDate() + 1);
 
         if (iterableDate.getTime() <= todayDate.getTime()) {
-          console.log('Heyy If');
           let firstTurnValue = getTurnValue(
             firstTurn,
             iterableDate,
@@ -227,7 +232,7 @@
             currentHour,
             currentMonth
           );
-          console.log(" ~ file: sym-RendimientoPlantaBarras.js:229 ~ firstTurnValue", firstTurnValue)
+
           let secondTurnValue = getTurnValue(
             secondTurn,
             iterableDate,
@@ -238,7 +243,6 @@
             currentHour,
             currentMonth
           );
-          console.log(" ~ file: sym-RendimientoPlantaBarras.js:240 ~ secondTurnValue", secondTurnValue)
 
           let firstTurnNewValue = getTurnValueForNews(
             firstTurnNew,
@@ -250,7 +254,7 @@
             currentHour,
             currentMonth
           );
-          console.log(" ~ file: sym-RendimientoPlantaBarras.js:252 ~ firstTurnNewValue", firstTurnNewValue)
+
           let secondTurnNewValue = getTurnValueForNews(
             secondTurnNew,
             iterableDate,
@@ -261,7 +265,6 @@
             currentHour,
             currentMonth
           );
-          console.log(" ~ file: sym-RendimientoPlantaBarras.js:263 ~ secondTurnNewValue", secondTurnNewValue)
 
           // TONELAJES ************************************
           let dryTonnageValue = getTonnageValueForNews(
@@ -308,7 +311,6 @@
             floatDryTonnage,
             floatWetTonnage
           );
-          console.log(" ~ file: sym-RendimientoPlantaBarras.js:306 ~ newDataObject", newDataObject)
           dataArray.push(newDataObject);
         } else {
           let newDataObject = getNewDataObject(
@@ -322,10 +324,56 @@
             null,
             null
           );
-          console.log(" ~ file: sym-RendimientoPlantaBarras.js:319 ~ newDataObject", newDataObject)
           dataArray.push(newDataObject);
         }
       }
+    }
+
+    function setDaysCalendarMine(month) {
+      let dayCalendar;
+
+      switch (month) {
+        case 0:
+          dayCalendar = 28;
+          break;
+        case 1:
+          dayCalendar = 25;
+          break;
+        case 2:
+          dayCalendar = 28;
+          break;
+        case 3:
+          dayCalendar = 27;
+          break;
+        case 4:
+          dayCalendar = 28;
+          break;
+        case 5:
+          sdayCalendar = 27;
+          break;
+        case 6:
+          dayCalendar = 28;
+          break;
+        case 7:
+          dayCalendar = 28;
+          break;
+        case 8:
+          dayCalendar = 27;
+          break;
+        case 9:
+          dayCalendar = 28;
+          break;
+        case 10:
+          dayCalendar = 27;
+          break;
+        case 11:
+          dayCalendar = 31;
+          break;
+        default:
+          break;
+      }
+
+      return dayCalendar;
     }
 
     function setValueAxisYToMargin(dataArray) {
@@ -333,11 +381,25 @@
         return item.total;
       });
 
+      let lineswet = dataArray.map(function (item) {
+        return item.wettonnage;
+      });
+
+      let linesdry = dataArray.map(function (item) {
+        return item.drytonnage;
+      });
+
       let maximum = Math.max.apply(null, totals);
+      let maximumlineswet = Math.max.apply(null, lineswet);
+      let maximumlinesdry = Math.max.apply(null, linesdry);
 
       let axisValue = maximum + maximum / 10;
       scope.config.yAxisRange = "customRange";
       scope.config.maximumYValue = parseInt(axisValue);
+      scope.config.maximumYValueAxisv2 =
+        maximumlineswet > maximumlinesdry
+          ? parseInt(maximumlineswet)
+          : parseInt(maximumlinesdry);
       scope.config.minimumYValue = 0;
     }
 
@@ -362,20 +424,31 @@
           : secondTurnValue,
         total: total ? total.toFixed(scope.config.decimalPlaces) : total,
         turno1new: firstTurnNew
-        ? firstTurnNew.toFixed(scope.config.decimalPlaces)
-        : firstTurnNew,
+          ? firstTurnNew.toFixed(scope.config.decimalPlaces)
+          : firstTurnNew,
         turno2new: secondTurnNew
-        ? secondTurnNew.toFixed(scope.config.decimalPlaces)
-        : secondTurnNew,
+          ? secondTurnNew.toFixed(scope.config.decimalPlaces)
+          : secondTurnNew,
         totalnew: totalnew
           ? totalnew.toFixed(scope.config.decimalPlaces)
           : totalnew,
         drytonnage: dryTonnage
-        ? dryTonnage.toFixed(scope.config.decimalPlaces)
-        : dryTonnage,
+          ? dryTonnage.toFixed(scope.config.decimalPlaces)
+          : dryTonnage,
         wettonnage: wetTonnage
-        ? wetTonnage.toFixed(scope.config.decimalPlaces)
-        : wetTonnage,
+          ? wetTonnage.toFixed(scope.config.decimalPlaces)
+          : wetTonnage,
+        // Dry Tonnage
+        drytonnageup: dryTonnage
+          ? dryTonnage > 5733
+            ? dryTonnage.toFixed(scope.config.decimalPlaces)
+            : null
+          : null,
+        drytonnagedown: dryTonnage
+          ? dryTonnage < 5187
+            ? dryTonnage.toFixed(scope.config.decimalPlaces)
+            : null
+          : null,
       };
     }
 
@@ -422,6 +495,8 @@
         chart.valueAxes[0].maximum = getCorrectChartMax() + maxLabelRight;
         chart.valueAxes[1].minimum = getCorrectChartMin();
         chart.valueAxes[1].maximum = getCorrectChartMax() + maxLabelRight;
+
+        chart.valueAxes[2].maximum = getCorrectChartLine();
 
         chart.dataProvider = dataArray;
         chart.validateData();
@@ -539,11 +614,8 @@
       let originalArrayLength = turnArray.Values.length;
       let hasSavedValues = originalArrayLength != 0;
       let arrayLength = hasSavedValues ? originalArrayLength : 1;
-      console.log(" ~ file: sym-RendimientoPlantaBarras.js:541 ~ arrayLength", arrayLength)
 
       for (let itemIndex = 0; itemIndex < arrayLength; itemIndex++) {
-        console.log(" ~ file: sym-RendimientoPlantaBarras.js:544 ~ itemIndex", itemIndex)
-        console.log(" ~ file: sym-RendimientoPlantaBarras.js:567 ~ hasSavedValues", hasSavedValues)
         if (hasSavedValues)
           turnValue = getSavedValue(
             turnValue,
@@ -551,9 +623,7 @@
             itemIndex,
             iterableDate
           );
-          console.log(" ~ file: sym-RendimientoPlantaBarras.js:548 ~ turnValue", turnValue)
         if (turnValue != null) continue;
-        console.log("Heyy Turn is Null");
         turnValue = getRealValue(
           turnValue,
           iterableDate,
@@ -595,7 +665,6 @@
       isFirstTurn,
       currentMonth
     ) {
-      console.log(" ~ file: sym-RendimientoPlantaBarras.js:597 ~ isFirstTurn", isFirstTurn)
       if (isFirstTurn) {
         return getFirstTurnRealValue(
           turnValue,
@@ -605,8 +674,7 @@
           firstTurnReal,
           currentMonth
         );
-      }
-      else {
+      } else {
         return getSecondTurnRealValue(
           turnValue,
           iterableDate,
@@ -671,9 +739,7 @@
         currentHour < 19 &&
         iterableDate.getMonth() + 1 == currentMonth
       ) {
-        console.log('Hey Iff');
-        console.log(secondTurnReal);
-        if( secondTurnReal.Values.length > 0) {
+        if (secondTurnReal.Values.length > 0) {
           return secondTurnReal.Values[secondTurnReal.Values.length - 1].Value;
         } else {
           return 0;
@@ -683,11 +749,9 @@
         currentHour >= 19 &&
         currentHour < 24 &&
         iterableDate.getMonth() + 1 == currentMonth
-        ) {
-        console.log('Hey Else If');
+      ) {
         return 0;
       } else {
-        console.log('Heyy Else');
         return turnValue;
       }
     }
@@ -719,6 +783,16 @@
       return result;
     }
 
+    function getCorrectChartLine() {
+      let result = undefined;
+      if (scope.config.yAxisRange == "customRange") {
+        result = scope.config.maximumYValueAxisv2;
+      } else {
+        result = undefined;
+      }
+      return result;
+    }
+
     function getDaysOfMonth(numMonth, numYear) {
       let daysOfMonth = 31;
       numMonth = parseInt(numMonth);
@@ -744,10 +818,6 @@
       stringUnitsFourth,
       dataArray
     ) {
-      console.log(
-        " ~ file: sym-RendimientoPlantaBarras.js:382 ~ getNewChart ~ dataArray",
-        dataArray
-      );
       return AmCharts.makeChart(symbolContainerDiv.id, {
         type: "serial",
         //"theme": "light",
@@ -846,14 +916,14 @@
             axisAlpha: 1,
             position: "right",
             gridAlpha: 0,
-            maximum: 6000,
+            maximum: scope.config.maximumYValueAxisv2,
             minimum: 0,
           },
         ],
         categoryAxis: {
           axisColor: scope.config.seriesColor2,
           minPeriod: "ss",
-          gridAlpha: 0,
+          gridAlpha: 0.5,
           gridPosition: "start",
           autoWrap: true,
         },
@@ -866,9 +936,8 @@
             fillAlphas: 1,
             lineAlpha: 1,
             lineColor: scope.config.seriesColor1,
-            fontSize: 45,
+            fontSize: 35,
             bold: true,
-            //"opacity": 1,
             labelText: "[[turno1]]",
             showAllValueLabels: true,
             labelRotation: 270,
@@ -886,14 +955,12 @@
             type: "column",
             fillAlphas: 0.8,
             lineAlpha: 0.3,
-            //"opacity": 0.2,
             fontSize: 35,
             bold: true,
             lineColor: scope.config.seriesColor2,
             labelText: "[[turno2]]",
             showAllValueLabels: true,
             labelRotation: 270,
-            //"backgroundcolor": 'transparent',
             balloonText:
               "[[title]]" +
               "</b><br />[[timestamp]]</b><br />[[turno2]] " +
@@ -901,34 +968,15 @@
             valueField: "turno2",
             valueAxis: "Axis0",
           },
-          /*{
-                "id": "GAcumulado3",
-                "title": "Total Toneladas Secas",
-                "lineColor": scope.config.seriesColor3,
-                "type": "smoothedLine",
-                "fontSize": 35,
-                "bullet": "bubble",
-                "bulletBorderThickness": 1,
-                "balloonText": "[[title]]" + "</b><br />[[timestamp]]</b><br />[[total]] " + stringUnitsFirst,
-                "valueField": "total",
-                "labelText": "[[total]]",
-                "labelRotation": -45,
-                "bold": true,
-                "fillAlphas": 0,
-                "animationPlayed": true,
-                "valueAxis": "Axis0",
-            },*/
           {
             id: "Procesado1",
             clustered: false,
             title: "Turno Noche Ticlio",
             type: "column",
             fillAlphas: 0.8,
-            //"opacity": 0.2,
             fontSize: 35,
             bold: true,
             lineColor: scope.config.seriesColor4,
-            //"labelText": "[[turno1new]]",
             columnWidth: 0.5,
             showAllValueLabels: true,
             labelRotation: -45,
@@ -947,11 +995,9 @@
             title: "Turno Día Ticlio",
             type: "column",
             fillAlphas: 0.8,
-            //"opacity": 0.2,
             fontSize: 35,
             bold: true,
             lineColor: scope.config.seriesColor5,
-            //"labelText": "[[turno2new]]",
             columnWidth: 0.5,
             showAllValueLabels: true,
             labelRotation: -45,
@@ -967,17 +1013,17 @@
           {
             id: "Line1",
             valueAxis: "Axis2",
-            fontSize: scope.config.fontSize + 5,
+            fontSize: scope.config.fontSize,
             balloonText: "Toneladas Secas" + "</b><br/>[[drytonnage]]T",
             labelPosition: "top",
             title: "Toneladas Secas",
             valueField: "drytonnage",
             showBalloon: true,
-            color: "#BFB8B8",
-            bulletSize: 15,
+            color: "#0a0a0a",
+            bulletSize: 30,
             lineColor: "#000000",
             type: "smoothedLine",
-            bullet: "round",
+            bullet: "diamond",
             lineThickness: 3,
             bulletBorderAlpha: 2,
             useLineColorForBulletBorder: true,
@@ -985,7 +1031,7 @@
             fillAlphas: 0,
             lineAlpha: 1,
             dashLengthField: "dashLengthLine",
-            "labelText": "[[drytonnage]]",
+            labelText: "[[drytonnage]]",
           },
           {
             id: "Line2",
@@ -997,7 +1043,7 @@
             valueField: "wettonnage",
             showBalloon: true,
             color: "#BFB8B8",
-            bulletSize: 12,
+            bulletSize: 20,
             lineColor: "#BFB8B8",
             type: "smoothedLine",
             bullet: "round",
@@ -1009,24 +1055,44 @@
             lineAlpha: 1,
             dashLengthField: "dashLengthLine",
           },
-          /* {
-
-                        "id": "totalnew",
-                        "title": "Total Ticlio",
-                        "lineThickness": 0,
-                        "fontSize": 35,
-                        "lineColor": scope.config.seriesColor6,
-                        "bullet": "bubble",
-                        "bulletBorderThickness": 1,
-                        "balloonText": "[[title]]" + "</b><br />[[timestamp]]</b><br />[[totalnew]] " + stringUnitsFirst,
-                        "valueField": "totalnew",
-                        "labelText": "[[totalnew]]",
-                        "labelRotation": -45,
-                        "labelPosition": "left",
-                        "bold": true,
-                        "fillAlphas": 0,
-                        "valueAxis": "Axis1",
-                    },*/
+          {
+            id: "Line3",
+            valueAxis: "Axis2",
+            balloonText: "Toneladas Humedas" + "</b><br/>[[drytonnageup]]T",
+            fontSize: scope.config.fontSize + 10,
+            labelPosition: "top",
+            bullet: "diamond",
+            lineThickness: 3,
+            bulletBorderAlpha: 2,
+            useLineColorForBulletBorder: true,
+            bulletBorderThickness: 4,
+            title: "Toneladas Secas (Up)",
+            valueField: "drytonnageup",
+            showBalloon: true,
+            linecolor: "#001BFF",
+            Color: "#001BFF",
+            bulletSize: 30,
+            lineAlpha: 0,
+          },
+          {
+            id: "Line4",
+            valueAxis: "Axis2",
+            balloonText: "Toneladas Humedas" + "</b><br/>[[drytonnagedown]]T",
+            fontSize: scope.config.fontSize + 10,
+            labelPosition: "top",
+            bullet: "diamond",
+            lineThickness: 3,
+            bulletBorderAlpha: 2,
+            useLineColorForBulletBorder: true,
+            bulletBorderThickness: 4,
+            title: "Toneladas Secas (Down)",
+            valueField: "drytonnagedown",
+            showBalloon: true,
+            linecolor: "#FF0000",
+            Color: "#FF0000",
+            bulletSize: 30,
+            lineAlpha: 0,
+          },
         ],
         legend: {
           position: scope.config.legendPosition,
@@ -1061,9 +1127,11 @@
       if (chart) {
         setTrendCategory();
         chart.valueAxes[0].minimum = getCorrectChartMin();
-        chart.valueAxes[0].maximum = getCorrectChartMax()  + maxLabelRight;
+        chart.valueAxes[0].maximum = getCorrectChartMax() + maxLabelRight;
         chart.valueAxes[1].minimum = getCorrectChartMin();
-        chart.valueAxes[1].maximum = getCorrectChartMax()  + maxLabelRight;
+        chart.valueAxes[1].maximum = getCorrectChartMax() + maxLabelRight;
+
+        chart.valueAxes[2].maximum = getCorrectChartLine();
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
         } else {
@@ -1109,11 +1177,9 @@
         if (scope.config.showValues) {
           chart.graphs[0].labelText = "[[value]]";
           chart.graphs[1].labelText = "[[value]]";
-          // chart.graphs[2].labelText = "[[value]]";
         } else {
           chart.graphs[0].labelText = "";
           chart.graphs[1].labelText = "";
-          // chart.graphs[2].labelText = "";
         }
         if (chart.precision != scope.config.decimalPlaces) {
           chart.precision = scope.config.decimalPlaces;
