@@ -366,14 +366,15 @@
 
             return AmCharts.makeChart(symbolContainerDiv.id, {
                 "type": "serial",
-                "theme": "light",
+                //"theme": "light",
                 "hideCredits": true,
                 "addClassNames": true,
                 "depth3D": 0,
                 "angle": 0,
                 "marginRight": 1,
                 "marginLeft": 1,
-                "trendLines": [
+               
+                /*"trendLines": [
                     {
                       finalCategory: "29/11",
                       finalValue: targetUP,
@@ -382,7 +383,7 @@
                       lineColor: "#f58e8e",
                       //tipe: "smoothedLine",
                       lineThickness: 5,
-                      balloonText: "Límite superior +5%" + " (" + targetUP + ")",
+                      balloonText: "Límite superiorERS +5%" + " (" + targetUP + ")",
                      //labelText: 5733 + "Tn",
                       valueAxis: "Axis2",
                     },
@@ -408,16 +409,16 @@
                       //labelText: 5460 + "Tn",
                       valueAxis: "Axis2",
                     },
-                ],
+                ],*/
                 "titles": createArrayOfChartTitles(),
                 "fontSize": 35,
                 "categoryField": "timestamp",
-                "backgroundAlpha": 1,
+                "backgroundAlpha": 0,
                 "precision": scope.config.decimalPlaces,
                 "backgroundColor": scope.config.backgroundColor,
                 "plotAreaFillColors": scope.config.plotAreaFillColor,
                 "color": scope.config.textColor,
-                "plotAreaFillAlphas": 0.1,
+                "plotAreaFillAlphas": 1,
                 "autoMargin": true,
                 "autoMarginOffset": 10,
                 "decimalSeparator": ".",
@@ -434,7 +435,7 @@
                     "dragIcon": "dragIconRectSmall",
                     "backgroundAlpha": 1,
                     "backgroundColor": scope.config.plotAreaFillColor,
-                    "selectedBackgroundAlpha": 0.2
+                    "selectedBackgroundAlpha": 0.2,
                 },
                 "valueAxes": [{
                         "id": "Axis0",
@@ -444,6 +445,7 @@
                         "position": "left",
                         "minimum": scope.config.minimumYValue,
                         "maximum": scope.config.maximumYValue,
+                        "labelsEnabled": false,
                     },
                     {
                         "id": "Axis1",
@@ -453,6 +455,7 @@
                         "position": "left",
                         "minimum": scope.config.minimumYValue,
                         "maximum": scope.config.maximumYValue,
+                        "labelsEnabled": false,
                     }
                 ],
                 "categoryAxis": {
@@ -467,12 +470,12 @@
                         "clustered": false,
                         "title": "Turno Noche SC-CAR",
                         "type": "column",
-                        "fillAlphas": 0.8,
-                        "lineAlpha": 0.3,
+                        "fillAlphas": 1,
+                        "lineAlpha": 1,
                         "lineColor": scope.config.seriesColor1,
-                        "fontSize": 35,
+                        "fontSize": 45,
                         "bold": true,
-                        //"opacity": 0.2,
+                        //"opacity": 1,
                         "labelText": "[[turno1]]",
                         "showAllValueLabels": true,
                         "labelRotation": 270,
@@ -494,12 +497,12 @@
                         "labelText": "[[turno2]]",
                         "showAllValueLabels": true,
                         "labelRotation": 270,
-                        "backgroundcolor": 'transparent',
+                        //"backgroundcolor": 'transparent',
                         "balloonText": "[[title]]" + "</b><br />[[timestamp]]</b><br />[[turno2]] " + stringUnitsSecond,
                         "valueField": "turno2",
                         "valueAxis": "Axis0"
                     },
-                    {
+                    /*{
 
                         "id": "GAcumulado3",
                         "title": "Total Toneladas Secas",
@@ -516,7 +519,7 @@
                         "fillAlphas": 0,
                         "animationPlayed": true,
                         "valueAxis": "Axis0",
-                    },
+                    },*/
                     {
                         "id": "Procesado1",
                         "clustered": false,
@@ -554,7 +557,7 @@
                         "valueField": "turno2new",
                         "valueAxis": "Axis1",
                     },
-                    {
+                   /* {
 
                         "id": "totalnew",
                         "title": "Total Ticlio",
@@ -571,7 +574,7 @@
                         "bold": true,
                         "fillAlphas": 0,
                         "valueAxis": "Axis1",
-                    },
+                    },*/
                 ],
                 "legend": {
                     "position": scope.config.legendPosition,
@@ -581,7 +584,7 @@
                     "valueAlign": "right",
                     "horizontalGap": 10,
                     "useGraphSettings": true,
-                    "size": 26,
+                    "size": 36,
                     "bold": true,
                     "markerSize": 36
                 },
