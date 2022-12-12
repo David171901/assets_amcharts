@@ -198,10 +198,12 @@
             // console.log(timeProvider.displayTime.start);
             // console.log(timeProvider.displayTime.end);
             let endCategory = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
-            // console.log(" ~ file: sym-RendimientoPlantaBarras.js:201 ~ setTrendCategory ~ endCategory", endCategory)
+            console.log(" ~ file: sym-RendimientoPlantaBarras.js:201 ~ setTrendCategory ~ endCategory", endCategory)
             let startCategory = new Date(timeProvider.displayTime.start);
-            // console.log(" ~ file: sym-RendimientoPlantaBarras.js:203 ~ setTrendCategory ~ startCategory", startCategory)
             startCategory = addDays(startCategory,1);
+            console.log("🚀 ~ file: sym-RendimientoPlantaBarras.js:205 ~ setTrendCategory ~ startCategory", startCategory)
+            console.log(`${endCategory.getDate()}/${endCategory.getMonth()+1}`);
+            console.log(`${startCategory.getDate()}/${startCategory.getMonth()+1}`);
             chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
             chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
             chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
@@ -373,8 +375,7 @@
                 "angle": 0,
                 "marginRight": 1,
                 "marginLeft": 1,
-               
-                /*"trendLines": [
+                "trendLines": [
                     {
                       finalCategory: "29/11",
                       finalValue: targetUP,
@@ -409,7 +410,7 @@
                       //labelText: 5460 + "Tn",
                       valueAxis: "Axis2",
                     },
-                ],*/
+                ],
                 "titles": createArrayOfChartTitles(),
                 "fontSize": 35,
                 "categoryField": "timestamp",
@@ -605,9 +606,8 @@
 
         function myCustomConfigurationChangeFunction() {
             console.log('Here');
-            setTrendCategory ();
             if (chart) {
-
+                setTrendCategory();
                 chart.valueAxes[0].minimum = getCorrectChartMin();
                 chart.valueAxes[0].maximum = getCorrectChartMax();
                 chart.valueAxes[1].minimum = getCorrectChartMin();
@@ -632,24 +632,24 @@
                 if (chart.graphs[0].lineThickness !== scope.config.lineThick) {
                     chart.graphs[0].lineThickness = scope.config.lineThick;
                 }
-                if (chart.graphs[0].lineColor !== scope.config.seriesColor1) {
-                    chart.graphs[0].lineColor = scope.config.seriesColor1;
-                }
-                if (chart.graphs[1].lineColor !== scope.config.seriesColor2) {
-                    chart.graphs[1].lineColor = scope.config.seriesColor2;
-                }
-                if (chart.graphs[2].lineColor !== scope.config.seriesColor3) {
-                    chart.graphs[2].lineColor = scope.config.seriesColor3;
-                }
-                if (chart.graphs[3].lineColor !== scope.config.seriesColor4) {
-                    chart.graphs[3].lineColor = scope.config.seriesColor4;
-                }
-                if (chart.graphs[4].lineColor !== scope.config.seriesColor5) {
-                    chart.graphs[4].lineColor = scope.config.seriesColor5;
-                }
-                if (chart.graphs[5].lineColor !== scope.config.seriesColor6) {
-                    chart.graphs[5].lineColor = scope.config.seriesColor6;
-                }
+                // if (chart.graphs[0].lineColor !== scope.config.seriesColor1) {
+                //     chart.graphs[0].lineColor = scope.config.seriesColor1;
+                // }
+                // if (chart.graphs[1].lineColor !== scope.config.seriesColor2) {
+                //     chart.graphs[1].lineColor = scope.config.seriesColor2;
+                // }
+                // if (chart.graphs[2].lineColor !== scope.config.seriesColor3) {
+                //     chart.graphs[2].lineColor = scope.config.seriesColor3;
+                // }
+                // if (chart.graphs[3].lineColor !== scope.config.seriesColor4) {
+                //     chart.graphs[3].lineColor = scope.config.seriesColor4;
+                // }
+                // if (chart.graphs[4].lineColor !== scope.config.seriesColor5) {
+                //     chart.graphs[4].lineColor = scope.config.seriesColor5;
+                // }
+                // if (chart.graphs[5].lineColor !== scope.config.seriesColor6) {
+                //     chart.graphs[5].lineColor = scope.config.seriesColor6;
+                // }
                 
                 if (chart.chartScrollbar.enabled != scope.config.showChartScrollBar) {
                     chart.chartScrollbar.enabled = scope.config.showChartScrollBar;
