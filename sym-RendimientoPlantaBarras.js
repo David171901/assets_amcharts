@@ -67,6 +67,7 @@
     var targetUP;
 
     function myCustomDataUpdateFunction(data) {
+      console.log(" ~ file: sym-RendimientoPlantaBarras.js:70 ~ myCustomDataUpdateFunction ~ data", data)
       if (data !== null && data.Data) {
         dataArray = [];
 
@@ -161,6 +162,7 @@
             dryTonnageReal,
             wetTonnageReal
           );
+          
           setValueAxisYToMargin(dataArray);
         }
 
@@ -213,6 +215,7 @@
         iterableDate.setDate(iterableDate.getDate() + 1);
 
         if (iterableDate.getTime() <= todayDate.getTime()) {
+          console.log('Heyy If');
           let firstTurnValue = getTurnValue(
             firstTurn,
             iterableDate,
@@ -223,6 +226,7 @@
             currentHour,
             currentMonth
           );
+          console.log(" ~ file: sym-RendimientoPlantaBarras.js:229 ~ firstTurnValue", firstTurnValue)
           let secondTurnValue = getTurnValue(
             secondTurn,
             iterableDate,
@@ -233,6 +237,7 @@
             currentHour,
             currentMonth
           );
+          console.log(" ~ file: sym-RendimientoPlantaBarras.js:240 ~ secondTurnValue", secondTurnValue)
 
           let firstTurnNewValue = getTurnValueForNews(
             firstTurnNew,
@@ -244,6 +249,7 @@
             currentHour,
             currentMonth
           );
+          console.log(" ~ file: sym-RendimientoPlantaBarras.js:252 ~ firstTurnNewValue", firstTurnNewValue)
           let secondTurnNewValue = getTurnValueForNews(
             secondTurnNew,
             iterableDate,
@@ -254,6 +260,7 @@
             currentHour,
             currentMonth
           );
+          console.log(" ~ file: sym-RendimientoPlantaBarras.js:263 ~ secondTurnNewValue", secondTurnNewValue)
 
           // TONELAJES ************************************
           let dryTonnageValue = getTonnageValueForNews(
@@ -300,6 +307,7 @@
             floatDryTonnage,
             floatWetTonnage
           );
+          console.log(" ~ file: sym-RendimientoPlantaBarras.js:306 ~ newDataObject", newDataObject)
           dataArray.push(newDataObject);
         } else {
           let newDataObject = getNewDataObject(
@@ -313,6 +321,7 @@
             null,
             null
           );
+          console.log(" ~ file: sym-RendimientoPlantaBarras.js:319 ~ newDataObject", newDataObject)
           dataArray.push(newDataObject);
         }
       }
@@ -351,13 +360,21 @@
           ? secondTurnValue.toFixed(scope.config.decimalPlaces)
           : secondTurnValue,
         total: total ? total.toFixed(scope.config.decimalPlaces) : total,
-        turno1new: firstTurnNew,
-        turno2new: secondTurnNew,
+        turno1new: firstTurnNew
+        ? firstTurnNew.toFixed(scope.config.decimalPlaces)
+        : firstTurnNew,
+        turno2new: secondTurnNew
+        ? secondTurnNew.toFixed(scope.config.decimalPlaces)
+        : secondTurnNew,
         totalnew: totalnew
           ? totalnew.toFixed(scope.config.decimalPlaces)
           : totalnew,
-        drytonnage: dryTonnage,
-        wettonnage: wetTonnage,
+        drytonnage: dryTonnage
+        ? dryTonnage.toFixed(scope.config.decimalPlaces)
+        : dryTonnage,
+        wettonnage: wetTonnage
+        ? wetTonnage.toFixed(scope.config.decimalPlaces)
+        : wetTonnage,
       };
     }
 
@@ -521,8 +538,11 @@
       let originalArrayLength = turnArray.Values.length;
       let hasSavedValues = originalArrayLength != 0;
       let arrayLength = hasSavedValues ? originalArrayLength : 1;
+      console.log(" ~ file: sym-RendimientoPlantaBarras.js:541 ~ arrayLength", arrayLength)
 
       for (let itemIndex = 0; itemIndex < arrayLength; itemIndex++) {
+        console.log(" ~ file: sym-RendimientoPlantaBarras.js:544 ~ itemIndex", itemIndex)
+        console.log(" ~ file: sym-RendimientoPlantaBarras.js:567 ~ hasSavedValues", hasSavedValues)
         if (hasSavedValues)
           turnValue = getSavedValue(
             turnValue,
@@ -530,8 +550,9 @@
             itemIndex,
             iterableDate
           );
+          console.log(" ~ file: sym-RendimientoPlantaBarras.js:548 ~ turnValue", turnValue)
         if (turnValue != null) continue;
-
+        console.log("Heyy Turn is Null");
         turnValue = getRealValue(
           turnValue,
           iterableDate,
@@ -573,7 +594,8 @@
       isFirstTurn,
       currentMonth
     ) {
-      if (isFirstTurn)
+      console.log(" ~ file: sym-RendimientoPlantaBarras.js:597 ~ isFirstTurn", isFirstTurn)
+      if (isFirstTurn) {
         return getFirstTurnRealValue(
           turnValue,
           iterableDate,
@@ -582,7 +604,8 @@
           firstTurnReal,
           currentMonth
         );
-      else
+      }
+      else {
         return getSecondTurnRealValue(
           turnValue,
           iterableDate,
@@ -591,6 +614,7 @@
           secondTurnReal,
           currentMonth
         );
+      }
     }
 
     function getLastUnsavedTemporal(
@@ -645,16 +669,26 @@
         currentHour >= 7 &&
         currentHour < 19 &&
         iterableDate.getMonth() + 1 == currentMonth
-      )
-        return secondTurnReal.Values[secondTurnReal.Values.length - 1].Value;
-      else if (
+      ) {
+        console.log('Hey Iff');
+        console.log(secondTurnReal);
+        if( secondTurnReal.Values.length > 0) {
+          return secondTurnReal.Values[secondTurnReal.Values.length - 1].Value;
+        } else {
+          return 0;
+        }
+      } else if (
         iterableDay - 1 == currentDay &&
         currentHour >= 19 &&
         currentHour < 24 &&
         iterableDate.getMonth() + 1 == currentMonth
-      )
+        ) {
+        console.log('Hey Else If');
         return 0;
-      else return turnValue;
+      } else {
+        console.log('Heyy Else');
+        return turnValue;
+      }
     }
 
     function getTotalTurns(firstTurnValue, secondTurnValue) {
@@ -891,6 +925,7 @@
             fillAlphas: 0.8,
             //"opacity": 0.2,
             fontSize: 35,
+            bold: true,
             lineColor: scope.config.seriesColor4,
             //"labelText": "[[turno1new]]",
             columnWidth: 0.5,
@@ -903,6 +938,7 @@
               stringUnitsFourth,
             valueField: "turno1new",
             valueAxis: "Axis1",
+            labelText: "",
           },
           {
             id: "Procesado2",
@@ -925,6 +961,7 @@
               stringUnitsFourth,
             valueField: "turno2new",
             valueAxis: "Axis1",
+            labelText: "",
           },
           {
             id: "Line1",
@@ -947,6 +984,7 @@
             fillAlphas: 0,
             lineAlpha: 1,
             dashLengthField: "dashLengthLine",
+            "labelText": "[[drytonnage]]",
           },
           {
             id: "Line2",
@@ -969,6 +1007,7 @@
             fillAlphas: 0,
             lineAlpha: 1,
             dashLengthField: "dashLengthLine",
+            "labelText": "[[wettonnage]]",
           },
           /* {
 
