@@ -65,6 +65,7 @@
     var targetDefault;
     var targetDown;
     var targetUP;
+    var maxLabelRight = 2000;
 
     function myCustomDataUpdateFunction(data) {
       console.log(" ~ file: sym-RendimientoPlantaBarras.js:70 ~ myCustomDataUpdateFunction ~ data", data)
@@ -418,9 +419,9 @@
           chart.titles = null;
         }
         chart.valueAxes[0].minimum = getCorrectChartMin();
-        chart.valueAxes[0].maximum = getCorrectChartMax();
+        chart.valueAxes[0].maximum = getCorrectChartMax() + maxLabelRight;
         chart.valueAxes[1].minimum = getCorrectChartMin();
-        chart.valueAxes[1].maximum = getCorrectChartMax();
+        chart.valueAxes[1].maximum = getCorrectChartMax() + maxLabelRight;
 
         chart.dataProvider = dataArray;
         chart.validateData();
@@ -1007,7 +1008,6 @@
             fillAlphas: 0,
             lineAlpha: 1,
             dashLengthField: "dashLengthLine",
-            "labelText": "[[wettonnage]]",
           },
           /* {
 
@@ -1061,9 +1061,9 @@
       if (chart) {
         setTrendCategory();
         chart.valueAxes[0].minimum = getCorrectChartMin();
-        chart.valueAxes[0].maximum = getCorrectChartMax();
+        chart.valueAxes[0].maximum = getCorrectChartMax()  + maxLabelRight;
         chart.valueAxes[1].minimum = getCorrectChartMin();
-        chart.valueAxes[1].maximum = getCorrectChartMax();
+        chart.valueAxes[1].maximum = getCorrectChartMax()  + maxLabelRight;
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
         } else {
@@ -1109,11 +1109,11 @@
         if (scope.config.showValues) {
           chart.graphs[0].labelText = "[[value]]";
           chart.graphs[1].labelText = "[[value]]";
-          chart.graphs[2].labelText = "[[value]]";
+          // chart.graphs[2].labelText = "[[value]]";
         } else {
           chart.graphs[0].labelText = "";
           chart.graphs[1].labelText = "";
-          chart.graphs[2].labelText = "";
+          // chart.graphs[2].labelText = "";
         }
         if (chart.precision != scope.config.decimalPlaces) {
           chart.precision = scope.config.decimalPlaces;
