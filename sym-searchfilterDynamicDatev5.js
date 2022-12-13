@@ -31,7 +31,7 @@
         var count = 0;
         
         function myCustomDataUpdateFunction(data) {
-            console.log(" ~ file: sym-searchfilterDynamicDatev2.js ~ line 34 ~ myCustomDataUpdateFunction ~ data", data)
+            // console.log(" ~ file: sym-searchfilterDynamicDatev2.js ~ line 34 ~ myCustomDataUpdateFunction ~ data", data)
             if(isLoaded == 'primero'){
                 dataTotal = data;
 
@@ -125,7 +125,7 @@
             }
 
             function getStartEndTimeForLoad(month, year, day) {
-                console.log(" ~ file: sym-searchfilterDynamicDatev4.js:98 ~ getStartEndTimeForLoad ~ month, year, day", month, year, day)
+                // console.log(" ~ file: sym-searchfilterDynamicDatev4.js:98 ~ getStartEndTimeForLoad ~ month, year, day", month, year, day)
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
                 
@@ -189,7 +189,7 @@
             }
 
             function getStartEndTimeForSearch(month, year, day) {
-                console.log(" ~ file: sym-searchfilterDynamicDatev4.js:122 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
+                // console.log(" ~ file: sym-searchfilterDynamicDatev4.js:122 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
 
                 // START
 

@@ -68,10 +68,10 @@
     var maxLabelRight = 10000;
 
     function myCustomDataUpdateFunction(data) {
-      console.log(
-        " ~ file: sym-RendimientoPlantaBarras.js:70 ~ myCustomDataUpdateFunction ~ data",
-        data
-      );
+      // console.log(
+      //   " ~ file: sym-RendimientoPlantaBarras.js:70 ~ myCustomDataUpdateFunction ~ data",
+      //   data
+      // );
       if (data !== null && data.Data) {
         dataArray = [];
 
