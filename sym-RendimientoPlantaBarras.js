@@ -31,6 +31,7 @@
         seriesColor5: "#000000",
         seriesColor6: "#000000",
         seriesColor7: "#111111",
+        seriescolor8: "#ffc90e",
         showLegend: true,
         showChartScrollBar: false,
         legendPosition: "bottom",
@@ -65,7 +66,7 @@
     var targetDefault;
     var targetDown;
     var targetUP;
-    var maxLabelRight = 10000;
+    var maxLabelRight = 12000;
 
     function myCustomDataUpdateFunction(data) {
       // console.log(
@@ -396,10 +397,10 @@
       let axisValue = maximum + maximum / 10;
       scope.config.yAxisRange = "customRange";
       scope.config.maximumYValue = parseInt(axisValue);
-      scope.config.maximumYValueAxisv2 =
+      /*scope.config.maximumYValueAxisv2 =
         maximumlineswet > maximumlinesdry
           ? parseInt(maximumlineswet)
-          : parseInt(maximumlinesdry);
+          : parseInt(maximumlinesdry);*/
       scope.config.minimumYValue = 0;
     }
 
@@ -440,12 +441,12 @@
           : wetTonnage,
         // Dry Tonnage
         drytonnageup: dryTonnage
-          ? dryTonnage > 5733
+          ? dryTonnage > 5623.8
             ? dryTonnage.toFixed(scope.config.decimalPlaces)
             : null
           : null,
         drytonnagedown: dryTonnage
-          ? dryTonnage < 5187
+          ? dryTonnage < 5296.2
             ? dryTonnage.toFixed(scope.config.decimalPlaces)
             : null
           : null,
@@ -823,7 +824,7 @@
         //"theme": "light",
         hideCredits: true,
         addClassNames: true,
-        depth3D: 0,
+        depth3D: 20,
         angle: 0,
         marginRight: 1,
         marginLeft: 1,
@@ -833,10 +834,10 @@
             finalValue: targetUP,
             initialCategory: "31/12",
             initialValue: targetUP,
-            lineColor: "#f58e8e",
+            lineColor: "#0084ff",
             //tipe: "smoothedLine",
             lineThickness: 5,
-            balloonText: "Límite superiorERS +5%" + " (" + targetUP + ")",
+            balloonText: "Límite superior +3%" + " (" + targetUP + ")",
             //labelText: 5733 + "Tn",
             valueAxis: "Axis2",
           },
@@ -847,7 +848,7 @@
             initialValue: targetDown,
             lineColor: "#f58e8e",
             lineThickness: 5,
-            balloonText: "Límite inferior -5%" + " (" + targetDown + ")",
+            balloonText: "Límite inferior -3%" + " (" + targetDown + ")",
             //labelText: 5187 + "Tn",
             valueAxis: "Axis2",
           },
@@ -856,7 +857,7 @@
             finalValue: targetDefault,
             initialCategory: "31/12",
             initialValue: targetDefault,
-            lineColor: "#5e8dff",
+            lineColor: "#57f76c",
             lineThickness: 5,
             balloonText: "Target / TMS" + " (" + targetDefault + ")",
             //labelText: 5460 + "Tn",
@@ -897,8 +898,8 @@
             gridAlpha: 0,
             axisColor: scope.config.seriesColor2,
             position: "left",
-            minimum: scope.config.minimumYValue,
-            maximum: scope.config.maximumYValue,
+            minimum: 0,//scope.config.minimumYValue,
+            maximum: 10000,//scope.config.maximumYValue,
             labelsEnabled: false,
           },
           {
@@ -907,17 +908,17 @@
             gridAlpha: 0,
             axisColor: scope.config.seriesColor2,
             position: "left",
-            minimum: scope.config.minimumYValue,
-            maximum: scope.config.maximumYValue,
+            minimum: 0,//scope.config.minimumYValue,
+            maximum: 10000,//scope.config.maximumYValue,
             labelsEnabled: false,
           },
           {
             id: "Axis2",
             axisAlpha: 1,
             position: "right",
-            gridAlpha: 0,
-            maximum: scope.config.maximumYValueAxisv2,
-            minimum: 0,
+            gridAlpha: 0.1,
+            maximum: 10000, //scope.config.maximumYValueAxisv2,
+            minimum: 3000,
           },
         ],
         categoryAxis: {
@@ -931,7 +932,7 @@
           {
             id: "GAcumulado1",
             clustered: false,
-            title: "Turno Noche SC-CAR",
+            title: "San Cristobal - Carahuacra", //turno noche SC-CAR
             type: "column",
             fillAlphas: 1,
             lineAlpha: 1,
@@ -951,7 +952,7 @@
           {
             id: "GAcumulado2",
             clustered: false,
-            title: "Turno Día SC-CAR",
+            //title: "San Cristobal - Carahuacra", //turno dia SC-CAR
             type: "column",
             fillAlphas: 0.8,
             lineAlpha: 0.3,
@@ -971,12 +972,12 @@
           {
             id: "Procesado1",
             clustered: false,
-            title: "Turno Noche Ticlio",
+            title: "Ticlio", //Turno Noche Ticlio
             type: "column",
             fillAlphas: 0.8,
             fontSize: 35,
             bold: true,
-            lineColor: scope.config.seriesColor4,
+            lineColor: scope.config.seriesColor3,
             columnWidth: 0.5,
             showAllValueLabels: true,
             labelRotation: -45,
@@ -992,12 +993,12 @@
           {
             id: "Procesado2",
             clustered: false,
-            title: "Turno Día Ticlio",
+            //title: "Ticlio", //Turno Dia Ticlio
             type: "column",
             fillAlphas: 0.8,
             fontSize: 35,
             bold: true,
-            lineColor: scope.config.seriesColor5,
+            lineColor: scope.config.seriesColor4,
             columnWidth: 0.5,
             showAllValueLabels: true,
             labelRotation: -45,
@@ -1013,15 +1014,15 @@
           {
             id: "Line1",
             valueAxis: "Axis2",
-            fontSize: scope.config.fontSize,
+            fontSize: scope.config.fontSize + 10,
             balloonText: "Toneladas Secas" + "</b><br/>[[drytonnage]]T",
-            labelPosition: "top",
+            labelPosition: "bottom",
             title: "Toneladas Secas",
             valueField: "drytonnage",
             showBalloon: true,
             color: "#0a0a0a",
             bulletSize: 30,
-            lineColor: "#000000",
+            lineColor: scope.config.seriesColor5,
             type: "smoothedLine",
             bullet: "diamond",
             lineThickness: 3,
@@ -1029,9 +1030,48 @@
             useLineColorForBulletBorder: true,
             bulletBorderThickness: 4,
             fillAlphas: 0,
-            lineAlpha: 1,
+            lineAlpha: 0.9,
             dashLengthField: "dashLengthLine",
             labelText: "[[drytonnage]]",
+          },
+          {
+            id: "Line3",
+            valueAxis: "Axis2",
+            balloonText: "Toneladas Secas" + "</b><br/>[[drytonnageup]]T",
+            fontSize: scope.config.fontSize + 10,
+            labelPosition: "top",
+            bullet: "diamond",
+            lineThickness: 3,
+            bulletBorderAlpha: 2,
+            useLineColorForBulletBorder: true,
+            bulletBorderThickness: 4,
+            title: "Produccion encima del límite esperado",
+            valueField: "drytonnageup",
+            showBalloon: true,
+            balloncolor: "#001BFF",
+            linecolor: scope.config.seriesColor6,
+            Color: "#001BFF",
+            bulletSize: 30,
+            lineAlpha: 0,
+          },
+          {
+            id: "Line4",
+            valueAxis: "Axis2",
+            balloonText: "Toneladas Secas" + "</b><br/>[[drytonnagedown]]T",
+            fontSize: scope.config.fontSize + 10,
+            labelPosition: "top",
+            bullet: "diamond",
+            lineThickness: 3,
+            bulletBorderAlpha: 2,
+            useLineColorForBulletBorder: true,
+            bulletBorderThickness: 4,
+            title: "Produccion debajo del límite esperado",
+            valueField: "drytonnagedown",
+            showBalloon: true,
+            linecolor: scope.config.seriesColor7,
+            Color: "#FF0000",
+            bulletSize: 30,
+            lineAlpha: 0,
           },
           {
             id: "Line2",
@@ -1042,11 +1082,11 @@
             title: "Toneladas Humedas",
             valueField: "wettonnage",
             showBalloon: true,
-            color: "#BFB8B8",
-            bulletSize: 20,
-            lineColor: "#BFB8B8",
+            color: "#e0dcdc",
+            bulletSize: 25,
+            lineColor: "#e0dcdc",
             type: "smoothedLine",
-            bullet: "round",
+            bullet: "diamond",
             lineThickness: 3,
             bulletBorderAlpha: 2,
             useLineColorForBulletBorder: true,
@@ -1054,44 +1094,6 @@
             fillAlphas: 0,
             lineAlpha: 1,
             dashLengthField: "dashLengthLine",
-          },
-          {
-            id: "Line3",
-            valueAxis: "Axis2",
-            balloonText: "Toneladas Humedas" + "</b><br/>[[drytonnageup]]T",
-            fontSize: scope.config.fontSize + 10,
-            labelPosition: "top",
-            bullet: "diamond",
-            lineThickness: 3,
-            bulletBorderAlpha: 2,
-            useLineColorForBulletBorder: true,
-            bulletBorderThickness: 4,
-            title: "Toneladas Secas (Up)",
-            valueField: "drytonnageup",
-            showBalloon: true,
-            linecolor: "#001BFF",
-            Color: "#001BFF",
-            bulletSize: 30,
-            lineAlpha: 0,
-          },
-          {
-            id: "Line4",
-            valueAxis: "Axis2",
-            balloonText: "Toneladas Humedas" + "</b><br/>[[drytonnagedown]]T",
-            fontSize: scope.config.fontSize + 10,
-            labelPosition: "top",
-            bullet: "diamond",
-            lineThickness: 3,
-            bulletBorderAlpha: 2,
-            useLineColorForBulletBorder: true,
-            bulletBorderThickness: 4,
-            title: "Toneladas Secas (Down)",
-            valueField: "drytonnagedown",
-            showBalloon: true,
-            linecolor: "#FF0000",
-            Color: "#FF0000",
-            bulletSize: 30,
-            lineAlpha: 0,
           },
         ],
         legend: {
@@ -1152,24 +1154,29 @@
         if (chart.graphs[0].lineThickness !== scope.config.lineThick) {
           chart.graphs[0].lineThickness = scope.config.lineThick;
         }
-        // if (chart.graphs[0].lineColor !== scope.config.seriesColor1) {
-        //     chart.graphs[0].lineColor = scope.config.seriesColor1;
-        // }
-        // if (chart.graphs[1].lineColor !== scope.config.seriesColor2) {
-        //     chart.graphs[1].lineColor = scope.config.seriesColor2;
-        // }
-        // if (chart.graphs[2].lineColor !== scope.config.seriesColor3) {
-        //     chart.graphs[2].lineColor = scope.config.seriesColor3;
-        // }
-        // if (chart.graphs[3].lineColor !== scope.config.seriesColor4) {
-        //     chart.graphs[3].lineColor = scope.config.seriesColor4;
-        // }
-        // if (chart.graphs[4].lineColor !== scope.config.seriesColor5) {
-        //     chart.graphs[4].lineColor = scope.config.seriesColor5;
-        // }
-        // if (chart.graphs[5].lineColor !== scope.config.seriesColor6) {
-        //     chart.graphs[5].lineColor = scope.config.seriesColor6;
-        // }
+        //
+         if (chart.graphs[0].lineColor !== scope.config.seriesColor1) {
+             chart.graphs[0].lineColor = scope.config.seriesColor1;
+         }
+         if (chart.graphs[1].lineColor !== scope.config.seriesColor2) {
+             chart.graphs[1].lineColor = scope.config.seriesColor2;
+         }
+         if (chart.graphs[2].lineColor !== scope.config.seriesColor3) {
+             chart.graphs[2].lineColor = scope.config.seriesColor3;
+         }
+         if (chart.graphs[3].lineColor !== scope.config.seriesColor4) {
+             chart.graphs[3].lineColor = scope.config.seriesColor4;
+         }
+         if (chart.graphs[4].lineColor !== scope.config.seriesColor5) {
+             chart.graphs[4].lineColor = scope.config.seriesColor5;
+         }
+         if (chart.graphs[5].lineColor !== scope.config.seriesColor6) {
+             chart.graphs[5].lineColor = scope.config.seriesColor6;
+         }
+         if (chart.graphs[5].lineColor !== scope.config.seriesColor7) {
+             chart.graphs[5].lineColor = scope.config.seriesColor7;
+         }
+         //
 
         if (chart.chartScrollbar.enabled != scope.config.showChartScrollBar) {
           chart.chartScrollbar.enabled = scope.config.showChartScrollBar;

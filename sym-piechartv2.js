@@ -86,6 +86,8 @@
     var dataArray = [];
 
     function myCustomDataUpdateFunction(data) {
+      console.log(" ~ file: sym-piechartv2.js:89 ~ myCustomDataUpdateFunction ~ data", data)
+      
       let dataFormat = data.Data[0].Values.filter((el) => {
         return !el.Time.includes("T00:00:00Z");
       });
@@ -118,6 +120,7 @@
       data = {
         Rows: sortArray,
       };
+      console.log(" ~ file: sym-piechartv2.js:120 ~ myCustomDataUpdateFunction ~ data", data)
 
       if (data) {
         dataArray = [];
