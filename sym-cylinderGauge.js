@@ -52,10 +52,7 @@
         "type": "serial",
         "depth3D": 100,
         "angle": 30,
-        // "autoMargins": false,
-        // "marginBottom": 100,
-        // "marginLeft": 350,
-        // "marginRight": 300,
+        "hideCredits": true,
         "dataProvider": [ {
           "category": "Wine left in the barrel",
           "value1": 30,
