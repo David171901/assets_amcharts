@@ -12,11 +12,93 @@ visualización de actualización instantánea se debe mantener el botón
 NOW(posición inferior derecha) activada(verde).
 
 -->
+<div id="container" style="width: 100%; height: 100%"></div>
+<div style="width: 100%; height: 100%; display: block">
+  <!-- overflow-y:auto;overflow-x:hidden-->
+  <table
+    id="table"
+    style="
+      width: 100%;
+      height: 100%;
+      color: white;
+      text-align: left;
+      overflow-y: auto;
+      padding: 5px;
+      display: block;
+      display: table;
+    "
+  ></table>
+  <div>
+    <style>
 
-<div id='container' style="width: 100%; height: 100%"> </div>
+      .headerAPCellClass {
+      	font-size: {{config.fontSize}}{{config.unitFontSize}};
+      	text-align: center;
+      	border: 2px solid white;
+      	background: {{config.headerBackgroundColor}};
+      	color: {{config.headerTextColor}};
+      	vertical-align: middle;
+      }
 
-<div style="width:100%;height:100%;display:block;">
-	<!-- overflow-y:auto;overflow-x:hidden-->
-	<table id="table" style="width:100%;height:100%;color:white;text-align:left;overflow-y:auto;padding:5px;display:block; display:table;">
-	</table>
-<div>
+      .subHeaderAPCellClass {
+      	font-size: {{config.fontSize}}{{config.unitFontSize}};
+      	text-align: center;
+      	border: 2px solid white;
+      	background: {{config.subheaderBackgroundColor}};
+      	color: {{config.headerTextColor}};
+      	vertical-align: middle;
+      }
+
+      .rowAPClass:nth-child(even) {
+
+      	background: {{config.evenRowColor}}
+      }
+      .rowAPClass:nth-child(odd) {
+      	background: {{config.oddRowColor}}
+      }
+      .rowAPClass:hover {
+      	background: {{config.hoverColor}};
+      }
+
+      .cellAPClass {
+      	padding-Left:  5px;
+      	padding-Right: 5px;
+      	padding-Top:   3px;
+      	padding-Bottom:3px;
+      	text-align: center;
+      	vertical-align: middle;
+      }
+
+
+      .myCustomDataItemAPCellClass {
+      	color: {{config.dataItemColumnColor}};
+      	display: {{config.showDataItemNameCheckboxStyle}};
+      }
+
+      .myValueCellClass {
+      	font-size: {{config.fontSize}}{{config.unitFontSize}};
+      	border-radius: 30px;
+      	color: {{config.valueColumnColor}};
+      	text-align:center;
+      	vertical-align: middle;
+      }
+
+      .myCustomRightHeaderCellClass {
+      	font-size: {{config.fontSize}}{{config.unitFontSize}};
+      	text-align: center;
+      	color: {{config.headerRightTextColor}};
+      	background: {{config.headerRightColumnColor}};
+      	display: {{config.showHeaderRightCheckboxStyle}};
+      }
+
+      .subtotalAPCellClass {
+      	font-size: {{config.fontSize}}{{config.unitFontSize}};
+      	text-align: center;
+      	border: 2px solid white;
+      	background: {{config.headerBackgroundColor}};
+      	color: {{config.headerTextColor}};
+      	vertical-align: middle;
+      }
+    </style>
+  </div>
+</div>

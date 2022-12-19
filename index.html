@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <style>
+#chartdiv {
+	width		: 100%;
+	height		: 500px;
+	font-size	: 11px;
+}					
+  </style>
+  <body>
+
+
+
+    <script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="http://www.amcharts.com/lib/3/pie.js"></script>
+    <script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
+    <div id="chartdiv"></div>
+    <div class="w-full border-2 rounder">
+      Texto descriptivo
+    </div>
+
+<script>
+
+
+function handleClick(event)
+{
+  // alert("Hello")  
+  console.log(event.dataItem.dataContext)
+}
+
+var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "pie",
+  "theme": "light",
+  "dataProvider": [ {
+    "country": "Lithuania",
+    "litres": 501.9
+  }, {
+    "country": "Czech Republic",
+    "litres": 301.9
+  }, {
+    "country": "Ireland",
+    "litres": 201.1,
+  }, {
+    "country": "Germany",
+    "litres": 165.8
+  }, {
+    "country": "Australia",
+    "litres": 139.9
+  }, {
+    "country": "Austria",
+    "litres": 128.3
+  }, {
+    "country": "UK",
+    "litres": 99
+  }, {
+    "country": "Belgium",
+    "litres": 60
+  }, {
+    "country": "The Netherlands",
+    "litres": 50
+  } ],
+  "valueField": "litres",
+  "titleField": "country",
+   "balloon":{
+   "fixedPosition":true
+  },
+  "export": {
+    "enabled": true
+  }
+} );
+
+
+
+
+  chart.addListener("clickSlice", handleClick);
+
+
+//   "addEventListeners": function(a, b) {
+//    var c = this
+//    a.mouseover(function(a) {
+//       c.rollOverSlice(b, !0, a)
+//    }).mouseout(function(a) {
+//       c.rollOutSlice(b, a)
+//    }).touchend(function(a) {
+//       c.rollOverSlice(b, a)
+//    }).mouseup(function(a) {
+//       alert('ah ah ah... didn\'t say the magic word!')
+//    }).contextmenu(function(a) {
+//       c.handleRightClick(b, a)
+//    })
+// },
+
+
+// "listeners": [{
+//     event: 'clickSlice',
+//     method: function(e) {
+//       if (!e.dataItem.ignore) {
+//         e.dataItem.ignore = true; //prevent infinite loop
+//         e.chart.clickSlice(e.dataItem.index); //call clickSlice to cancel out the user's click
+//         e.dataItem.ignore = false; //reset the ignore flag
+//       }
+//     },
+//   }],
+
+</script>
+
+  </body>
+
+</html>
