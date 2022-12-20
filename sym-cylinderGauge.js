@@ -70,7 +70,7 @@
           "lineThickness": 2,
           "lineAlpha": 0.5,
           "lineColor": "#FFFFFF",
-          "fillColors": "#8d003b",
+          "fillColors": "#0EE1BE",
           "fillAlphas": 0.8,
           "valueField": "value1"
         }, {

@@ -87,8 +87,11 @@
     ];
 
     function myCustomDataUpdateFunction(data) {
-      console.log(" ~ file: sym-barrasfallasvchungar.js:90 ~ myCustomDataUpdateFunction ~ data", data)
-      
+      console.log(
+        " ~ file: sym-barrasfallasvchungar.js:90 ~ myCustomDataUpdateFunction ~ data",
+        data
+      );
+
       let dataFormat = data.Data[0].Values;
       let arrayData = [
         ...new Set(dataFormat.map((el) => el.Value.split("||")[0])),
@@ -159,13 +162,13 @@
         let twelfthTurn = data.Data[2];
         // Tonelaje humedo
         let thirteenthTurn = data.Data[3];
-        // Target 
+        // Target
         let targetDefault = data.Data[4]?.Values[0]?.Value || -10;
         // Target Down
         let targetDown = data.Data[5]?.Values[0]?.Value || -10;
         // Target UP
         let targetUP = data.Data[6]?.Values[0]?.Value || -10;
-        
+
         let firstTurnReal = {};
         firstTurnReal.Values = [];
         let secondTurnReal = {};
@@ -765,12 +768,28 @@
       let totals = dataArray.map(function (item) {
         return item.total;
       });
+
+      let lineswet = dataArray.map(function (item) {
+        return item.turno12;
+      });
+
+      let linesdry = dataArray.map(function (item) {
+        return item.turno13;
+      });
+
       let maximum = Math.max.apply(null, totals);
+      let maximumlineswet = Math.max.apply(null, lineswet);
+      let maximumlinesdry = Math.max.apply(null, linesdry);
 
       let axisValue = maximum + maximum / 10;
       scope.config.yAxisRange = "customRange";
       scope.config.maximumYValue = parseInt(axisValue);
       scope.config.minimumYValue = 0;
+      scope.config.maximumYValueAxisv2 =
+        maximumlineswet > maximumlinesdry
+          ? parseInt(maximumlineswet)
+          : parseInt(maximumlinesdry);
+      (scope.config.maximumYValueAxisv2 < 5200) ? scope.config.maximumYValueAxisv2 = 5200 : true;
     }
 
     function getNewDataObject(
@@ -792,8 +811,13 @@
       media,
       month
     ) {
-      console.log((twelfthTurnValue  ? ((twelfthTurnValue > 5623) ? twelfthTurnValue.toFixed(0) : null) : twelfthTurnValue) ||
-      null);
+      console.log(
+        (twelfthTurnValue
+          ? twelfthTurnValue > 5623
+            ? twelfthTurnValue.toFixed(0)
+            : null
+          : twelfthTurnValue) || null
+      );
       return {
         timestamp: dayIndex + "/" + month,
         turno1:
@@ -802,7 +826,9 @@
             : eleventhTurnValue) || null,
         dateturno1:
           (eleventhTurnValue
-            ? formatDateTurns(eleventhTurnValue.toFixed(scope.config.decimalPlaces))
+            ? formatDateTurns(
+                eleventhTurnValue.toFixed(scope.config.decimalPlaces)
+              )
             : eleventhTurnValue) || null,
         turno2:
           (secondTurnValue
@@ -845,19 +871,25 @@
             ? firstTurnValue.toFixed(scope.config.decimalPlaces)
             : firstTurnValue) || null,
         turno12:
-        (twelfthTurnValue
-          ? twelfthTurnValue.toFixed(0)
-          : twelfthTurnValue) || null,
+          (twelfthTurnValue ? twelfthTurnValue.toFixed(0) : twelfthTurnValue) ||
+          null,
         turno13:
           (thirteenthTurn ? thirteenthTurn.toFixed(0) : thirteenthTurn) || null,
         // TARGET
-        turno14:
-        (twelfthTurnValue  ? ((twelfthTurnValue > 5623) ? twelfthTurnValue.toFixed(0) : null) : null),
-        turno15:
-        (twelfthTurnValue  ? ((twelfthTurnValue < 5296) ? twelfthTurnValue.toFixed(0) : null) : null),
-          total: total ? total.toFixed(scope.config.decimalPlaces) : total,
+        turno14: twelfthTurnValue
+          ? twelfthTurnValue > 5623
+            ? twelfthTurnValue.toFixed(0)
+            : null
+          : null,
+        turno15: twelfthTurnValue
+          ? twelfthTurnValue < 5296
+            ? twelfthTurnValue.toFixed(0)
+            : null
+          : null,
+        total: total ? total.toFixed(scope.config.decimalPlaces) : total,
         media: media ? media.toFixed(scope.config.decimalPlaces) : media,
-        description: formatBalloonText(secondTurnValue,
+        description: formatBalloonText(
+          secondTurnValue,
           thirdTurnValue,
           fourthTurnValue,
           fifthTurnValue,
@@ -866,14 +898,15 @@
           eighthTurnValue,
           ninethTurnValue,
           tenthTurnValue,
-          eleventhTurnValue)
+          eleventhTurnValue
+        ),
       };
     }
 
     function formatDateTurns(number) {
       let int = Math.trunc(number);
-      let float = ((number - Math.trunc(number))*60).toFixed(0);
-      return `${int}h ${float}m`
+      let float = ((number - Math.trunc(number)) * 60).toFixed(0);
+      return `${int}h ${float}m`;
     }
 
     function formatBalloonText(
@@ -888,7 +921,97 @@
       tenthTurnValue,
       eleventhTurnValue
     ) {
-      return `${secondTurnValue != 0 ? `RE │ Avería de Instrumentos: ${secondTurnValue ? formatDateTurns(secondTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"} ${thirdTurnValue != 0 ? `RE │ Avería Eléctrica : ${thirdTurnValue ? formatDateTurns(thirdTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"}  ${fourthTurnValue != 0 ? `RM │ Avería Mecánica: ${fourthTurnValue ? formatDateTurns(fourthTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"}  ${fifthTurnValue != 0 ? `TF │ Funcionamiento : ${fifthTurnValue ? formatDateTurns(fifthTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"}  ${sixthTurnValue != 0 ? `RG │ Influencia Externa: ${sixthTurnValue ? formatDateTurns(sixthTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"}  ${seventhTurnValue != 0 ? `MP │ Mantenimiento Planificado: ${seventhTurnValue ? formatDateTurns(seventhTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"} ${eighthTurnValue != 0 ? `Otros : ${eighthTurnValue ? formatDateTurns(eighthTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"}  ${ninethTurnValue != 0 ? `RnP │ Seguridad: ${ninethTurnValue ? formatDateTurns(ninethTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"}  ${tenthTurnValue != 0 ? `TnP │ Stand By: ${tenthTurnValue ? formatDateTurns(tenthTurnValue.toFixed(scope.config.decimalPlaces)) : ""} <br>`: "<span></span>"}`
+      return `${
+        secondTurnValue != 0
+          ? `RE │ Avería de Instrumentos: ${
+              secondTurnValue
+                ? formatDateTurns(
+                    secondTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      } ${
+        thirdTurnValue != 0
+          ? `RE │ Avería Eléctrica : ${
+              thirdTurnValue
+                ? formatDateTurns(
+                    thirdTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      }  ${
+        fourthTurnValue != 0
+          ? `RM │ Avería Mecánica: ${
+              fourthTurnValue
+                ? formatDateTurns(
+                    fourthTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      }  ${
+        fifthTurnValue != 0
+          ? `TF │ Funcionamiento : ${
+              fifthTurnValue
+                ? formatDateTurns(
+                    fifthTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      }  ${
+        sixthTurnValue != 0
+          ? `RG │ Influencia Externa: ${
+              sixthTurnValue
+                ? formatDateTurns(
+                    sixthTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      }  ${
+        seventhTurnValue != 0
+          ? `MP │ Mantenimiento Planificado: ${
+              seventhTurnValue
+                ? formatDateTurns(
+                    seventhTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      } ${
+        eighthTurnValue != 0
+          ? `Otros : ${
+              eighthTurnValue
+                ? formatDateTurns(
+                    eighthTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      }  ${
+        ninethTurnValue != 0
+          ? `RnP │ Seguridad: ${
+              ninethTurnValue
+                ? formatDateTurns(
+                    ninethTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      }  ${
+        tenthTurnValue != 0
+          ? `TnP │ Stand By: ${
+              tenthTurnValue
+                ? formatDateTurns(
+                    tenthTurnValue.toFixed(scope.config.decimalPlaces)
+                  )
+                : ""
+            } <br>`
+          : "<span></span>"
+      }`;
     }
 
     function refreshChart(chart, scope, monthNow, dataArray) {
@@ -903,19 +1026,33 @@
       }
     }
 
-    function setTrendCategory () {
-      let endCategory = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
+    function setTrendCategory() {
+      let endCategory =
+        timeProvider.displayTime.end != "*"
+          ? new Date(timeProvider.displayTime.end)
+          : new Date();
       let startCategory = new Date(timeProvider.displayTime.start);
-      startCategory = addDays(startCategory,1);
-      chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
-      chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
-      chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
-      chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
-      chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${endCategory.getMonth()+1}`;
-      chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${startCategory.getMonth()+1}`;
+      startCategory = addDays(startCategory, 1);
+      chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${
+        endCategory.getMonth() + 1
+      }`;
+      chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${
+        startCategory.getMonth() + 1
+      }`;
+      chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${
+        endCategory.getMonth() + 1
+      }`;
+      chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${
+        startCategory.getMonth() + 1
+      }`;
+      chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${
+        endCategory.getMonth() + 1
+      }`;
+      chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${
+        startCategory.getMonth() + 1
+      }`;
+    }
 
-  }
-    
     function getTurnValue(
       turnArray,
       iterableDate,
@@ -1195,7 +1332,7 @@
     function getCorrectChartMax() {
       let result = undefined;
       if (scope.config.yAxisRange == "customRange") {
-        result = scope.config.maximumYValue;
+        result = scope.config.maximumYValueAxisv2;
       } else {
         result = undefined;
       }
@@ -1302,7 +1439,7 @@
               //tipe: "smoothedLine",
               lineThickness: 5,
               balloonText: "Límite superior +3%" + " (" + targetUP + ")",
-             //labelText: 5733 + "Tn",
+              //labelText: 5733 + "Tn",
               valueAxis: "Axis2",
               fillAlphas: 0.5,
             },
@@ -1314,7 +1451,7 @@
               lineColor: "#ffcccc",
               lineThickness: 5,
               balloonText: "Límite inferior -3%" + " (" + targetDown + ")",
-             //labelText: 5187 + "Tn",
+              //labelText: 5187 + "Tn",
               valueAxis: "Axis2",
               fillAlphas: 0.5,
             },
@@ -1330,7 +1467,7 @@
               valueAxis: "Axis2",
               fillAlphas: 0.5,
             },
-        ],
+          ],
           chartScrollbar: {
             graph: "g1",
             graphType: "line",
@@ -1349,7 +1486,6 @@
               axisColor: scope.config.seriesColor2,
               position: "left",
               stackType: "regular",
-              // "title": "Horas",
               maximum: 120,
               minimum: 0,
               step: 2,
@@ -1360,10 +1496,9 @@
               axisAlpha: 1,
               position: "right",
               gridAlpha: 0.05,
-              maximum: 5000,
+              maximum: scope.config.maximumYValueAxisv2,
               minimum: 0,
               step: 5000,
-              //labelsEnabled: false,
             },
           ],
           categoryAxis: {
@@ -1387,7 +1522,7 @@
               bold: true,
               balloonText:
                 "<strong> Disponibilidad: </strong> </b><br />" +
-                "[[dateturno1]]  </b><br />" +        
+                "[[dateturno1]]  </b><br />" +
                 "<strong> Eventos: </strong> </b><br />" +
                 "[[description]]" +
                 scope.config.labelunit,
@@ -1577,11 +1712,9 @@
               lineColor: "#2471A3",
             },
             {
-              //Linea de codigo para el trend de tonelaje humedo o seco
               id: "Line1",
               valueAxis: "Axis2",
-              balloonText:
-                "Toneladas Humedas" + "</b><br/>[[turno12]]T",
+              balloonText: "Toneladas Humedas" + "</b><br/>[[turno12]]T",
               fontSize: scope.config.fontSize + 10,
               labelPosition: "top",
               bullet: "diamond",
@@ -1600,49 +1733,7 @@
               lineAlpha: 1,
               dashLengthField: "dashLengthLine",
             },
-           /* {
-              id: "Line3",
-              valueAxis: "Axis2",
-              balloonText:
-                "Toneladas Humedas" + "</b><br/>[[turno14]]T",
-              fontSize: scope.config.fontSize + 10,
-              labelPosition: "top",
-              bullet: "triangleUp",
-              lineThickness: 3,
-              bulletBorderAlpha: 2,
-              useLineColorForBulletBorder: true,
-              bulletBorderThickness: 4,
-              labelText: "[[turno14]]",
-              title: "Toneladas Humedas (Up)",
-              valueField: "turno14",
-              showBalloon: true,
-              linecolor: "#00c71b",
-              Color: "#CD6155",
-              bulletSize: 30,
-              lineAlpha: 0,
-            },
             {
-              id: "Line4",
-              valueAxis: "Axis2",
-              balloonText:
-                "Toneladas Humedas" + "</b><br/>[[turno15]]T",
-              fontSize: scope.config.fontSize + 10,
-              labelPosition: "top",
-              bullet: "triangleUp",
-              lineThickness: 3,
-              bulletBorderAlpha: 2,
-              useLineColorForBulletBorder: true,
-              bulletBorderThickness: 4,
-              labelText: "[[turno15]]",
-              title: "Toneladas Humedas (Down)",
-              valueField: "turno15",
-              showBalloon: true,
-              linecolor: "#00c71b",
-              Color: "#F4D03F",
-              bulletSize: 30,
-              lineAlpha: 0,
-            },*/
-            {//linea de codigo para el tarjet de tonelaje humedo o seco
               id: "Line2",
               valueAxis: "Axis2",
               fontSize: scope.config.fontSize + 5,
@@ -1727,8 +1818,10 @@
     }
 
     function myCustomConfigurationChangeFunction() {
-      setTrendCategory ();
+      setTrendCategory();
       if (chart) {
+        chart.valueAxes[1].maximum = getCorrectChartMax();
+
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
         } else {
