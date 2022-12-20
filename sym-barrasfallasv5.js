@@ -18,7 +18,7 @@
         backgroundColor: "transparent",
         gridColor: "transparent",
         // plotAreaFillColor: "transparent",
-        showTitle: false,
+        showTitle: true,
         showValues: true,
         fontSize: 12,
         FormatType: null,
@@ -378,6 +378,9 @@
       daysOfMonth,
       dataArray
     ) {
+      console.log(new Date(timeProvider.displayTime.start).getDate());
+      if((new Date(timeProvider.displayTime.start).getMonth() == 0) && (new Date(timeProvider.displayTime.start).getDate() == 1) ) daysOfMonth = 0;
+      console.log(" ~ file: sym-barrasfallasv5.js:381 ~ daysOfMonth", daysOfMonth)
       let todayDate =
         timeProvider.displayTime.end != "*"
           ? new Date(timeProvider.displayTime.end)
@@ -390,9 +393,10 @@
       let moreDays = null;
 
       moreDays = daysOfPreviewMonth - start.getDate();
+      console.log(" ~ file: sym-barrasfallasv5.js:394 ~ moreDays", moreDays)
 
       todayDate.setDate(todayDate.getDate() + 1);
-
+      
       for (let dayIndex = 1; dayIndex <= daysOfMonth + moreDays; dayIndex++) {
         iterableDate.setDate(iterableDate.getDate() + 1);
 
@@ -790,8 +794,6 @@
       media,
       month
     ) {
-      console.log((twelfthTurnValue  ? ((twelfthTurnValue > 5623) ? twelfthTurnValue.toFixed(0) : null) : twelfthTurnValue) ||
-      null);
       return {
         timestamp: dayIndex + "/" + month,
         turno1:
@@ -1348,7 +1350,7 @@
               position: "left",
               stackType: "regular",
               // "title": "Horas",
-              maximum: 120,
+              maximum: 100,
               minimum: 0,
               step: 2,
               labelsEnabled: false,
@@ -1393,6 +1395,7 @@
               valueAxis: "Axis1",
               lineColor: "#25E576",
               labelRotation: 270,
+              
             },
             {
               id: "GAcumulado2",
@@ -1579,7 +1582,7 @@
               id: "Line1",
               valueAxis: "Axis2",
               balloonText:
-                "Toneladas Humedas" + "</b><br/>[[turno12]]T",
+                "Toneladas Secas" + "</b><br/>[[turno12]]T",
               fontSize: scope.config.fontSize + 10,
               labelPosition: "top",
               bullet: "diamond",
@@ -1588,7 +1591,7 @@
               useLineColorForBulletBorder: true,
               bulletBorderThickness: 4,
               labelText: "[[turno12]]",
-              title: "Toneladas Humedas",
+              title: "Toneladas Secas",
               valueField: "turno12",
               showBalloon: true,
               linecolor: "#25E576",
@@ -1644,9 +1647,9 @@
               id: "Line2",
               valueAxis: "Axis2",
               fontSize: scope.config.fontSize + 5,
-              balloonText: "Toneladas Secas" + "</b><br/>[[turno13]]T",
+              balloonText: "Toneladas Humedas" + "</b><br/>[[turno13]]T",
               labelPosition: "top",
-              title: "Toneladas Secas",
+              title: "Toneladas Humedas",
               valueField: "turno13",
               showBalloon: true,
               color: "#BFB8B8",
