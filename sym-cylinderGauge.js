@@ -12,7 +12,7 @@
         DataShape: "TimeSeries",
         FormatType: null, 
         Height: 400,
-        Width: 400,
+        Width: 800,
       };
     },
 
@@ -30,33 +30,61 @@
     scope.config.FormatType = null;
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
-    var symbolContainerDiv = elem.find("#container")[0];
-    var newUniqueIDString = "amChart_" + scope.symbol.Name;
-    symbolContainerDiv.id = newUniqueIDString;
+    var symbolContainerDiv1 = elem.find("#container1")[0];
+    var newUniqueIDString1 = "amChart_" + Math.random().toString(36).substr(2, 16);
+    symbolContainerDiv1.id = newUniqueIDString1;
+
+    var symbolContainerDiv2 = elem.find("#container2")[0];
+    var newUniqueIDString2 = "amChart_" + Math.random().toString(36).substr(2, 16);
+    symbolContainerDiv2.id = newUniqueIDString2;
 
     var chart;
     var dataArray = [];
+    var dataNumber;
 
     function myCustomDataUpdateFunction(data) {
       if (data) {
-        dataArray = [];
+        console.log(" ~ file: sym-cylinderGauge.js:46 ~ myCustomDataUpdateFunction ~ data", data)
+        let static = data.Data[0];
+        let real = data.Data[1];
 
-        if (!chart) chart = getNewChart(dataArray);
-        else refreshChart(chart, dataArray);
+        let realValue = getRealValue(real);
+        let staticValue = getStaticValue(static);
+        dataNumber = realValue;
+        dataArray = [...staticValue];
+        console.log(" ~ file: sym-cylinderGauge.js:56 ~ myCustomDataUpdateFunction ~ dataArray", dataArray)
+
+        if (!chart) chart = getNewChart(dataArray,dataNumber);
+        else refreshChart(chart, dataArray, dataNumber);
       }
     }
 
-    function getNewChart(dataArray) {
+    function getRealValue ( data ) {
+      let Value = data.Values.at(-1).Value;
+      return Value;
+    }
 
-      return AmCharts.makeChart(symbolContainerDiv.id, {
+    function getStaticValue ( data ) {
+      let Values = data.Values;
+      let array = Values.map(elem => Object({
+        value: elem.Value,
+        date: elem.Time.split("T")[0].replace("2022-","")
+      }))
+      
+      return array;
+    }
+
+    function getNewChart(dataArray, dataNumber) {
+
+      var chartCylinderGauge = AmCharts.makeChart(symbolContainerDiv1.id, {
         "type": "serial",
         "depth3D": 100,
         "angle": 30,
         "hideCredits": true,
         "dataProvider": [ {
           "category": "Wine left in the barrel",
-          "value1": 30,
-          "value2": 70
+          "value1": dataNumber,
+          "value2": 100 - dataNumber,
         } ],
         "valueAxes": [ {
           "stackType": "100%",
@@ -92,17 +120,61 @@
           "gridAlpha": 0
         },
       });
+
+
+      var chartLineBase = AmCharts.makeChart(symbolContainerDiv2.id, {
+    "type": "serial",
+    "theme": "none",
+    "marginRight": 40,
+    "marginLeft": 40,
+    "hideCredits": true,
+    "autoMarginOffset": 20,
+    "valueAxes": [{
+        "id": "v1",
+        "axisAlpha": 0,
+        "position": "left",
+        "ignoreAxisWidth":true
+    }],
+    "balloon": {
+        "borderThickness": 1,
+        "shadowAlpha": 0
+    },
+    "graphs": [{
+        "id": "g1",
+        "balloon":{
+          "drop":true,
+          "adjustBorderColor":false,
+          "color":"#ffffff"
+        },
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "lineColor": "#0EE1BE",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "title": "red line",
+        "useLineColorForBulletBorder": true,
+        "valueField": "value",
+        "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
+    }],
+    "categoryField": "date",
+    "dataProvider": dataArray,
+});
+
+      return chartCylinderGauge
     }
 
-    function refreshChart(chart, dataArray) {
-      chart.dataProvider = dataArray;
-      // chart.validateData();
-      // chart.validateNow();
+    function refreshChart(chart, dataArray, dataNumber) {
+      chart.dataProvider.value1 = dataNumber;
+      chart.dataProvider.value2 = 100 - dataNumber;
+      chart.validateData();
+      chart.validateNow();
     }
 
     function myCustomConfigurationChangeFunction(data) {
       if (chart) {
-        // chart.validateNow();
+        chart.validateNow();
       }
     }
   };
