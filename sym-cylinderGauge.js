@@ -161,20 +161,30 @@
     "categoryField": "date",
     "dataProvider": dataArray,
 });
-
-      return chartCylinderGauge
+      let amchart = {chartCylinderGauge, chartLineBase}
+      refreshChart(amchart, dataArray, dataNumber);
+      return {chartCylinderGauge, chartLineBase}
     }
 
     function refreshChart(chart, dataArray, dataNumber) {
-      chart.dataProvider.value1 = dataNumber;
-      chart.dataProvider.value2 = 100 - dataNumber;
-      chart.validateData();
-      chart.validateNow();
+
+      let {chartCylinderGauge, chartLineBase } = chart;
+
+      chartCylinderGauge.dataProvider.value1 = dataNumber;
+      chartCylinderGauge.dataProvider.value2 = 100 - dataNumber;
+      chartLineBase.dataProvider = dataArray;
+
+      chartCylinderGauge.validateData();
+      chartCylinderGauge.validateNow();
+      chartLineBase.validateData();
+      chartLineBase.validateNow();
     }
 
     function myCustomConfigurationChangeFunction(data) {
       if (chart) {
-        chart.validateNow();
+        let {chartCylinderGauge, chartLineBase } = chart;
+        chartCylinderGauge.validateNow();
+        chartLineBase.validateNow();
       }
     }
   };

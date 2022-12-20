@@ -145,37 +145,37 @@
                         startTime = `${startDate.getFullYear()}-01-01T19:00:00`;
                         break;
                     case 1:
-                        startTime = `${startDate.getFullYear()}-01-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-01-28T19:00:00`;
                         break;
                     case 2:
-                        startTime = `${startDate.getFullYear()}-02-26T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-02-25T19:00:00`;
                         break;
                     case 3:
-                        startTime = `${startDate.getFullYear()}-03-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-03-28T19:00:00`;
                         break;
                     case 4:
-                        startTime = `${startDate.getFullYear()}-04-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-04-27T19:00:00`;
                         break;
                     case 5:
-                        startTime = `${startDate.getFullYear()}-05-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-05-28T19:00:00`;
                         break;
                     case 6:
-                        startTime = `${startDate.getFullYear()}-06-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-06-27T19:00:00`;
                         break;
                     case 7:
-                        startTime = `${startDate.getFullYear()}-07-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-07-28T19:00:00`;
                         break;
                     case 8:
-                        startTime = `${startDate.getFullYear()}-08-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-08-28T19:00:00`;
                         break;
                     case 9:
-                        startTime = `${startDate.getFullYear()}-09-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-09-27T19:00:00`;
                         break;
                     case 10:
-                        startTime = `${startDate.getFullYear()}-10-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-10-28T19:00:00`;
                         break;
                     case 11:
-                        startTime = `${startDate.getFullYear()}-11-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-11-27T19:00:00`;
                         break;
                     default:
                         break;
@@ -189,7 +189,7 @@
             }
 
             function getStartEndTimeForSearch(month, year, day) {
-                // console.log(" ~ file: sym-searchfilterDynamicDatev4.js:122 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
+                console.log(" ~ file: sym-searchfilterDynamicDatev4.js:122 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
 
                 // START
 
@@ -200,11 +200,15 @@
                     year-=1;
                 }
                 
-                let startDate = new Date(year, month-1, day);
+                let startDate ;
 
+                if (month == 0) startDate = new Date(year, month, day);
+                else startDate = new Date(year, month, day);
+                
                 if (month - 1 == 1 && day == 29 && year % 4 > 0) {
                     startDate = new Date(year, month - 1, 28);
                 }
+                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:204 ~ getStartEndTimeForSearch ~ startDate", startDate)
 
                 let startMonth = startDate.getMonth() + 1;
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
@@ -229,47 +233,47 @@
                         endTime = `${endDate.getFullYear()}-01-28T19:00:00`;
                         break;
                     case 1:
-                        startTime = `${startDate.getFullYear()}-01-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-01-28T19:00:00`;
                         endTime = `${endDate.getFullYear()}-02-25T19:00:00`;
                         break;
                     case 2:
-                        startTime = `${startDate.getFullYear()}-02-26T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-02-25T19:00:00`;
                         endTime = `${endDate.getFullYear()}-03-28T19:00:00`;
                         break;
                     case 3:
-                        startTime = `${startDate.getFullYear()}-03-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-03-28T19:00:00`;
                         endTime = `${endDate.getFullYear()}-04-27T19:00:00`;
                         break;
                     case 4:
-                        startTime = `${startDate.getFullYear()}-04-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-04-27T19:00:00`;
                         endTime = `${endDate.getFullYear()}-05-28T19:00:00`;
                         break;
                     case 5:
-                        startTime = `${startDate.getFullYear()}-05-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-05-28T19:00:00`;
                         endTime = `${endDate.getFullYear()}-06-27T19:00:00`;
                         break;
                     case 6:
-                        startTime = `${startDate.getFullYear()}-06-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-06-27T19:00:00`;
                         endTime = `${endDate.getFullYear()}-07-28T19:00:00`;
                         break;
                     case 7:
-                        startTime = `${startDate.getFullYear()}-07-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-07-28T19:00:00`;
                         endTime = `${endDate.getFullYear()}-08-28T19:00:00`;
                         break;
                     case 8:
-                        startTime = `${startDate.getFullYear()}-08-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-08-28T19:00:00`;
                         endTime = `${endDate.getFullYear()}-09-27T19:00:00`;
                         break;
                     case 9:
-                        startTime = `${startDate.getFullYear()}-09-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-09-27T19:00:00`;
                         endTime = `${endDate.getFullYear()}-10-28T19:00:00`;
                         break;
                     case 10:
-                        startTime = `${startDate.getFullYear()}-10-29T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-10-28T19:00:00`;
                         endTime = `${endDate.getFullYear()}-11-27T19:00:00`;
                         break;
                     case 11:
-                        startTime = `${startDate.getFullYear()}-11-28T19:00:00`;
+                        startTime = `${startDate.getFullYear()}-11-27T19:00:00`;
                         endTime = `${endDate.getFullYear()}-12-31T19:00:00`;
                         break;
                 
