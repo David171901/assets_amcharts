@@ -1,8 +1,8 @@
-(function (CS) {
+﻿(function (CS) {
   //"use strict";
   var myEDcolumnDefinition = {
-    typeName: "RendimientoPlantaBarras",
-    displayName: "Rendimiento Planta Barras",
+    typeName: "RendimientoPlantaBarrasv2",
+    displayName: "Rendimiento Planta Barras _ v2",
     datasourceBehavior: CS.Extensibility.Enums.DatasourceBehaviors.Multiple,
     inject: ["timeProvider"],
     //iconUrl: '/Scripts/app/editor/symbols/ext/Icons/comm.png',
@@ -202,8 +202,6 @@
       dryTonnageReal,
       wetTonnageReal
     ) {
-      
-
       let todayDate =
         timeProvider.displayTime.end != "*"
           ? new Date(timeProvider.displayTime.end)
@@ -218,7 +216,7 @@
       let daysOfPreviewMonth = getDaysOfMonth(start.getMonth() + 1);
       let moreDays = daysOfPreviewMonth - start.getDate();
       todayDate.setDate(todayDate.getDate() + 1);
-      
+
       let daysOfMonth_ = setDaysCalendarMine(todayDate.getMonth());
       
       if((new Date(timeProvider.displayTime.start).getMonth() == 0) && (new Date(timeProvider.displayTime.start).getDate() == 1) ) {
@@ -924,7 +922,7 @@
             axisAlpha: 1,
             position: "right",
             gridAlpha: 0.1,
-            maximum: 10000, //scope.config.maximumYValueAxisv2,
+            maximum: 8000,//scope.config.maximumYValueAxisv2,
             minimum: 3000,
           },
         ],
@@ -959,7 +957,7 @@
           {
             id: "GAcumulado2",
             clustered: false,
-            //title: "San Cristobal - Carahuacra", //turno dia SC-CAR
+            title: "Ticlio", //turno dia SC-CAR
             type: "column",
             fillAlphas: 0.8,
             lineAlpha: 0.3,
@@ -976,7 +974,7 @@
             valueField: "turno2",
             valueAxis: "Axis0",
           },
-          {
+        /*  {
             id: "Procesado1",
             clustered: false,
             title: "Ticlio", //Turno Noche Ticlio
@@ -1017,7 +1015,7 @@
             valueField: "turno2new",
             valueAxis: "Axis1",
             labelText: "",
-          },
+          },*/
           {
             id: "Line1",
             valueAxis: "Axis2",

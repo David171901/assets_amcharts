@@ -379,7 +379,6 @@
       dataArray
     ) {
       console.log(new Date(timeProvider.displayTime.start).getDate());
-      if((new Date(timeProvider.displayTime.start).getMonth() == 0) && (new Date(timeProvider.displayTime.start).getDate() == 1) ) daysOfMonth = 0;
       console.log(" ~ file: sym-barrasfallasv5.js:381 ~ daysOfMonth", daysOfMonth)
       let todayDate =
         timeProvider.displayTime.end != "*"
@@ -393,11 +392,16 @@
       let moreDays = null;
 
       moreDays = daysOfPreviewMonth - start.getDate();
-      console.log(" ~ file: sym-barrasfallasv5.js:394 ~ moreDays", moreDays)
+      
+      let daysOfMonth_ = setDaysCalendarMine(todayDate.getMonth());
+      if((new Date(timeProvider.displayTime.start).getMonth() == 0) && (new Date(timeProvider.displayTime.start).getDate() == 1) ) {
+        daysOfMonth_ = 0;
+        moreDays = 27;
+      };
 
       todayDate.setDate(todayDate.getDate() + 1);
       
-      for (let dayIndex = 1; dayIndex <= daysOfMonth + moreDays; dayIndex++) {
+      for (let dayIndex = 1; dayIndex <= daysOfMonth_ + moreDays; dayIndex++) {
         iterableDate.setDate(iterableDate.getDate() + 1);
 
         if (iterableDate.getTime() <= todayDate.getTime()) {
@@ -761,6 +765,53 @@
           dataArray.push(newDataObject);
         }
       }
+    }
+
+    function setDaysCalendarMine(month) {
+      let dayCalendar;
+
+      switch (month) {
+        case 0:
+          dayCalendar = 28;
+          break;
+        case 1:
+          dayCalendar = 25;
+          break;
+        case 2:
+          dayCalendar = 28;
+          break;
+        case 3:
+          dayCalendar = 27;
+          break;
+        case 4:
+          dayCalendar = 28;
+          break;
+        case 5:
+          sdayCalendar = 27;
+          break;
+        case 6:
+          dayCalendar = 28;
+          break;
+        case 7:
+          dayCalendar = 28;
+          break;
+        case 8:
+          dayCalendar = 27;
+          break;
+        case 9:
+          dayCalendar = 28;
+          break;
+        case 10:
+          dayCalendar = 27;
+          break;
+        case 11:
+          dayCalendar = 31;
+          break;
+        default:
+          break;
+      }
+
+      return dayCalendar;
     }
 
     function setValueAxisYToMargin(dataArray) {
