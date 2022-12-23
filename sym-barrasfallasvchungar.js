@@ -288,6 +288,7 @@
       let moreDays = null;
       moreDays = daysOfPreviewMonth - startTime.getDate();
 
+      
       let items = [];
       for (let index = 0; index < endTime.getDate() + moreDays + 1; index++) {
         let dayStart = startTime.getDate();
@@ -396,9 +397,15 @@
 
       moreDays = daysOfPreviewMonth - start.getDate();
 
+      let daysOfMonth_ = setDaysCalendarMine(todayDate.getMonth());
+      if((new Date(timeProvider.displayTime.start).getMonth() == 0) && (new Date(timeProvider.displayTime.start).getDate() == 1) ) {
+        daysOfMonth_ = 0;
+        moreDays = 27;
+      };
+
       todayDate.setDate(todayDate.getDate() + 1);
 
-      for (let dayIndex = 1; dayIndex <= daysOfMonth + moreDays; dayIndex++) {
+      for (let dayIndex = 1; dayIndex <= daysOfMonth_ + moreDays; dayIndex++) {
         iterableDate.setDate(iterableDate.getDate() + 1);
 
         if (iterableDate.getTime() <= todayDate.getTime()) {
@@ -763,6 +770,50 @@
         }
       }
     }
+
+    function setDaysCalendarMine(month) {
+      let dayCalendar;
+
+      switch (month) {
+        case 0:
+          dayCalendar = 28;
+          break;
+        case 1:
+          dayCalendar = 25;
+          break;
+        case 2:
+          dayCalendar = 28;
+          break;
+        case 3:
+          dayCalendar = 27;
+          break;
+        case 4:
+          dayCalendar = 28;
+          break;
+        case 5:
+          sdayCalendar = 27;
+          break;
+        case 6:
+          dayCalendar = 28;
+          break;
+        case 7:
+          dayCalendar = 28;
+          break;
+        case 8:
+          dayCalendar = 27;
+          break;
+        case 9:
+          dayCalendar = 28;
+          break;
+        case 10:
+          dayCalendar = 27;
+          break;
+        case 11:
+          dayCalendar = 31;
+          break;
+        default:
+          break;
+      }
 
     function setValueAxisYToMargin(dataArray) {
       let totals = dataArray.map(function (item) {
