@@ -58,28 +58,20 @@
 
     function myCustomDataUpdateFunction(data) {
       if (data) {
-        console.log(
-          " ~ file: sym-tableconteo.js:63 ~ myCustomDataUpdateFunction ~ data",
-          data
-        );
         // Datos iniciales
         let dataDryTons = data.Data[0].Values;
         dataDryTons.shift();
         dataDryTons.shift();
         dataDryTons = dataDryTons.filter((el) => el.Value != 0);
-        console.log(" ~ file: sym-tableconteo.js:67 ~ myCustomDataUpdateFunction ~ dataDryTons", dataDryTons)
         dataDryTons = dataDryTons.map((el) => el.Value.replace(",", ""));
         let dataTargetUp = 5623; // data.Data[1].Values[0].Value
         let dataTargetDown = 5296; // data.Data[2].Values[0].Value
 
         let dataDryTonsUp = dataDryTons.filter((el) => el > dataTargetUp);
-        console.log(" ~ file: sym-tableconteo.js:72 ~ myCustomDataUpdateFunction ~ dataDryTonsUp", dataDryTonsUp)
         let dataDryTonsDown = dataDryTons.filter((el) => el < dataTargetDown && el > 100);
-        console.log(" ~ file: sym-tableconteo.js:74 ~ myCustomDataUpdateFunction ~ dataDryTonsDown", dataDryTonsDown)
         let dataDryTonsRegular = dataDryTons.filter(
           (el) => el > dataTargetDown && el < dataTargetUp
         );
-        console.log(" ~ file: sym-tableconteo.js:78 ~ myCustomDataUpdateFunction ~ dataDryTonsRegular", dataDryTonsRegular)
 
         let cellA1 = dataDryTonsUp.length;
         let cellA2 = dataDryTonsRegular.length;
@@ -113,9 +105,9 @@
 
         let zeroHeaders = ["Dias", "Prom. TMS", "Diferencia"]; //,Columnas;
 
-        let row1 = [cellA1.toFixed(scope.config.numberOfDecimalPlaces), cellB1.toFixed(scope.config.numberOfDecimalPlaces), cellC1.toFixed(scope.config.numberOfDecimalPlaces)];
-        let row2 = [cellA2.toFixed(scope.config.numberOfDecimalPlaces), cellB2.toFixed(scope.config.numberOfDecimalPlaces), cellC2.toFixed(scope.config.numberOfDecimalPlaces)];
-        let row3 = [cellA3.toFixed(scope.config.numberOfDecimalPlaces), cellB3.toFixed(scope.config.numberOfDecimalPlaces), cellC3.toFixed(scope.config.numberOfDecimalPlaces)];
+        let row1 = [cellA1.toFixed(0), cellB1.toFixed(scope.config.numberOfDecimalPlaces), cellC1.toFixed(scope.config.numberOfDecimalPlaces)];
+        let row2 = [cellA2.toFixed(0), cellB2.toFixed(scope.config.numberOfDecimalPlaces), cellC2.toFixed(scope.config.numberOfDecimalPlaces)];
+        let row3 = [cellA3.toFixed(0), cellB3.toFixed(scope.config.numberOfDecimalPlaces), cellC3.toFixed(scope.config.numberOfDecimalPlaces)];
         let row4 = ["", cellB4.toFixed(scope.config.numberOfDecimalPlaces), ""];
 
         //     let totalMINE = [];
@@ -165,14 +157,6 @@
     }
 
     function getTotalData(totalOfArrays, arrayUnitOne, arrayUnitTwo) {
-      console.log(
-        " ~ file: sym-tableskips.js ~ line 88 ~ getTotalData ~ arrayUnitTwo",
-        arrayUnitTwo
-      );
-      console.log(
-        " ~ file: sym-tableskips.js ~ line 88 ~ getTotalData ~ arrayUnitOne",
-        arrayUnitOne
-      );
       for (let index = 0; index < arrayUnitOne.length; index++) {
         totalOfArrays.push(
           (

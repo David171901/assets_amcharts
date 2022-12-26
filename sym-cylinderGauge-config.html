@@ -1,1 +1,103 @@
-﻿
+﻿<ul kendo-panel-bar class="t-side-panel-bgcolor" style="font-size: 14px">
+  <li>
+    <span class="panel-bar-label-no-wrap">Cylinder</span>
+    <div style="margin: 8px 0">
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 15px; font-size: 14px"
+      >
+        <input
+          type="checkbox"
+          class="c-config-checkbox"
+          ng-model="config.useCustomTitle1"
+        />Usar título personalizado<br />
+      </label>
+      <label
+        style="margin-top: 8px; margin-left: 20px; font-size: 14px"
+        ng-show="config.useCustomTitle1"
+      >
+        <br />
+        <input
+          type="text"
+          style="text-align: center; margin-left: 15px"
+          ng-model="config.customTitle1"
+        />
+        <br />
+      </label>
+
+      <div class="config-option-format">
+        <pv-color-picker
+          id="colorChart1"
+          ng-model="config.colorChart1"
+          config="config"
+          colorkeyword="Color"
+        ></pv-color-picker>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <span class="panel-bar-label-no-wrap">Line chart</span>
+    <div style="margin: 8px 0">
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 15px; font-size: 14px"
+      >
+        <input
+          type="checkbox"
+          class="c-config-checkbox"
+          ng-model="config.useCustomTitle2"
+        />Usar título personalizado<br />
+      </label>
+      <label
+        style="margin-top: 8px; margin-left: 20px; font-size: 14px"
+        ng-show="config.useCustomTitle2EEEE"
+      >
+        <br />
+        <input
+          type="text"
+          style="text-align: center; margin-left: 15px"
+          ng-model="config.customTitle2"
+        />
+        <br />
+      </label>
+
+      <div class="config-option-format">
+        <pv-color-picker
+          id="colorChart2"
+          ng-model="config.colorChart2"
+          config="config"
+          colorkeyword="Color"
+        ></pv-color-picker>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <span class="panel-bar-label-no-wrap">Ambas</span>
+    <div style="margin: 8px 0">
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 14px; font-size: 14px"
+      >
+        <input
+          type="number"
+          style="margin-right: 8px; text-align: center"
+          ng-model="config.decimalPlaces"
+        />Número de decimales<br />
+      </label>
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 35px; font-size: 14px"
+      >
+        <label>Tamaño texto</label>
+        <input
+          type="number"
+          class=""
+          style="margin-left: 8px"
+          ng-model="config.fontSize"
+        />
+      </label>
+    </div>
+  </li>
+</ul>

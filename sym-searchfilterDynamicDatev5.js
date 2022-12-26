@@ -130,14 +130,15 @@
                 if (!year) year = currentDate.getFullYear();
                 
                 let startDate = new Date(year, month-1, day);
-
+                
                 if (month - 1 == 1 && day == 29 && year % 4 > 0) {
                     startDate = new Date(year, month - 1, 28);
                 }
-
+                
                 let startMonth = startDate.getMonth() + 1;
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
                 
+                // console.log(" ~ file: sym-searchfilterDynamicDatev5.js:128 ~ getStartEndTimeForLoad ~ year", year)
                 let startTime;
 
                 switch (month) {
@@ -189,7 +190,7 @@
             }
 
             function getStartEndTimeForSearch(month, year, day) {
-                console.log(" ~ file: sym-searchfilterDynamicDatev4.js:122 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
+                // console.log(" ~ file: sym-searchfilterDynamicDatev4.js:122 ~ getStartEndTimeForSearch ~ month, year, day", month, year, day)
 
                 // START
 
@@ -208,7 +209,7 @@
                 if (month - 1 == 1 && day == 29 && year % 4 > 0) {
                     startDate = new Date(year, month - 1, 28);
                 }
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:204 ~ getStartEndTimeForSearch ~ startDate", startDate)
+                // console.log(" ~ file: sym-searchfilterDynamicDatev5.js:204 ~ getStartEndTimeForSearch ~ startDate", startDate)
 
                 let startMonth = startDate.getMonth() + 1;
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
@@ -226,7 +227,7 @@
 
                 let startTime;
                 let endTime;
-
+                // console.log(" ~ file: sym-searchfilterDynamicDatev5.js:128 ~ getStartEndTimeForLoad ~ year", year)
                 switch (month) {
                     case 0:
                         startTime = `${startDate.getFullYear()}-01-01T19:00:00`;
