@@ -18,6 +18,8 @@
         colorChart3: "#F6FC45",
         colorChart4: "#F8DC55",
         colorChart5: "#FC8D45",
+        colorChart6: "#000000",
+        colorChart7: "#000000",
         numberRange1: 20,
         numberRange2: 20,
         numberRange3: 20,
@@ -49,6 +51,7 @@
     var dataArray = [];
 
     function myCustomDataUpdateFunction(data) {
+      console.log(" ~ file: sym-bulletChart.js:54 ~ myCustomDataUpdateFunction ~ data", data)
       if (data) {
         dataArray = [];
 
@@ -128,14 +131,14 @@
             clustered: false,
             columnWidth: 0.3,
             fillAlphas: 1,
-            lineColor: "#000000",
+            lineColor: scope.config.colorChart6,
             stackable: false,
             type: "column",
             valueField: "bullet",
           },
           {
             columnWidth: 0.5,
-            lineColor: "#000000",
+            lineColor: scope.config.colorChart7,
             lineThickness: 3,
             noStepRisers: true,
             stackable: false,
@@ -167,6 +170,8 @@
         chart.graphs[2].lineColor = scope.config.colorChart3;
         chart.graphs[3].lineColor = scope.config.colorChart4;
         chart.graphs[4].lineColor = scope.config.colorChart5;
+        chart.graphs[5].lineColor = scope.config.colorChart6;
+        chart.graphs[6].lineColor = scope.config.colorChart7;
 
 
         if(scope.config.customTitle) chart.dataProvider = [{
