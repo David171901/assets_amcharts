@@ -11,8 +11,19 @@
       return {
         DataShape: "TimeSeries",
         FormatType: null,
-        Height: 500,
-        Width: 250,
+        Height: 200,
+        Width: 500,
+        colorChart1: "#47DB53",
+        colorChart2: "#C3E44B",
+        colorChart3: "#F6FC45",
+        colorChart4: "#F8DC55",
+        colorChart5: "#FC8D45",
+        numberRange1: 20,
+        numberRange2: 20,
+        numberRange3: 20,
+        numberRange4: 20,
+        numberRange5: 20,
+        customTitle: "",
       };
     },
 
@@ -52,18 +63,18 @@
         theme: "none",
         autoMargins: false,
         marginTop: 30,
-        marginLeft: 80,
+        marginLeft: 100,
         marginBottom: 30,
-        marginRight: 50,
-        "hideCredits": true,
+        marginRight: 100,
+        hideCredits: true,
         dataProvider: [
           {
-            category: "Evaluation",
-            excelent: 20,
-            good: 20,
-            average: 20,
-            poor: 20,
-            bad: 20,
+            category: scope.config.customTitle,
+            excelent: scope.config.numberRange1,
+            good: scope.config.numberRange2,
+            average: scope.config.numberRange3,
+            poor: scope.config.numberRange4,
+            bad: scope.config.numberRange5,
             limit: 78,
             full: 100,
             bullet: 65,
@@ -71,7 +82,7 @@
         ],
         valueAxes: [
           {
-            maximum: 100,
+            maximum: scope.config.numberRange1 + scope.config.numberRange2 + scope.config.numberRange3 + scope.config.numberRange4 + scope.config.numberRange5,
             stackType: "regular",
             gridAlpha: 0,
           },
@@ -80,35 +91,35 @@
         graphs: [
           {
             fillAlphas: 0.8,
-            lineColor: "#19d228",
+            lineColor: scope.config.colorChart1,
             showBalloon: false,
             type: "column",
             valueField: "excelent",
           },
           {
             fillAlphas: 0.8,
-            lineColor: "#b4dd1e",
+            lineColor: scope.config.colorChart2,
             showBalloon: false,
             type: "column",
             valueField: "good",
           },
           {
             fillAlphas: 0.8,
-            lineColor: "#f4fb16",
+            lineColor: scope.config.colorChart3,
             showBalloon: false,
             type: "column",
             valueField: "average",
           },
           {
             fillAlphas: 0.8,
-            lineColor: "#f6d32b",
+            lineColor: scope.config.colorChart4,
             showBalloon: false,
             type: "column",
             valueField: "poor",
           },
           {
             fillAlphas: 0.8,
-            lineColor: "#fb7116",
+            lineColor: scope.config.colorChart5,
             showBalloon: false,
             type: "column",
             valueField: "bad",
@@ -143,14 +154,57 @@
     }
 
     function refreshChart(chart, dataArray) {
-      chart.dataProvider = dataArray;
-      // chart.validateData();
-      // chart.validateNow();
+      // chart.dataProvider = dataArray;
+      chart.validateData();
+      chart.validateNow();
     }
 
     function myCustomConfigurationChangeFunction(data) {
       if (chart) {
-        // chart.validateNow();
+
+        chart.graphs[0].lineColor = scope.config.colorChart1;
+        chart.graphs[1].lineColor = scope.config.colorChart2;
+        chart.graphs[2].lineColor = scope.config.colorChart3;
+        chart.graphs[3].lineColor = scope.config.colorChart4;
+        chart.graphs[4].lineColor = scope.config.colorChart5;
+
+
+        if(scope.config.customTitle) chart.dataProvider = [{
+          ...chart.dataProvider[0],
+          category: scope.config.customTitle,
+        }];
+
+        if(scope.config.numberRange1) chart.dataProvider = [{
+          ...chart.dataProvider[0],
+          excelent: scope.config.numberRange1,
+        }];
+
+        if(scope.config.numberRange2) chart.dataProvider = [{
+          ...chart.dataProvider[0],
+          good: scope.config.numberRange2,
+        }];
+
+        if(scope.config.numberRange3) chart.dataProvider = [{
+          ...chart.dataProvider[0],
+          average: scope.config.numberRange3,
+        }];
+
+        if(scope.config.numberRange4) chart.dataProvider = [{
+          ...chart.dataProvider[0],
+          poor: scope.config.numberRange4,
+        }];
+
+        if(scope.config.numberRange5) chart.dataProvider = [{
+          ...chart.dataProvider[0],
+          bad: scope.config.numberRange5,
+        }];
+
+        // if(scope.config.numberRange1 || scope.config.numberRange2 || scope.config.numberRange3 || scope.config.numberRange4 || scope.config.numberRange5) chart.valueAxes = [{
+        //   ...chart.valueAxes[0],
+        //   maximum: scope.config.numberRange1 + scope.config.numberRange2 + scope.config.numberRange3 + scope.config.numberRange4 + scope.config.numberRange5,
+        // }]
+
+        chart.validateNow();
       }
     }
   };

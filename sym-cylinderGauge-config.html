@@ -51,7 +51,7 @@
       </label>
       <label
         style="margin-top: 8px; margin-left: 20px; font-size: 14px"
-        ng-show="config.useCustomTitle2EEEE"
+        ng-show="config.useCustomTitle2"
       >
         <br />
         <input
@@ -98,6 +98,30 @@
           ng-model="config.fontSize"
         />
       </label>
+
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 15px; font-size: 14px"
+      >
+        <input
+          type="checkbox"
+          class="c-config-checkbox"
+          ng-model="config.useCustomTitle"
+        />Usar título personalizado<br />
+      </label>
+      <label
+        style="margin-top: 8px; margin-left: 20px; font-size: 14px"
+        ng-show="config.useCustomTitle"
+      >
+        <br />
+        <input
+          type="text"
+          style="text-align: center; margin-left: 15px"
+          ng-model="config.customTitle"
+        />
+        <br />
+      </label>
+
     </div>
   </li>
 </ul>

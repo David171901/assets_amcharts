@@ -1,1 +1,139 @@
-﻿
+﻿<ul kendo-panel-bar class="t-side-panel-bgcolor" style="font-size: 14px">
+  <li>
+    <span class="panel-bar-label-no-wrap">Bullet</span>
+    <div style="margin: 8px 0">
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 15px; font-size: 14px"
+      >
+        <input
+          type="checkbox"
+          class="c-config-checkbox"
+          ng-model="config.useCustomTitle"
+        />Usar título personalizado<br />
+      </label>
+      <label
+        style="margin-top: 8px; margin-left: 20px; font-size: 14px"
+        ng-show="config.useCustomTitle"
+      >
+        <br />
+        <input
+          type="text"
+          style="text-align: center; margin-left: 15px"
+          ng-model="config.customTitle"
+        />
+        <br />
+      </label>
+
+      <div class="config-option-format">
+        <pv-color-picker
+          id="colorChart1"
+          ng-model="config.colorChart1"
+          config="config"
+          colorkeyword="Color"
+        ></pv-color-picker>
+      </div>
+
+      <div class="config-option-format">
+        <pv-color-picker
+          id="colorChart1"
+          ng-model="config.colorChart2"
+          config="config"
+          colorkeyword="Color"
+        ></pv-color-picker>
+      </div>
+
+      <div class="config-option-format">
+        <pv-color-picker
+          id="colorChart1"
+          ng-model="config.colorChart3"
+          config="config"
+          colorkeyword="Color"
+        ></pv-color-picker>
+      </div>
+
+      <div class="config-option-format">
+        <pv-color-picker
+          id="colorChart1"
+          ng-model="config.colorChart4"
+          config="config"
+          colorkeyword="Color"
+        ></pv-color-picker>
+      </div>
+
+      <div class="config-option-format">
+        <pv-color-picker
+          id="colorChart1"
+          ng-model="config.colorChart5"
+          config="config"
+          colorkeyword="Color"
+        ></pv-color-picker>
+      </div>
+
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 35px; font-size: 14px"
+      >
+        <label></label>
+        <input
+          type="number"
+          class=""
+          style="margin-left: 8px"
+          ng-model="config.numberRange1"
+        />
+      </label>
+
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 35px; font-size: 14px"
+      >
+        <label></label>
+        <input
+          type="number"
+          class=""
+          style="margin-left: 8px"
+          ng-model="config.numberRange2"
+        />
+      </label>
+
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 35px; font-size: 14px"
+      >
+        <label></label>
+        <input
+          type="number"
+          class=""
+          style="margin-left: 8px"
+          ng-model="config.numberRange3"
+        />
+      </label>
+
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 35px; font-size: 14px"
+      >
+        <label></label>
+        <input
+          type="number"
+          class=""
+          style="margin-left: 8px"
+          ng-model="config.numberRange4"
+        />
+      </label>
+
+      <label
+        class="flex-align-center"
+        style="margin-top: 8px; margin-left: 35px; font-size: 14px"
+      >
+        <label></label>
+        <input
+          type="number"
+          class=""
+          style="margin-left: 8px"
+          ng-model="config.numberRange5"
+        />
+      </label>
+    </div>
+  </li>
+</ul>

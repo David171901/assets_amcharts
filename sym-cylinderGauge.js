@@ -13,6 +13,7 @@
         FormatType: null,
         Height: 400,
         Width: 800,
+        customTitle: "",
         customTitle1: "",
         customTitle2: "",
         colorChart1: "#0EE1BE",
@@ -51,6 +52,7 @@
     var dataNumber;
 
     function myCustomDataUpdateFunction(data) {
+      scope.customTitle = scope.customTitle;
       if (data) {
         let static = data.Data[0];
         let real = data.Data[1];
@@ -70,6 +72,40 @@
       return Value;
     }
 
+    function createArrayOfChartTitles(typeChart) {
+      var titlesArray;
+
+      switch (typeChart) {
+        case 'cylinder':
+          if (scope.config.useCustomTitle1) {
+            titlesArray = [
+              {
+                text: scope.config.customTitle1,
+                size: scope.config.fontSize,
+              },
+            ];
+          }
+          return titlesArray;
+
+          break;
+        case 'line':
+          if (scope.config.useCustomTitle2) {
+            titlesArray = [
+              {
+                text: scope.config.customTitle2,
+                size: scope.config.fontSize,
+              },
+            ];
+          }
+          return titlesArray;  
+
+          break;
+      
+        default:
+          break;
+      }
+    }
+
     function getStaticValue(data) {
       let Values = data.Values;
       let array = Values.map((elem) =>
@@ -87,6 +123,7 @@
         type: "serial",
         depth3D: 100,
         angle: 30,
+        titles: createArrayOfChartTitles('cylinder'),
         hideCredits: true,
         fontSize: scope.config.fontSize,
         dataProvider: [
@@ -142,6 +179,7 @@
         marginRight: 40,
         marginLeft: 40,
         hideCredits: true,
+        titles: createArrayOfChartTitles('line'),
         autoMarginOffset: 20,
         fontSize: scope.config.fontSize,
         valueAxes: [
@@ -189,6 +227,7 @@
       let { chartCylinderGauge, chartLineBase } = chart;
 
       if (chartCylinderGauge) {
+        chartCylinderGauge.titles = createArrayOfChartTitles('cylinder');
         chartCylinderGauge.dataProvider = [
           {
             category: "Wine left in the barrel",
@@ -201,6 +240,8 @@
       }
 
       if (chartLineBase) {
+        chartLineBase.title = createArrayOfChartTitles('line');
+
         chartLineBase.dataProvider = dataArray;
 
         chartLineBase.validateData();
@@ -214,9 +255,11 @@
 
         // chartCylinderGauge
         chartCylinderGauge.graphs[0].fillColors = scope.config.colorChart1;
-
+        chartCylinderGauge.titles = createArrayOfChartTitles('cylinder');
+        
         // chartLineBase
         chartLineBase.graphs[0].lineColor = scope.config.colorChart2;
+        chartLineBase.titles = createArrayOfChartTitles('line');
 
         if (chart.fontSize !== scope.config.fontSize) {
           chartCylinderGauge.fontSize = scope.config.fontSize;

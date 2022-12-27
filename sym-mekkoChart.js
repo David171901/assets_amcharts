@@ -38,12 +38,26 @@
     var dataArray = [];
 
     function myCustomDataUpdateFunction(data) {
+      console.log(" ~ file: sym-mekkoChart.js:41 ~ myCustomDataUpdateFunction ~ data", data)
       if (data) {
         dataArray = [];
+        
+        formatData(data.Data)
+
+        console.log(" ~ file: sym-mekkoChart.js:44 ~ myCustomDataUpdateFunction ~ dataArray", dataArray)
 
         if (!chart) chart = getNewChart(dataArray);
         else refreshChart(chart, dataArray);
       }
+    }
+
+    function formatData ( ...data ) {
+      data[0].forEach(el => {
+        dataArray.push(Object({
+          total: el.Values.at(-1).Value,
+          label: el.Label.split('|')[1],
+        }));
+      })
     }
 
     function getNewChart(dataArray) {
@@ -53,22 +67,22 @@
         "hideCredits": true,
         dataProvider: [
           {
-            continent: "North America",
+            label: "North America",
             trucks: 40000,
             total: 310000,
           },
           {
-            continent: "Asia",
+            label: "Asia",
             SUVs: 40000,
             total: 310000,
           },
           {
-            continent: "Europe",
+            label: "Europe",
             cars: 110000,
             total: 310000,
           },
         ],
-        categoryField: "continent",
+        categoryField: "label",
         categoryAxis: {
           gridAlpha: 0.1,
           axisAlpha: 0,
