@@ -26,7 +26,7 @@
         lineThick: 4,
         seriesColor1: "#ffc90e",
         seriesColor2: "#00a2e8",
-        seriesColor3: "#ff0000",
+        seriesColor3: "#000000",
         seriesColor4: "#000000",
         seriesColor5: "#000000",
         seriesColor6: "#000000",
@@ -502,7 +502,7 @@
         chart.valueAxes[1].minimum = getCorrectChartMin();
         chart.valueAxes[1].maximum = getCorrectChartMax() + maxLabelRight;
 
-        chart.valueAxes[2].maximum = getCorrectChartLine();
+        // chart.valueAxes[2].maximum = getCorrectChartLine();
 
         chart.dataProvider = dataArray;
         chart.validateData();
@@ -922,7 +922,7 @@
             axisAlpha: 1,
             position: "right",
             gridAlpha: 0.1,
-            maximum: 8000,//scope.config.maximumYValueAxisv2,
+            maximum: 6000,//scope.config.maximumYValueAxisv2,
             minimum: 3000,
           },
         ],
@@ -974,48 +974,6 @@
             valueField: "turno2",
             valueAxis: "Axis0",
           },
-        /*  {
-            id: "Procesado1",
-            clustered: false,
-            title: "Ticlio", //Turno Noche Ticlio
-            type: "column",
-            fillAlphas: 0.8,
-            fontSize: 35,
-            bold: true,
-            lineColor: scope.config.seriesColor3,
-            columnWidth: 0.5,
-            showAllValueLabels: true,
-            labelRotation: -45,
-            backgroundcolor: "transparent",
-            balloonText:
-              "[[title]]" +
-              "<b><br />[[timestamp]]</b><br />[[turno1new]] " +
-              stringUnitsFourth,
-            valueField: "turno1new",
-            valueAxis: "Axis1",
-            labelText: "",
-          },
-          {
-            id: "Procesado2",
-            clustered: false,
-            //title: "Ticlio", //Turno Dia Ticlio
-            type: "column",
-            fillAlphas: 0.8,
-            fontSize: 35,
-            bold: true,
-            lineColor: scope.config.seriesColor4,
-            columnWidth: 0.5,
-            showAllValueLabels: true,
-            labelRotation: -45,
-            backgroundcolor: "transparent",
-            balloonText:
-              "[[title]]" +
-              "<b><br />[[timestamp]]</b><br />[[turno2new]] " +
-              stringUnitsFourth,
-            valueField: "turno2new",
-            valueAxis: "Axis1",
-            labelText: "",
-          },*/
           {
             id: "Line1",
             valueAxis: "Axis2",
@@ -1025,9 +983,9 @@
             title: "Toneladas Secas",
             valueField: "drytonnage",
             showBalloon: true,
-            color: "#0a0a0a",
+            color: "#000000",
             bulletSize: 30,
-            lineColor: scope.config.seriesColor5,
+            lineColor: "#08FF00",
             type: "smoothedLine",
             bullet: "diamond",
             lineThickness: 3,
@@ -1040,46 +998,7 @@
             labelText: "[[drytonnage]]",
           },
           {
-            id: "Line3",
-            valueAxis: "Axis2",
-            balloonText: "Toneladas Secas" + "</b><br/>[[drytonnageup]]T",
-            fontSize: scope.config.fontSize + 10,
-            labelPosition: "top",
-            bullet: "diamond",
-            lineThickness: 3,
-            bulletBorderAlpha: 2,
-            useLineColorForBulletBorder: true,
-            bulletBorderThickness: 4,
-            title: "Produccion encima del límite esperado",
-            valueField: "drytonnageup",
-            showBalloon: true,
-            balloncolor: "#001BFF",
-            linecolor: scope.config.seriesColor6,
-            Color: "#001BFF",
-            bulletSize: 30,
-            lineAlpha: 0,
-          },
-          {
             id: "Line4",
-            valueAxis: "Axis2",
-            balloonText: "Toneladas Secas" + "</b><br/>[[drytonnagedown]]T",
-            fontSize: scope.config.fontSize + 10,
-            labelPosition: "top",
-            bullet: "diamond",
-            lineThickness: 3,
-            bulletBorderAlpha: 2,
-            useLineColorForBulletBorder: true,
-            bulletBorderThickness: 4,
-            title: "Produccion debajo del límite esperado",
-            valueField: "drytonnagedown",
-            showBalloon: true,
-            linecolor: scope.config.seriesColor7,
-            Color: "#FF0000",
-            bulletSize: 30,
-            lineAlpha: 0,
-          },
-          {
-            id: "Line2",
             valueAxis: "Axis2",
             fontSize: scope.config.fontSize,
             balloonText: "Toneladas Humedas" + "</b><br/>[[wettonnage]]T",
@@ -1099,6 +1018,45 @@
             fillAlphas: 0,
             lineAlpha: 1,
             dashLengthField: "dashLengthLine",
+          },
+          {
+            id: "Line2",
+            valueAxis: "Axis2",
+            balloonText: "Toneladas Secas" + "</b><br/>[[drytonnageup]]T",
+            fontSize: scope.config.fontSize + 10,
+            labelPosition: "top",
+            bullet: "diamond",
+            lineThickness: 3,
+            bulletBorderAlpha: 2,
+            useLineColorForBulletBorder: true,
+            bulletBorderThickness: 4,
+            title: "Produccion encima del límite esperado",
+            valueField: "drytonnageup",
+            showBalloon: true,
+            balloncolor: "#001BFF",
+            linecolor: "#0027FF",
+            color: "#000000",
+            bulletSize: 30,
+            lineAlpha: 0,
+          },
+          {
+            id: "Line3",
+            valueAxis: "Axis2",
+            balloonText: "Toneladas Secas" + "</b><br/>[[drytonnagedown]]T",
+            fontSize: scope.config.fontSize + 10,
+            labelPosition: "top",
+            bullet: "diamond",
+            lineThickness: 3,
+            bulletBorderAlpha: 2,
+            useLineColorForBulletBorder: true,
+            bulletBorderThickness: 4,
+            title: "Produccion debajo del límite esperado",
+            valueField: "drytonnagedown",
+            showBalloon: true,
+            linecolor: "#FF0000",
+            color: "#000000",
+            bulletSize: 30,
+            lineAlpha: 0,
           },
         ],
         legend: {
@@ -1138,7 +1096,7 @@
         chart.valueAxes[1].minimum = getCorrectChartMin();
         chart.valueAxes[1].maximum = getCorrectChartMax() + maxLabelRight;
 
-        chart.valueAxes[2].maximum = getCorrectChartLine();
+        // chart.valueAxes[2].maximum = getCorrectChartLine();
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
         } else {
@@ -1160,27 +1118,24 @@
           chart.graphs[0].lineThickness = scope.config.lineThick;
         }
         //
-         if (chart.graphs[0].lineColor !== scope.config.seriesColor1) {
-             chart.graphs[0].lineColor = scope.config.seriesColor1;
-         }
-         if (chart.graphs[1].lineColor !== scope.config.seriesColor2) {
-             chart.graphs[1].lineColor = scope.config.seriesColor2;
-         }
-         if (chart.graphs[2].lineColor !== scope.config.seriesColor3) {
-             chart.graphs[2].lineColor = scope.config.seriesColor3;
-         }
-         if (chart.graphs[3].lineColor !== scope.config.seriesColor4) {
-             chart.graphs[3].lineColor = scope.config.seriesColor4;
-         }
-         if (chart.graphs[4].lineColor !== scope.config.seriesColor5) {
-             chart.graphs[4].lineColor = scope.config.seriesColor5;
-         }
-         if (chart.graphs[5].lineColor !== scope.config.seriesColor6) {
-             chart.graphs[5].lineColor = scope.config.seriesColor6;
-         }
-         if (chart.graphs[5].lineColor !== scope.config.seriesColor7) {
-             chart.graphs[5].lineColor = scope.config.seriesColor7;
-         }
+        //  if (chart.graphs[0].lineColor !== scope.config.seriesColor1) {
+        //      chart.graphs[0].lineColor = scope.config.seriesColor1;
+        //  }
+        //  if (chart.graphs[1].lineColor !== scope.config.seriesColor2) {
+        //      chart.graphs[1].lineColor = scope.config.seriesColor2;
+        //  }
+        //  if (chart.graphs[2].lineColor !== scope.config.seriesColor3) {
+        //      chart.graphs[2].lineColor = scope.config.seriesColor3;
+        //  }
+        //  if (chart.graphs[3].lineColor !== scope.config.seriesColor4) {
+        //      chart.graphs[3].lineColor = scope.config.seriesColor4;
+        //  }
+        //  if (chart.graphs[4].lineColor !== scope.config.seriesColor5) {
+        //      chart.graphs[4].lineColor = scope.config.seriesColor5;
+        //  }
+        //  if (chart.graphs[5].lineColor !== scope.config.seriesColor7) {
+        //      chart.graphs[5].lineColor = scope.config.seriesColor7;
+        //  }
          //
 
         if (chart.chartScrollbar.enabled != scope.config.showChartScrollBar) {
