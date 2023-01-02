@@ -378,8 +378,6 @@
       daysOfMonth,
       dataArray
     ) {
-      console.log(new Date(timeProvider.displayTime.start).getDate());
-      console.log(" ~ file: sym-barrasfallasv5.js:381 ~ daysOfMonth", daysOfMonth)
       let todayDate =
         timeProvider.displayTime.end != "*"
           ? new Date(timeProvider.displayTime.end)
