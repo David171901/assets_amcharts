@@ -33,23 +33,16 @@
         function myCustomDataUpdateFunction(data) {
             if(isLoaded == 'primero'){
                 dataTotal = data;
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:36 ~ myCustomDataUpdateFunction ~ dataTotal", dataTotal)
 
                 let ultimoValue =  dataTotal.Data[0].Values[dataTotal.Data[0].Values.length-1].Value;
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:39 ~ myCustomDataUpdateFunction ~ ultimoValue", ultimoValue)
             
                 let initialDate = dataTotal.Data[0].Values.filter(item => item.Value == ultimoValue);
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:42 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                 initialDate = initialDate[0].Time;
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:44 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                 
                 let initialDay = parseInt(initialDate.split('/')[0]) - 1;
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:47 ~ myCustomDataUpdateFunction ~ initialDay", initialDay)
                 let initialMonth = parseInt(initialDate.split('/')[1]);
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:49 ~ myCustomDataUpdateFunction ~ initialMonth", initialMonth)
                 
                 let yearNow = parseInt(initialDate.split('/')[2]);
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:52 ~ myCustomDataUpdateFunction ~ yearNow", yearNow)
                 
                 scope.timeED = { month: "", year: "" };
             
@@ -74,7 +67,7 @@
                     }
 
                     let searchInterval = new Date(scope.timeED.year, parseInt(scope.timeED.month)-1, 1);
-                    if(new Date().getMonth() >= scope.timeED.month){
+                    if(true){
                         stringTimeED = getStartEndTimeForSearch(parseInt(searchInterval.getMonth()), parseInt(searchInterval.getFullYear()), 1);
                     } else {
                         let initialDate = dataTotal.Data[0].Values.filter(item => item.Value == ultimoValue);
@@ -144,43 +137,44 @@
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
                 
                 let startTime;
-
+                month = new Date().getMonth();
+                
                 switch (month) {
                     case 0:
-                        startTime = `${startDate.getFullYear()}-01-01T19:00:00`;
+                        startTime = `${new Date().getFullYear()-1}-12-31T19:00:00`;
                         break;
                     case 1:
-                        startTime = `${startDate.getFullYear()}-01-28T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-01-28T19:00:00`;
                         break;
                     case 2:
-                        startTime = `${startDate.getFullYear()}-02-25T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-02-25T19:00:00`;
                         break;
                     case 3:
-                        startTime = `${startDate.getFullYear()}-03-28T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-03-28T19:00:00`;
                         break;
                     case 4:
-                        startTime = `${startDate.getFullYear()}-04-27T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-04-27T19:00:00`;
                         break;
                     case 5:
-                        startTime = `${startDate.getFullYear()}-05-28T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-05-28T19:00:00`;
                         break;
                     case 6:
-                        startTime = `${startDate.getFullYear()}-06-27T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-06-27T19:00:00`;
                         break;
                     case 7:
-                        startTime = `${startDate.getFullYear()}-07-28T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-07-28T19:00:00`;
                         break;
                     case 8:
-                        startTime = `${startDate.getFullYear()}-08-28T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-08-28T19:00:00`;
                         break;
                     case 9:
-                        startTime = `${startDate.getFullYear()}-09-27T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-09-27T19:00:00`;
                         break;
                     case 10:
-                        startTime = `${startDate.getFullYear()}-10-28T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-10-28T19:00:00`;
                         break;
                     case 11:
-                        startTime = `${startDate.getFullYear()}-11-27T19:00:00`;
+                        startTime = `${new Date().getFullYear()}-11-27T19:00:00`;
                         break;
                     default:
                         break;
@@ -231,7 +225,6 @@
                 let endTime;
 
                 let idSearch = `${month}-${year}`;
-                console.log(" ~ file: sym-searchfilterDynamicDatev5.js:234 ~ getStartEndTimeForSearch ~ idSearch", idSearch)
 
                 switch (idSearch) {
                     case '0-2022':
@@ -283,11 +276,11 @@
                         endTime = `2022-12-31T19:00:00`;
                         break;
                     case '0-2023':
-                        startTime = `2023-01-01T19:00:00`;
+                        startTime = `2022-12-31T19:00:00`;
                         endTime = `2023-01-28T19:00:00`;
                         break;                      
                     case '1-2023':
-                        startTime = `2023-01-28T19:00:00`;
+                        startTime = `2023-01-27T19:00:00`;
                         endTime = `2023-02-25T19:00:00`;
                         break;      
                     default:

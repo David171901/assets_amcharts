@@ -110,15 +110,21 @@
         };
 
         const getEndDate = (turnA , turnB, ticlioTurnA, ticlioTurnB) => {
+        console.log(" ~ file: sym-balMetalYauli.js:113 ~ getEndDate ~ turnA , turnB, ticlioTurnA, ticlioTurnB", turnA , turnB, ticlioTurnA, ticlioTurnB)
     
             let turnTA = turnA.length > 0 ? turnA[turnA.length-1].Time : null;
+            console.log(" ~ file: sym-balMetalYauli.js:116 ~ getEndDate ~ turnTA", turnTA)
             let turnTB = turnB.length > 0 ? turnB[turnB.length-1].Time : null;
+            console.log(" ~ file: sym-balMetalYauli.js:118 ~ getEndDate ~ turnTB", turnTB)
            
             let ticlioA = ticlioTurnA.length > 0 ? ticlioTurnA[ticlioTurnA.length-1].Time : null;
+            console.log(" ~ file: sym-balMetalYauli.js:121 ~ getEndDate ~ ticlioA", ticlioA)
             let ticlioB = ticlioTurnB.length > 0 ? ticlioTurnB[ticlioTurnB.length-1].Time : null;
+            console.log(" ~ file: sym-balMetalYauli.js:123 ~ getEndDate ~ ticlioB", ticlioB)
             
             if(turnTA != null && turnTA != ticlioA) dateToReturn = turnTA;
-            else dateToReturn = turnTB != ticlioB ? turnTB : turnA[turnA.length-2].Time;
+            else dateToReturn = turnTB != ticlioB ? turnTB : turnA[turnA.length-1].Time;
+            console.log(" ~ file: sym-balMetalYauli.js:127 ~ getEndDate ~ dateToReturn", dateToReturn)
             
             return dateToReturn;
         };
@@ -162,7 +168,8 @@
 
         const getTrusthData = (data) => {
             let trusthData = [];
-            data.Data.forEach(item => { trusthData.push(item.Values.filter(exactValue => new Date(exactValue.Time).getHours() == 0))});
+            
+            data.Data.forEach(item => { trusthData.push(item.Values.filter(exactValue => new Date(exactValue.Time).getHours() == 0).length == 0 ? [{Value: 0, Time: '2023-01-01T00:00:00Z'}] : item.Values.filter(exactValue => new Date(exactValue.Time).getHours() == 0))});
             return trusthData;
         };
 
@@ -237,6 +244,7 @@
         };
 
         function myCustomDataUpdateFunction(data) {
+            console.log(" ~ file: sym-balMetalYauli.js:240 ~ myCustomDataUpdateFunction ~ data", data)
             
             var startDate = new Date(timeProvider.displayTime.start);
             var onzaTroy = 31.1034768;
@@ -248,6 +256,7 @@
                 const labels = ['SC-CAR','Unit','Trat. Día','Plan Día','Var/D', 'Trat. Mes', 'Plan Mes', 'Var/M'];
              
                 const trusthData = getTrusthData(data);
+                console.log(" ~ file: sym-balMetalYauli.js:253 ~ myCustomDataUpdateFunction ~ trusthData", trusthData)
                 
                 const planTms = getPlanTms(trusthData, 41, 42);
                 const tmsMcar = getPlanValue(trusthData, 41);
@@ -291,30 +300,46 @@
 
                 const metalPlanZinc = getDailyValue(planZinc[1]);
                 const metalPlanMoZinc = getMonthlyValue(planZinc[1]);
+                console.log(" ~ file: sym-balMetalYauli.js:327 ~ myCustomDataUpdateFunction ~ metalPlanMoZinc", metalPlanMoZinc)
 
                 const metalPlanPlomo = getDailyValue(planPlomo[1]);
+                console.log(" ~ file: sym-balMetalYauli.js:299 ~ myCustomDataUpdateFunction ~ metalPlanPlomo", metalPlanPlomo)
                 const metalPlanMonPlomo = getMonthlyValue(planPlomo[1]);
+                console.log(" ~ file: sym-balMetalYauli.js:301 ~ myCustomDataUpdateFunction ~ metalPlanMonPlomo", metalPlanMonPlomo)
 
                 const metalPlanCobre = getDailyValue(planCobre[1]);
+                console.log(" ~ file: sym-balMetalYauli.js:304 ~ myCustomDataUpdateFunction ~ metalPlanCobre", metalPlanCobre)
                 const metalPlanMoCobre = getMonthlyValue(planCobre[1]);
+                console.log(" ~ file: sym-balMetalYauli.js:306 ~ myCustomDataUpdateFunction ~ metalPlanMoCobre", metalPlanMoCobre)
 
                 const auxMetalPlata =  (planZincAg[1] + planPlomoAg[1] + planCobre[1]);
+                console.log(" ~ file: sym-balMetalYauli.js:309 ~ myCustomDataUpdateFunction ~ auxMetalPlata", auxMetalPlata)
                 const metalPlanPlata = getDailyValue(auxMetalPlata );
+                console.log(" ~ file: sym-balMetalYauli.js:311 ~ myCustomDataUpdateFunction ~ metalPlanPlata", metalPlanPlata)
                 const metalPlanMoPlata = getMonthlyValue( auxMetalPlata);
+                console.log(" ~ file: sym-balMetalYauli.js:313 ~ myCustomDataUpdateFunction ~ metalPlanMoPlata", metalPlanMoPlata)
 
                   
                 const turnA = createObjectOfTurn(trusthData, 'A');
+                console.log(" ~ file: sym-balMetalYauli.js:317 ~ myCustomDataUpdateFunction ~ turnA", turnA)
                 const turnB = createObjectOfTurn(trusthData, 'B');
+                console.log(" ~ file: sym-balMetalYauli.js:319 ~ myCustomDataUpdateFunction ~ turnB", turnB)
                 
                 const ticlioTurnA = turnA[4];
+                console.log(" ~ file: sym-balMetalYauli.js:322 ~ myCustomDataUpdateFunction ~ ticlioTurnA", ticlioTurnA)
                 const ticlioTurnB = turnB[4];
+                console.log(" ~ file: sym-balMetalYauli.js:324 ~ myCustomDataUpdateFunction ~ ticlioTurnB", ticlioTurnB)
                 
                 let endDate = new Date(getEndDate(turnA[0], turnB[0], ticlioTurnA, ticlioTurnB));
+                console.log(" ~ file: sym-balMetalYauli.js:327 ~ myCustomDataUpdateFunction ~ endDate", endDate)
                 
                 const tmsDailyA = parseFloat(getValue(turnA[0], endDate, ticlioTurnA));
+                console.log(" ~ file: sym-balMetalYauli.js:330 ~ myCustomDataUpdateFunction ~ tmsDailyA", tmsDailyA)
                 
                 const tmsDailyB = parseFloat(getValue(turnB[0], endDate, ticlioTurnB));
+                console.log(" ~ file: sym-balMetalYauli.js:333 ~ myCustomDataUpdateFunction ~ tmsDailyB", tmsDailyB)
                 const totalTmsDaily = tmsDailyA + tmsDailyB;
+                console.log(" ~ file: sym-balMetalYauli.js:335 ~ myCustomDataUpdateFunction ~ totalTmsDaily", totalTmsDaily)
 
                 const tmsDailyZincA = getValue(turnA[3], endDate, ticlioTurnA);
                 const tmsDailyZincB = getValue(turnB[3], endDate, ticlioTurnB);
