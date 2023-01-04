@@ -61,6 +61,7 @@
         var dataArray = [];
 
         function myCustomDataUpdateFunction(data) {
+        console.log(" ~ file: sym-BarrasSobrepuestasDynamicDateV4.js:64 ~ myCustomDataUpdateFunction ~ data", data)
 
             if (data !== null && data.Data) {
                 
@@ -68,11 +69,11 @@
 
                 let firstTurn = data.Data[0];
                 
-                let firstTurnDepuredValues = firstTurn.Values.filter(item => new Date(item.Time).getHours() == 0 && new Date(item.Time).getMinutes() == 00);
+                let firstTurnDepuredValues = firstTurn.Values;
                 firstTurn.Values = firstTurnDepuredValues;
 
                 let secondTurn = data.Data[1];
-                let secondTurnDepuredValues = secondTurn.Values.filter(item => new Date(item.Time).getHours() == 0 && new Date(item.Time).getMinutes() == 00);
+                let secondTurnDepuredValues = secondTurn.Values;
                 secondTurn.Values = secondTurnDepuredValues;
 
                 let firstTurnReal = data.Data[2];
@@ -80,12 +81,12 @@
 
                 let firstTurnNew = data.Data[4];
 
-                let firstTurnNewDepuredValues = firstTurnNew.Values.filter(item => new Date(item.Time).getHours() == 0 && new Date(item.Time).getMinutes() == 00);
+                let firstTurnNewDepuredValues = firstTurnNew.Values;
                 firstTurnNew.Values = firstTurnNewDepuredValues;
 
                 let secondTurnNew = data.Data[5];
 
-                let secondTurnNewDepuredValues = secondTurnNew.Values.filter(item => new Date(item.Time).getHours() == 0 && new Date(item.Time).getMinutes() == 00);
+                let secondTurnNewDepuredValues = secondTurnNew.Values;
                 secondTurnNew.Values = secondTurnNewDepuredValues;
 
                 let firstTurnNewReal = data.Data[6];

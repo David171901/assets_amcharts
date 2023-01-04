@@ -28,11 +28,14 @@
         var initialTime = 'T19:00:00';
         var currentStringTimeED = null;
         var dataTotal = null;
+        var dataTotal_ = null;
         var count = 0;
         
         function myCustomDataUpdateFunction(data) {
             if(isLoaded == 'primero'){
                 dataTotal = data;
+                dataTotal_ = data;
+
 
                 let ultimoValue =  dataTotal.Data[0].Values[dataTotal.Data[0].Values.length-1].Value;
             
@@ -67,15 +70,24 @@
                     }
 
                     let searchInterval = new Date(scope.timeED.year, parseInt(scope.timeED.month)-1, 1);
-                    if(true){
+
+                    console.log(new Date().getMonth());
+                    console.log(scope.timeED.month);
+                    if((new Date().getMonth() + 1) != scope.timeED.month){
                         stringTimeED = getStartEndTimeForSearch(parseInt(searchInterval.getMonth()), parseInt(searchInterval.getFullYear()), 1);
                     } else {
-                        let initialDate = dataTotal.Data[0].Values.filter(item => item.Value == ultimoValue);
+                        let initialDate = dataTotal_.Data[0].Values.filter(item => item.Value == ultimoValue);
+                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:77 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                         initialDate = initialDate[0].Time;
+                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:79 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                         let initialDay = parseInt(initialDate.split('/')[0]) - 1;
+                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:81 ~ myCustomDataUpdateFunction ~ initialDay", initialDay)
                         let initialMonth = parseInt(initialDate.split('/')[1]);
+                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:83 ~ myCustomDataUpdateFunction ~ initialMonth", initialMonth)
                         let yearNow = parseInt(initialDate.split('/')[2]);
+                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:85 ~ myCustomDataUpdateFunction ~ yearNow", yearNow)
                         stringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
+                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:87 ~ myCustomDataUpdateFunction ~ stringTimeED", stringTimeED)
                     }
 
                     timeProvider.requestNewTime(stringTimeED.startTimeED, stringTimeED.endTimeED, true);
