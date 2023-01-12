@@ -203,9 +203,10 @@
       wetTonnageReal
     ) {
       let todayDate =
-        timeProvider.displayTime.end != "*"
-          ? new Date(timeProvider.displayTime.end)
-          : new Date();
+      timeProvider.displayTime.end != "*"
+      ? new Date(timeProvider.displayTime.end)
+      : new Date();
+      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:206 ~ todayDate", todayDate)
       let currentDay = todayDate.getDate();
       let currentHour = todayDate.getHours();
       let currentMonth = todayDate.getMonth() + 1;
@@ -217,12 +218,15 @@
       let moreDays = daysOfPreviewMonth - start.getDate();
       todayDate.setDate(todayDate.getDate() + 1);
 
-      let daysOfMonth_ = setDaysCalendarMine(todayDate.getMonth());
+      let daysOfMonth_ = setDaysCalendarMine(currentMonth);
+      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:221 ~ daysOfMonth_", daysOfMonth_)
       
       if((new Date(timeProvider.displayTime.start).getMonth() == 0) && (new Date(timeProvider.displayTime.start).getDate() == 1) ) {
         daysOfMonth_ = 0;
         moreDays = 27;
       };
+      
+      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:226 ~ moreDays", moreDays)
 
       for (let dayIndex = 1; dayIndex <= daysOfMonth_ + moreDays; dayIndex++) {
         iterableDate.setDate(iterableDate.getDate() + 1);
@@ -336,8 +340,9 @@
     }
 
     function setDaysCalendarMine(month) {
+      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:342 ~ setDaysCalendarMine ~ month", month)
       let dayCalendar;
-
+      month = month -1;
       switch (month) {
         case 0:
           dayCalendar = 28;

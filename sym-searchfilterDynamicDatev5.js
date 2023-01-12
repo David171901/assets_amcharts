@@ -71,23 +71,15 @@
 
                     let searchInterval = new Date(scope.timeED.year, parseInt(scope.timeED.month)-1, 1);
 
-                    console.log(new Date().getMonth());
-                    console.log(scope.timeED.month);
-                    if((new Date().getMonth() + 1) != scope.timeED.month){
+                    if(scope.timeED.month != (new Date().getMonth() + 1) || scope.timeED.year != (new Date().getFullYear())){
                         stringTimeED = getStartEndTimeForSearch(parseInt(searchInterval.getMonth()), parseInt(searchInterval.getFullYear()), 1);
                     } else {
                         let initialDate = dataTotal_.Data[0].Values.filter(item => item.Value == ultimoValue);
-                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:77 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                         initialDate = initialDate[0].Time;
-                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:79 ~ myCustomDataUpdateFunction ~ initialDate", initialDate)
                         let initialDay = parseInt(initialDate.split('/')[0]) - 1;
-                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:81 ~ myCustomDataUpdateFunction ~ initialDay", initialDay)
                         let initialMonth = parseInt(initialDate.split('/')[1]);
-                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:83 ~ myCustomDataUpdateFunction ~ initialMonth", initialMonth)
                         let yearNow = parseInt(initialDate.split('/')[2]);
-                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:85 ~ myCustomDataUpdateFunction ~ yearNow", yearNow)
                         stringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
-                        console.log(" ~ file: sym-searchfilterDynamicDatev5.js:87 ~ myCustomDataUpdateFunction ~ stringTimeED", stringTimeED)
                     }
 
                     timeProvider.requestNewTime(stringTimeED.startTimeED, stringTimeED.endTimeED, true);
