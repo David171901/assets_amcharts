@@ -23,7 +23,7 @@
         fontSize: 12,
         FormatType: null,
         lineThick: 4,
-        seriesColor1: "#ffc90e",
+        seriesColor1: "#66D47D",
         seriesColor2: "#00a2e8",
         seriesColor3: "#000000",
         seriesColor4: "#000000",
@@ -669,7 +669,6 @@
       console.log(" ~ file: sym-RendimientoPlantaChungar.js:602 ~ dataArray", dataArray)
       return AmCharts.makeChart(symbolContainerDiv.id, {
         type: "serial",
-        theme: "none",
         hideCredits: true,
         creditsPosition: "bottom-right",
         addClassNames: true,
@@ -787,8 +786,8 @@
             fillAlphas: 0.8,
             lineAlpha: 0.3,
             lineColor: scope.config.seriesColor1,
-            fontSize: 20,
-            opacity: 0.2,
+            fontSize: scope.config.fontSize,
+            opacity: 1,
             labelText: "[[turno1]]",
             showAllValueLabels: true,
             labelRotation: 270,

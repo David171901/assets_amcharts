@@ -254,7 +254,8 @@
         let { chartCylinderGauge, chartLineBase } = chart;
 
         // chartCylinderGauge
-        chartCylinderGauge.graphs[0].fillColors = scope.config.colorChart1;
+        -
+        j
         chartCylinderGauge.titles = createArrayOfChartTitles('cylinder');
         
         // chartLineBase
