@@ -1,3 +1,30 @@
+/**
+ * Name: Diagrama circular Eventos (tiempo)
+ * File name: sym-pietimechartv2.js
+ * Atribute (1 atribute): 
+ *    example path: "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\00 EQUIPOS CRITICOS\\MOLINOS\\MOLINO PRIMARIO|Actividad Operacional|C. PARADA 1 R"
+ *    example data: [
+        {
+            "Value": "Averías de Instrumentos||Sin señal||0",
+            "Time": "2023-01-01T00:00:00Z"
+        },
+        {
+            "Value": "Actividad Operacional||Adición de Barras||22.09553426",
+            "Time": "2023-01-01T20:49:18Z"
+        },
+        {
+            "Value": "Averías de Instrumentos||Sin señal||0",
+            "Time": "2023-01-02T00:00:00Z"
+        },
+        {
+            "Value": "Averías de Instrumentos||Sin señal||0",
+            "Time": "2023-01-03T00:00:00Z"
+        }
+    ]
+ * 
+ * 
+ */
+
 (function (BS) {
   function symbolVis() {}
   BS.deriveVisualizationFromBase(symbolVis);
@@ -41,7 +68,7 @@
   };
 
   symbolVis.prototype.init = function (scope, elem) {
-    console.log("\t[+]PieCharts Time v2");
+    console.log("\t[+]Diagrama circular Eventos (tiempo)");
     scope.config.FormatType = null;
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
@@ -84,8 +111,8 @@
     var chart;
     var dataArray = [];
 
+    // Funcion inicilizadora
     function myCustomDataUpdateFunction(data) {
-      // console.log(" ~ file: sym-piechartv2.js ~ line 56 ~ myCustomDataUpdateFunction ~ data", data)
       let dataFormat = data.Data[0].Values;
       let arrayFormat = countTypesFailures(dataFormat);
       let sortArray = [];
@@ -146,11 +173,49 @@
       }
     }
 
+    // Funcion parseo de datos
+    /**
+     * 
+     * input: [
+          {
+              "Value": "Averías de Instrumentos||Sin señal||0",
+              "Time": "2022-12-31T00:00:00Z"
+          },
+          {
+              "Value": "Averías de Instrumentos||Sin señal||0",
+              "Time": "2023-01-01T00:00:00Z"
+          },
+          {
+              "Value": "Actividad Operacional||Adición de Barras||22.09553426",
+              "Time": "2023-01-01T20:49:18Z"
+          },
+          {
+              "Value": "Averías de Instrumentos||Sin señal||0",
+              "Time": "2023-01-02T00:00:00Z"
+          },
+          {
+              "Value": "Averías de Instrumentos||Sin señal||0",
+              "Time": "2023-01-03T00:00:00Z"
+          }
+      ]
+     * output: [
+          {
+              "Label": "Averías de Instrumentos",
+              "Value": 0,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:15:15"
+          },
+          {
+              "Label": "Actividad Operacional",
+              "Value": 0.36666666666666664,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:15:15"
+          }
+      ]
+     * 
+     */
+
     function countTypesFailures(data) {
-      //   console.log(
-      //     " ~ file: sym-pietimechartv2.js ~ line 109 ~ countTypesFailures ~ data",
-      //     data
-      //   );
       let array = data.map((el) => el.Value.split("||")[0]);
       let arrayLabel = [...new Set(data.map((el) => el.Value.split("||")[0]))];
       let dataArray = [];
@@ -172,11 +237,8 @@
       return dataArray;
     }
 
+    // Funcion invocadora del grafico 
     function getNewChart(dataArray) {
-      // if (
-      //   scope.config.password == password &&
-      //   linkAllowed.some((el) => el.includes(window.location.href))
-      // ) {
         return AmCharts.makeChart(symbolContainerDiv.id, {
           type: "pie",
           dataProvider: dataArray,
@@ -219,20 +281,9 @@
             position: "bottom",
           },
         });
-      // }
-
-      // return AmCharts.makeChart(symbolContainerDiv.id, {
-      //   type: "pie",
-      //   theme: "none",
-      //   dataProvider: [],
-      //   valueField: "litres",
-      //   titleField: "country",
-      //   balloon: {
-      //     fixedPosition: true,
-      //   },
-      // });
     }
 
+    // Funcion refresco del grafico 
     function refreshChart(chart, dataArray) {
       chart.titles = createArrayOfChartTitles();
       chart.dataProvider = dataArray;
@@ -253,6 +304,7 @@
       return titlesArray;
     }
 
+    // Funcion de configuracion de estilos
     function myCustomConfigurationChangeFunction(data) {
       if (chart) {
         if (chart.fontSize !== scope.config.fontSize) {

@@ -1,3 +1,29 @@
+/**
+ * Name: Diagrama Paretto (tiempo)
+ * File name: sym-parettotimev2.js
+ * Atribute (1 atribute): 
+ *    example path: "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|TIEMPO COMPLETO 2"
+ *    example data: [
+          {
+              "Value": "Mantenimiento Planificado||Inspección programada||25.7852816266667",
+              "Time": "2022-12-23T02:59:46Z"
+          },
+          {
+              "Value": "Influencia Externa||Paro externo||24.803918965",
+              "Time": "2022-12-24T14:16:25Z"
+          },
+          {
+              "Value": "Averías de Instrumentos||Sin señal||18.0991142266667",
+              "Time": "2022-12-28T14:09:15Z"
+          },
+          {
+              "Value": "Actividad Operacional||Adición de Barras||22.09553426",
+              "Time": "2023-01-01T20:49:18Z"
+          }
+      ]
+ * 
+ */
+
 (function (BS) {
   function symbolVis() {}
   BS.deriveVisualizationFromBase(symbolVis);
@@ -43,7 +69,7 @@
   };
 
   symbolVis.prototype.init = function (scope, elem) {
-    console.log("\t[+]ParettoTime");
+    console.log("\t[+]Diagrama Paretto (tiempo)");
     scope.config.FormatType = null;
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
@@ -102,8 +128,8 @@
     var _0x5b1c = ["\x43\x4F\x4D\x4D\x32\x30\x32\x30\x24"];
     var password = _0x5b1c[0];
 
+    // Funcion inicilizadora
     function myCustomDataUpdateFunction(data) {
-      // URL
       let var1 = $(`#${symbolContainerA.id}`);
       var1.attr("href", scope.config.href);
 
@@ -186,6 +212,76 @@
       }
     }
 
+    // Funcion parseo de datos
+    /**
+     * 
+     * input: [
+            {
+                "Value": "Averías Eléctricas||Baja RPM||32.6883740733333",
+                "Time": "2022-12-20T14:39:18Z"
+            },
+            {
+                "Value": "Funcionamiento||En Operación||43.065720875",
+                "Time": "2022-12-20T15:15:04Z"
+            },
+            {
+                "Value": "Mantenimiento Planificado||Inspección programada||25.7852816266667",
+                "Time": "2022-12-23T02:59:46Z"
+            },
+            {
+                "Value": "Influencia Externa||Paro externo||24.803918965",
+                "Time": "2022-12-24T14:16:25Z"
+            },
+            {
+                "Value": "Averías de Instrumentos||Sin señal||18.0991142266667",
+                "Time": "2022-12-28T14:09:15Z"
+            },
+            {
+                "Value": "Actividad Operacional||Adición de Barras||22.09553426",
+                "Time": "2023-01-01T20:49:18Z"
+            }
+        ]
+     * output: [
+          {
+              "Label": "Averías Eléctricas",
+              "Value": 32,
+              "DataType": "Float",
+              "Time": "22/1/2023, 17:33:50"
+          },
+          {
+              "Label": "Funcionamiento",
+              "Value": 43,
+              "DataType": "Float",
+              "Time": "22/1/2023, 17:33:50"
+          },
+          {
+              "Label": "Mantenimiento Planificado",
+              "Value": 25,
+              "DataType": "Float",
+              "Time": "22/1/2023, 17:33:50"
+          },
+          {
+              "Label": "Influencia Externa",
+              "Value": 24,
+              "DataType": "Float",
+              "Time": "22/1/2023, 17:33:50"
+          },
+          {
+              "Label": "Averías de Instrumentos",
+              "Value": 18,
+              "DataType": "Float",
+              "Time": "22/1/2023, 17:33:50"
+          },
+          {
+              "Label": "Actividad Operacional",
+              "Value": 22,
+              "DataType": "Float",
+              "Time": "22/1/2023, 17:33:50"
+          }
+      ]
+     * 
+     * 
+     */
     function countTypesFailures(data) {
       let array = data.map((el) => el.Value.split("||")[0]);
       let arrayNumber = data.map((el) => el.Value.split("||")[2]);
@@ -209,6 +305,16 @@
       return dataArray;
     }
 
+    // Funcion parse de fechas
+    /**
+     * 
+     * input: 25
+     * output: 0:25
+     * 
+     * input: 113
+     * output: 1:53
+     * 
+     */
     function formatTime(time) {
       var day = Math.floor(time / (24 * 60));
       var hour = Math.floor((time - day * 24 * 60) / 60);
@@ -216,104 +322,86 @@
       return `${day == 0 ? "" : `${day}d `}${hour}:${minute}`;
     }
 
+    // Funcion invocadora del grafico 
     function getNewChart(dataArray) {
-      // if (
-      //   scope.config.password == password &&
-      //   linkAllowed.some((el) => el.includes(window.location.href))
-      // ) {
-        return AmCharts.makeChart(symbolContainerDiv.id, {
-          type: "serial",
-          titles: createArrayOfChartTitles(),
-          hideCredits: true,
-          colors: ["", scope.config.colorfill2],
-          dataProvider: dataArray,
-          depth3D: 20,
-          angle: 35,
-          valueAxes: [
-            {
-              id: "v1",
-              title: "Tiempo (dias horas:min )",
-              axisAlpha: 0,
-              position: "left",
-              step: 2,
-              labelsEnabled: false,
-            },
-            {
-              id: "v2",
-              axisAlpha: 0,
-              position: "right",
-              unit: "%",
-              gridAlpha: 0,
-              maximum: 100,
-              minimum: 0,
-            },
-          ],
-          startDuration: 1,
-          graphs: [
-            {
-              fillAlphas: 1,
-              fillColorsField: "color",
-              title: "Value",
-              type: "column",
-              valueField: "Value",
-              labelText: "[[Format]]",
-              fontSize: scope.config.fontSize + 10,
-              balloonText: "[[Label]]:[[Format]]",
-              color: scope.config.textColor1,
-            },
-            {
-              valueAxis: "v2",
-              bullet: "round",
-              lineThickness: 3,
-              bulletSize: 7,
-              bulletBorderAlpha: 1,
-              bulletColor: "#FFFFFF",
-              useLineColorForBulletBorder: true,
-              fillAlphas: 0,
-              lineAlpha: 1,
-              title: "Percent",
-              valueField: "percent",
-              labelText: "[[percent]]%",
-              fontSize: scope.config.fontSize + 10,
-              balloonText: "[[Label]]:[[percent]]%",
-              precision: scope.config.decimalPlaces,
-              labelPosition: "bottom",
-              color: scope.config.textColor2,
-            },
-          ],
-          categoryField: "Label",
-          categoryAxis: {
-            gridPosition: "start",
+      return AmCharts.makeChart(symbolContainerDiv.id, {
+        type: "serial",
+        titles: createArrayOfChartTitles(),
+        hideCredits: true,
+        colors: ["", scope.config.colorfill2],
+        dataProvider: dataArray,
+        depth3D: 20,
+        angle: 35,
+        valueAxes: [
+          {
+            id: "v1",
+            title: "Tiempo (dias horas:min )",
             axisAlpha: 0,
-            tickLength: 0,
+            position: "left",
+            step: 2,
+            labelsEnabled: false,
           },
-          legend: {
-            enabled: scope.config.showLegend,
-            align: "center",
-            position: "bottom",
+          {
+            id: "v2",
+            axisAlpha: 0,
+            position: "right",
+            unit: "%",
+            gridAlpha: 0,
+            maximum: 100,
+            minimum: 0,
+          },
+        ],
+        startDuration: 1,
+        graphs: [
+          {
+            fillAlphas: 1,
+            fillColorsField: "color",
+            title: "Value",
+            type: "column",
+            valueField: "Value",
+            labelText: "[[Format]]",
+            fontSize: scope.config.fontSize + 10,
+            balloonText: "[[Label]]:[[Format]]",
             color: scope.config.textColor1,
-            fontSize: scope.config.fontSize,
-            labelHeight: 150,
           },
-        });
-      // }
-
-      // return AmCharts.makeChart(symbolContainerDiv.id, {
-      //   type: "serial",
-      //   titles: createArrayOfChartTitles(),
-      //   hideCredits: true,
-      //   valueAxes: [],
-      //   startDuration: 1,
-      //   graphs: [],
-      //   categoryField: "Label",
-      //   categoryAxis: {
-      //     gridPosition: "start",
-      //     axisAlpha: 0,
-      //     tickLength: 0,
-      //   },
-      // });
+          {
+            valueAxis: "v2",
+            bullet: "round",
+            lineThickness: 3,
+            bulletSize: 7,
+            bulletBorderAlpha: 1,
+            bulletColor: "#FFFFFF",
+            useLineColorForBulletBorder: true,
+            fillAlphas: 0,
+            lineAlpha: 1,
+            title: "Percent",
+            valueField: "percent",
+            labelText: "[[percent]]%",
+            fontSize: scope.config.fontSize + 10,
+            balloonText: "[[Label]]:[[percent]]%",
+            precision: scope.config.decimalPlaces,
+            labelPosition: "bottom",
+            color: scope.config.textColor2,
+          },
+        ],
+        categoryField: "Label",
+        categoryAxis: {
+          gridPosition: "start",
+          axisAlpha: 0,
+          tickLength: 0,
+        },
+        legend: {
+          enabled: scope.config.showLegend,
+          align: "center",
+          position: "bottom",
+          color: scope.config.textColor1,
+          fontSize: scope.config.fontSize,
+          labelHeight: 150,
+        },
+      });
     }
 
+    // Funcion refresco del grafico 
     function refreshChart(chart, dataArray) {
       chart.titles = createArrayOfChartTitles();
       chart.dataProvider = dataArray;
@@ -334,6 +422,7 @@
       return titlesArray;
     }
 
+    // Funcion de configuracion de estilos
     function myCustomConfigurationChangeFunction(data) {
       if (chart) {
         if (chart.fontSize !== scope.config.fontSize) {

@@ -1,3 +1,30 @@
+/**
+ * Name: Diagrama circular Eventos (cantidad)
+ * File name: sym-piechartv2.js
+ * Atribute (1 atribute): 
+ *    example path: "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\00 EQUIPOS CRITICOS\\MOLINOS\\MOLINO PRIMARIO|Actividad Operacional|C. PARADA 1 R"
+ *    example data: [
+        {
+            "Value": "Averías de Instrumentos||Sin señal||0",
+            "Time": "2023-01-01T00:00:00Z"
+        },
+        {
+            "Value": "Actividad Operacional||Adición de Barras||22.09553426",
+            "Time": "2023-01-01T20:49:18Z"
+        },
+        {
+            "Value": "Averías de Instrumentos||Sin señal||0",
+            "Time": "2023-01-02T00:00:00Z"
+        },
+        {
+            "Value": "Averías de Instrumentos||Sin señal||0",
+            "Time": "2023-01-03T00:00:00Z"
+        }
+    ]
+ * 
+ * 
+ */
+
 (function (BS) {
   function symbolVis() {}
   BS.deriveVisualizationFromBase(symbolVis);
@@ -42,7 +69,7 @@
   };
 
   symbolVis.prototype.init = function (scope, elem) {
-    console.log("\t[+]PieCharts v2");
+    console.log("\t[+]Diagrama circular Eventos (cantidad)");
     scope.config.FormatType = null;
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
@@ -85,9 +112,8 @@
     var chart;
     var dataArray = [];
 
+    // Funcion inicilizadora
     function myCustomDataUpdateFunction(data) {
-      console.log(" ~ file: sym-piechartv2.js:89 ~ myCustomDataUpdateFunction ~ data", data)
-      
       let dataFormat = data.Data[0].Values.filter((el) => {
         return !el.Time.includes("T00:00:00Z");
       });
@@ -120,7 +146,6 @@
       data = {
         Rows: sortArray,
       };
-      console.log(" ~ file: sym-piechartv2.js:120 ~ myCustomDataUpdateFunction ~ data", data)
 
       if (data) {
         dataArray = [];
@@ -151,6 +176,75 @@
       }
     }
 
+    // Funcion parseo de datos
+    /**
+     * 
+     * input: [
+          {
+              "Value": "Averías Eléctricas||Baja RPM||32.6883740733333",
+              "Time": "2022-12-20T14:39:18Z"
+          },
+          {
+              "Value": "Funcionamiento||En Operación||43.065720875",
+              "Time": "2022-12-20T15:15:04Z"
+          },
+          {
+              "Value": "Mantenimiento Planificado||Inspección programada||25.7852816266667",
+              "Time": "2022-12-23T02:59:46Z"
+          },
+          {
+              "Value": "Influencia Externa||Paro externo||24.803918965",
+              "Time": "2022-12-24T14:16:25Z"
+          },
+          {
+              "Value": "Averías de Instrumentos||Sin señal||18.0991142266667",
+              "Time": "2022-12-28T14:09:15Z"
+          },
+          {
+              "Value": "Actividad Operacional||Adición de Barras||22.09553426",
+              "Time": "2023-01-01T20:49:18Z"
+          }
+      ]
+     * output: [
+          {
+              "Label": "Averías Eléctricas",
+              "Value": 1,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:04:50"
+          },
+          {
+              "Label": "Funcionamiento",
+              "Value": 1,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:04:50"
+          },
+          {
+              "Label": "Mantenimiento Planificado",
+              "Value": 1,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:04:50"
+          },
+          {
+              "Label": "Influencia Externa",
+              "Value": 1,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:04:50"
+          },
+          {
+              "Label": "Averías de Instrumentos",
+              "Value": 1,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:04:50"
+          },
+          {
+              "Label": "Actividad Operacional",
+              "Value": 1,
+              "DataType": "Float",
+              "Time": "22/1/2023, 16:04:50"
+          }
+      ]
+     * 
+     */
     function countTypesFailures(data) {
       let array = data.map((el) => el.Value.split("||")[0]);
       let arrayLabel = [...new Set(data.map((el) => el.Value.split("||")[0]))];
@@ -167,15 +261,11 @@
           Time: new Date().toLocaleString(),
         });
       });
-
       return dataArray;
     }
 
+    // Funcion invocadora del grafico 
     function getNewChart(dataArray) {
-      // if (
-      //   scope.config.password == password &&
-      //   linkAllowed.some((el) => el.includes(window.location.href))
-      // ) {
         return AmCharts.makeChart(symbolContainerDiv.id, {
           type: "pie",
           dataProvider: dataArray,
@@ -218,20 +308,9 @@
             position: "bottom",
           },
         });
-      // }
-
-      // return AmCharts.makeChart(symbolContainerDiv.id, {
-      //   type: "pie",
-      //   theme: "none",
-      //   dataProvider: [],
-      //   valueField: "litres",
-      //   titleField: "country",
-      //   balloon: {
-      //     fixedPosition: true,
-      //   },
-      // });
     }
 
+    // Funcion refresco del grafico 
     function refreshChart(chart, dataArray) {
       chart.titles = createArrayOfChartTitles();
       chart.dataProvider = dataArray;
@@ -252,6 +331,7 @@
       return titlesArray;
     }
 
+    // Funcion de configuracion de estilos
     function myCustomConfigurationChangeFunction(data) {
       if (chart) {
         if (chart.fontSize !== scope.config.fontSize) {
