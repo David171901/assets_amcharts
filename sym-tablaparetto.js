@@ -1,4 +1,17 @@
-﻿(function(CS) {
+﻿/**
+ * Name: Tabla Eventos
+ * File name: sym-tablaparetto.js
+ * Atribute (1 atribute): 
+ *    example path: 
+      "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|TIEMPO COMPLETO 2"
+ *    example data: [
+            {
+                "Value": "Actividad Operacional||Adición de Barras||22.09553426",
+                "Time": "2023-01-01T20:49:18Z"
+            }
+        ]
+ */
+    (function(CS) {
 
     function symbolVis() {}
     CS.deriveVisualizationFromBase(symbolVis);
@@ -9,18 +22,14 @@
         datasourceBehavior: CS.Extensibility.Enums.DatasourceBehaviors.Multiple,
         visObjectType: symbolVis,
         iconUrl: '/Scripts/app/editor/symbols/ext/icons/TablaEventosCOMM.png',
-        // inject: ['timeProvider'],
-        // supportsCollections: true,
         supportsDynamicSearchCriteria: true,
         
         getDefaultConfig: function() {
             return {
                 DataShape: 'TimeSeries',
-                // DataQueryMode: CS.Extensibility.Enums.DataQueryMode.ModePlotValues,
                 Height: 300,
                 Width: 400,
                 Intervals: 1000,
-                // Mode: 'Compressed',
                 FormatType: null,
                 showDataItemNameCheckboxValue: true,
                 showHeaderRightCheckboxValue: true,
@@ -62,8 +71,9 @@
             var newUniqueIDString1 = "myCustomSymbol_1" + Math.random().toString(36).substr(2, 16);
             syContElement1.id = newUniqueIDString1;
             
-
+            // Funcion inicializadora
             function myCustomDataUpdateFunction(data) {
+                console.log(" ~ file: sym-tablaparetto.js:67 ~ myCustomDataUpdateFunction ~ data", data)
                 
                 let dataFormat = data.Data[0].Values;
 
@@ -103,7 +113,6 @@
                     Data: arrayData.sort((a,b) => - a.Minutes + b.Minutes).filter(element => element.Label != 'No Data'),
                     SymbolName: "Symbol1"
                 }
-                console.log(" ~ file: sym-tablaparetto.js ~ line 116 ~ myCustomDataUpdateFunction ~ data_", data_)
 
                 if (data) {
                     
@@ -122,17 +131,7 @@
                     generatedRow('', headersRow, ['Total',data_.Data.reduce((previousValue, currentValue) => previousValue + currentValue.Quantity,0),formatTime(data_.Data.reduce((previousValue, currentValue) => previousValue + currentValue.Minutes,0))], 'headerAPCellClass cellAPClass', 'center', false);
                 }
             }
-
-            function getTotalData(totalOfArrays , arrayUnitOne , arrayUnitTwo){
-                totalOfArrays.push('+');
-                for(let index = 1 ; index < arrayUnitOne.length; index++){
-                    index == 3|| index ==6 || index == 7 ?  
-                    totalOfArrays.push((parseFloat(arrayUnitOne[index])+parseFloat(arrayUnitTwo[index])).toFixed(scope.config.numberOfDecimalPlaces)):
-                    totalOfArrays.push(' ');
-                };
-                return totalOfArrays;
-            }
-
+            
             function dataToPush(data, index){
                 data = data.Data[index].Values.sort((a,b)=> {
                     return - parseInt(a.Value.split('||')[2]) + parseInt(b.Value.split('||')[2])
@@ -140,6 +139,16 @@
                 return data.map(element => [element.Value.split('||')[0],element.Value.split('||')[1],element.Value.split('||')[3]])
             };
 
+            // Funcion parse de fechas
+            /**
+             * 
+             * input: 25
+             * output: 0:25
+             * 
+             * input: 113
+             * output: 1:53
+             * 
+             */
             function formatTime(time){
                 var day = Math.floor (time / (24*60)); 
                 var hour = Math.floor( (time - day*24*60)/60); 
@@ -147,6 +156,7 @@
                 return `${day == 0 ? '': `${day}d `}${hour}:${minute}`
             }
 
+            // Funcion creacion de fila
             function generatedRow(firstElement, insertRow, dataArray, nameClass, align, isHeader, isSubHeader){
                 
                 insertRow = syContElement1.insertRow(-1);
@@ -163,6 +173,7 @@
                 });
             }
 
+            // Funcion creacion de filas multiples
             function generatedMultiRow(firstElement, insertRow, dataArray){
                 dataArray.forEach( filasItemCell => {
                     generatedRow(firstElement, insertRow ,filasItemCell, 'cellAPClass myValueCellClass', 'center', false, true);
@@ -171,6 +182,7 @@
                 return true
             }
 
+            // Funcion configuracion
             function myCustomConfigurationChangeFunction(data) {
                 document.getElementById(syContElement1.id).style.border = "3px solid " + scope.config.outsideBorderColor;
                 if (scope.config.showHeaderRightCheckboxValue) {

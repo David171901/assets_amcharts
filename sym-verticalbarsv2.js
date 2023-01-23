@@ -1,3 +1,115 @@
+/**
+ * Name: Disponibilidad Diaria de Equipo
+ * File name: sym-verticalbarsv2.js
+ * Atribute (5 atribute): 
+ *    example path: 
+      "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|DISPONIBILIDAD GUARDIA NOCHE (B)"}
+      "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|DISPONIBILIDAD GUARDIA DIA (A)"
+      "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|DISPONIBILIDAD REAL GUARDIA NOCHE (B)"
+      "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|DISPONIBILIDAD REAL GUARDIA DIAN (A)"
+      (1 atributo cualquiera) "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|FECHA INICIO"
+
+ *    example data: 
+      1. [
+          {
+              "Value": 100,
+              "Time": "2023-01-01T00:00:00Z"
+          },
+          {
+              "Value": 100,
+              "Time": "2023-01-01T12:00:00Z"
+          },
+          {
+              "Value": 100,
+              "Time": "2023-01-02T12:00:00Z"
+          },
+          {
+              "Value": 100,
+              "Time": "2023-01-03T12:00:00Z"
+          },
+          {
+              "Value": 100,
+              "Time": "2023-01-04T12:00:00Z"
+          },
+          {
+              "Value": 100,
+              "Time": "2023-01-05T05:00:00Z"
+          }
+      ]
+    2. [
+        {
+            "Value": 100,
+            "Time": "2023-01-01T00:00:00Z"
+        },
+        {
+            "Value": 96.01396942138672,
+            "Time": "2023-01-02T00:00:00Z"
+        },
+        {
+            "Value": 100,
+            "Time": "2023-01-03T00:00:00Z"
+        },
+        {
+            "Value": 99.99126434326172,
+            "Time": "2023-01-04T00:00:00Z"
+        },
+        {
+            "Value": 100,
+            "Time": "2023-01-05T00:00:00Z"
+        },
+        {
+            "Value": 99.48507690429688,
+            "Time": "2023-01-05T05:00:00Z"
+        }
+    ]
+    3. [
+        .
+        .
+        .
+        ,{
+            "Value": 100,
+            "Time": "2023-01-04T11:40:00Z"
+        },
+        {
+            "Value": "Calc Failed",
+            "Time": "2023-01-05T00:00:00Z",
+            "IsGood": false
+        },
+        {
+            "Value": 100,
+            "Time": "2023-01-05T00:20:00Z"
+        },
+        {
+            "Value": 100,
+            "Time": "2023-01-05T05:00:00Z"
+        }
+    ]
+    4. [
+        .
+        .
+        .
+        ,{
+            "Value": 100,
+            "Time": "2023-01-04T11:40:00Z"
+        },
+        {
+            "Value": "Calc Failed",
+            "Time": "2023-01-05T00:00:00Z",
+            "IsGood": false
+        },
+        {
+            "Value": 100,
+            "Time": "2023-01-05T00:20:00Z"
+        },
+        {
+            "Value": 100,
+            "Time": "2023-01-05T05:00:00Z"
+        }
+    ]
+    5. cualquier atributo
+
+ */
+
 (function (CS) {
   var myEDcolumnDefinition = {
     typeName: "verticalbarsv2",
@@ -51,7 +163,7 @@
   function symbolVis() {}
   CS.deriveVisualizationFromBase(symbolVis);
   symbolVis.prototype.init = function (scope, elem, timeProvider) {
-    console.log("\t[+]Vertical Bars v2");
+    console.log("\t[+] Disponibilidad Diaria de Equipo");
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
     scope.config.FormatType = null;
@@ -83,7 +195,9 @@
     var _0x5b1c = ["\x43\x4F\x4D\x4D\x32\x30\x32\x30\x24"];
     var password = _0x5b1c[0];
 
+    // Funcion inicilizadora
     function myCustomDataUpdateFunction(data) {
+      console.log(" ~ file: sym-verticalbarsv2.js:98 ~ myCustomDataUpdateFunction ~ data", data)
       if (data !== null && data.Data) {
         dataArray = [];
 
@@ -244,6 +358,7 @@
       };
     }
 
+    // Funcion refresco del grafico 
     function refreshChart(chart, scope, monthNow) {
       if (!chart.chartScrollbar.enabled) {
         if (scope.config.showTitle) {
@@ -475,6 +590,7 @@
       return daysOfMonth;
     }
 
+    // Funcion invocadora del grafico 
     function getNewChart(
       symbolContainerDiv,
       monthNow,
@@ -616,6 +732,7 @@
       });
     }
 
+    // Funcion actualizacion del titulo
     function createArrayOfChartTitles() {
       var titlesArray = null;
       if (scope.config.useCustomTitle) {
@@ -629,6 +746,7 @@
       return titlesArray;
     }
 
+    // Funcion refresco del grafico 
     function myCustomConfigurationChangeFunction() {
       if (chart) {
         chart.valueAxes[0].minimum = getCorrectChartMin();
