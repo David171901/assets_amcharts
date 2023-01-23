@@ -1,3 +1,59 @@
+/**
+ * Name: tumv2
+ * File name: sym-tumv2.js
+ * Atribute (2 atributes): 
+ *    example path: 
+            "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|PARADA COMPLETA"
+            "af:\\YAUMS26\BASE DE DATOS  PIAF - UM YAULI\PLANTA CONCENTRADORA VICTORIA\00 EQUIPOS CRITICOS\MOLINOS\MOLINO PRIMARIO|TIEMPO DE OPERACION TOTAL POR DIA"
+
+ *    example data: 
+            1. [
+                {
+                    "Value": "RE||5200||Sistema de Alimentación||6801||Trunion||120||Averías de Instrumentos||12020||Sin señal||-||0",
+                    "Time": "2023-01-01T00:00:00Z"
+                },
+                {
+                    "Value": "RP||5200||Sistema de Alimentación||2||NA||160||Actividad Operacional||16043||Adición de Barras||-||22.09553426",
+                    "Time": "2023-01-01T20:49:18Z"
+                },
+                {
+                    "Value": "RE||5200||Sistema de Alimentación||6801||Trunion||120||Averías de Instrumentos||12020||Sin señal||-||0",
+                    "Time": "2023-01-02T00:00:00Z"
+                },
+                {
+                    "Value": "RE||5200||Sistema de Alimentación||6801||Trunion||120||Averías de Instrumentos||12020||Sin señal||-||0",
+                    "Time": "2023-01-03T00:00:00Z"
+                }
+            ]
+            2. [
+                {
+                    "Value": 24,
+                    "Time": "2023-01-01T00:00:00Z"
+                },
+                {
+                    "Value": 23.52167510986328,
+                    "Time": "2023-01-02T00:00:00Z"
+                },
+                {
+                    "Value": 24,
+                    "Time": "2023-01-03T00:00:00Z"
+                },
+                {
+                    "Value": 23.998979568481445,
+                    "Time": "2023-01-04T00:00:00Z"
+                },
+                {
+                    "Value": 24,
+                    "Time": "2023-01-05T00:00:00Z"
+                },
+                {
+                    "Value": 23.711645126342773,
+                    "Time": "2023-01-06T00:00:00Z"
+                }
+            ]
+ * 
+ */
+
 (function (CS) {
   var myGaugeDefinition = {
     typeName: "tumv2",
@@ -9,7 +65,6 @@
     getDefaultConfig: function () {
       return {
         DataShape: "TimeSeries",
-        //DataQueryMode: CS.Extensibility.Enums.DataQueryMode.ModePlotValues,
         Height: 800,
         Width: 600,
         backgroundColor: "transparent",
@@ -20,23 +75,6 @@
         showTitle: true,
         fontSize: 20,
         customTitle: "",
-        // //color para las bandas
-        // bandColor1: "#ea3838",
-        // bandColor2: "#ffac29",
-        // bandColor3: "#00CC00",
-        // bulletSize: 8,
-        // // Axis
-        // startAxis: 0,
-        // limitAxis1: 30,
-        // limitAxis2: 60,
-        // endAxis: 100,
-        // // Others
-        // bottomTextYOffset: -175,
-        // labelOffset: 90,
-        // unit: "",
-        // valueInterval: 10,
-        // // Type
-        // type: "utilizacion",
       };
     },
     configOptions: function () {
@@ -53,7 +91,7 @@
 
   CS.deriveVisualizationFromBase(symbolVis);
   symbolVis.prototype.init = function (scope, elem, timeProvider) {
-    console.log("\t[+]Tum v1");
+    console.log("\t[+]Tum v2");
     // INIT ATRIBUTES
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
@@ -81,6 +119,7 @@
       "#34bfcf", //11
     ];
 
+    // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
       dataArray = [];
       const datainfo = getDataProvider(data);
@@ -92,7 +131,6 @@
     }
 
     function getDataProvider(data) {
-      // console.log(" ~ file: sym-gaugev3.js ~ line 73 ~ getDataProvider ~ data", data)
       // Events - Lista de eventos
       let eventArray = data.Data[0].Values || [];
       let disponibilidad = data.Data[1].Values || [];
@@ -104,13 +142,9 @@
       return dataFormat;
     }
 
+    // Funcion parseo de datos por codigo TUM 
     function timeModels(data, disponibilidad) {
       return [
-       /* {
-          Label: "TF <br> [Tiempo de funcionamiento]",
-          Value: getDailyAvailability(disponibilidad),
-          Color: colors[10],
-        },*/
         {
           Label: "RnP:",
           Value: filterToModelTime("RnP", data),
@@ -148,14 +182,7 @@
       ];
     }
 
-    function getDailyAvailability(data) {
-      return data.reduce(
-        (previousValue, currentValue) =>
-          previousValue + parseInt(currentValue.Value),
-        0
-      );
-    }
-
+    // Funcion de filtro por codigo
     function filterToModelTime(key, array) {
       return (
         array
@@ -169,12 +196,14 @@
       ).toFixed(2);
     }
 
+     // Funcion refresco del grafico
     function refreshChart(chart, dataArray) {
       chart.validateData();
       chart.validateNow();
       return chart;
     }
 
+     // Funcion configuracion del titulo
     function createArrayOfChartTitles() {
       var titlesArray = null;
       if (scope.config.useCustomTitle) {
@@ -188,6 +217,7 @@
       return titlesArray;
     }
 
+    // Funcion de configuracion del grafico
     function myCustomConfigurationChangeFunction() {
       if (chart) {
         // set title
@@ -205,6 +235,7 @@
       }
     }
 
+    // Funcion invocadora del grafico 
     function generateChart(dataArray, scope) {
       chart = AmCharts.makeChart(symbolContainerDiv1.id, {
         theme: "none",

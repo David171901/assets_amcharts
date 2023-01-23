@@ -1,4 +1,117 @@
-﻿(function (CS) {
+﻿/**
+ * Name: Diagrama de Barras Eventos con tarjets (CHUNGAR)
+ * File name: sym-barrasfallasvchungar.js
+ * Atribute (7 atribute): 
+ *    example path: 
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|Actividad Operacional|C. PARADA 1 R"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|TIEMPO DE OPERACION TOTAL POR DIA"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS"
+          "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\MOLINOS\\MOLINO BARRAS 1|PRODUCCION TONELADAS SECAS"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS|Target"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS|Target DOWN"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS|Target UP"
+
+ *    example data: 
+          1. [
+              {
+                  "Value": "Mantenimiento Planificado||Mantenimiento Correctivo Prog||895",
+                  "Time": "2023-01-01T09:04:58Z"
+              },
+              {
+                  "Value": "Mantenimiento Planificado||Mantenimiento Correctivo Prog||1440",
+                  "Time": "2023-01-02T00:00:00Z"
+              },
+              {
+                  "Value": "Mantenimiento Planificado||Mantenimiento Correctivo Prog||962",
+                  "Time": "2023-01-03T00:00:00Z"
+              },
+              {
+                  "Value": "Actividad Operacional||Adición de Barras||1105",
+                  "Time": "2023-01-08T05:34:21Z"
+              },
+              {
+                  "Value": "Actividad Operacional||Adición de Barras||1316",
+                  "Time": "2023-01-09T00:00:00Z"
+              }
+          ]
+          2. [
+              .
+              .
+              .
+              ,
+              {
+                  "Value": 4385.5,
+                  "Time": "2023-01-01T00:01:00Z"
+              },
+              {
+                  "Value": 4413,
+                  "Time": "2023-01-01T12:01:00Z"
+              },
+              {
+                  "Value": 1755.5,
+                  "Time": "2023-01-02T00:01:00Z"
+              }
+          ]
+          3. [
+              .
+              .
+              .
+              ,
+              {
+                  "Value": 4385.5,
+                  "Time": "2023-01-01T00:01:00Z"
+              },
+              {
+                  "Value": 4413,
+                  "Time": "2023-01-01T12:01:00Z"
+              },
+              {
+                  "Value": 1755.5,
+                  "Time": "2023-01-02T00:01:00Z"
+              }
+          ]
+          4. [
+              .
+              .
+              .
+              ,
+              {
+                  "Value": 4385.5,
+                  "Time": "2023-01-01T00:01:00Z"
+              },
+              {
+                  "Value": 4413,
+                  "Time": "2023-01-01T12:01:00Z"
+              },
+              {
+                  "Value": 1755.5,
+                  "Time": "2023-01-02T00:01:00Z"
+              }
+          ]
+          5. [
+              {
+                  "Value": 4700,
+                  "Time": "2023-01-01T00:00:00Z"
+              }
+          ]
+          6. [
+              {
+                  "Value": 4200,
+                  "Time": "2023-01-01T00:00:00Z"
+              }
+          ]
+          7. [
+              {
+                  "Value": 5200,
+                  "Time": "2023-01-01T00:00:00Z"
+              }
+          ]
+
+ * 
+ */
+
+
+(function (CS) {
   var myEDcolumnDefinition = {
     typeName: "barrasfallasvchungar",
     displayName: "Diagrama de Barras Eventos con tarjets (CHUNGAR)",
@@ -10,14 +123,12 @@
     getDefaultConfig: function () {
       return {
         DataShape: "TimeSeries",
-        // DataQueryMode: CS.Extensibility.Enums.DataQueryMode.ModePlotValues,
         Height: 600,
         Width: 1400,
         decimalPlaces: 0,
         textColor: "black",
         backgroundColor: "transparent",
         gridColor: "transparent",
-        // plotAreaFillColor: "transparent",
         showTitle: false,
         showValues: true,
         fontSize: 12,
@@ -86,6 +197,7 @@
       "Stand By",
     ];
 
+    // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
       console.log(
         " ~ file: sym-barrasfallasvchungar.js:90 ~ myCustomDataUpdateFunction ~ data",
@@ -261,24 +373,27 @@
       }
     }
 
+    // Funcion añadir dias 
     function addDays(fecha, dias) {
       fecha.setDate(fecha.getDate() + dias);
       return fecha;
     }
 
-    // New functions
+    // Funcion añadir dias 
     function addDaysToDate(date, days) {
       var res = new Date(date);
       res.setDate(res.getDate() + days);
       return res;
     }
 
+    // Funcion formateo de fecha
     function formatDate(year, month, day) {
       return `${year}-${month <= 9 ? `0${month}` : `${month}`}-${
         day <= 9 ? `0${day}` : `${day}`
       }`;
     }
 
+    // Funcion filtro por evento
     function formatItem(data) {
       let startTime = new Date(timeProvider.displayTime.start);
       let endTime = !new Date(timeProvider.displayTime.end).getMonth()
@@ -817,13 +932,6 @@
       media,
       month
     ) {
-      console.log(
-        (twelfthTurnValue
-          ? twelfthTurnValue > 5623
-            ? twelfthTurnValue.toFixed(0)
-            : null
-          : twelfthTurnValue) || null
-      );
       return {
         timestamp: dayIndex + "/" + month,
         turno1:
@@ -1393,6 +1501,7 @@
       });
     }
 
+    // Funcion creacion del grafico
     function getNewChart(
       symbolContainerDiv,
       monthNow,
@@ -1813,7 +1922,6 @@
 
     function setDaysCalendarMine(month) {
       let dayCalendar;
-
       switch (month) {
         case 0:
           dayCalendar = 28;
@@ -1858,7 +1966,7 @@
       return dayCalendar;
     }
 
-
+    // Funcion modificador de titulo
     function createArrayOfChartTitles() {
       var titlesArray = null;
       if (scope.config.useCustomTitle) {
@@ -1872,6 +1980,7 @@
       return titlesArray;
     }
 
+    // Funcion de configuracion de archivos
     function myCustomConfigurationChangeFunction() {
       setTrendCategory();
       if (chart) {
