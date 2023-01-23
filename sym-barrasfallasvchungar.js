@@ -199,10 +199,6 @@
 
     // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
-      console.log(
-        " ~ file: sym-barrasfallasvchungar.js:90 ~ myCustomDataUpdateFunction ~ data",
-        data
-      );
 
       let dataFormat = data.Data[0].Values;
       let arrayData = [
