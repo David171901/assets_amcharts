@@ -1,4 +1,116 @@
-﻿(function (CS) {
+﻿/**
+ * Name: Diagrama de Barras Eventos con tarjets
+ * File name: sym-barrasfallasv5.js
+ * Atribute (7 atribute): 
+ *    example path: 
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|Actividad Operacional|C. PARADA 1 R"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|TIEMPO DE OPERACION TOTAL POR DIA"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS"
+          "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\MOLINOS\\MOLINO BARRAS 1|PRODUCCION TONELADAS SECAS"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS|Target"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS|Target DOWN"
+          "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\MOLINOS\MOLINO BARRAS 1|PRODUCCION TONELADAS HUMEDAS|Target UP"
+
+ *    example data: 
+          1. [
+              {
+                  "Value": "Mantenimiento Planificado||Mantenimiento Correctivo Prog||895",
+                  "Time": "2023-01-01T09:04:58Z"
+              },
+              {
+                  "Value": "Mantenimiento Planificado||Mantenimiento Correctivo Prog||1440",
+                  "Time": "2023-01-02T00:00:00Z"
+              },
+              {
+                  "Value": "Mantenimiento Planificado||Mantenimiento Correctivo Prog||962",
+                  "Time": "2023-01-03T00:00:00Z"
+              },
+              {
+                  "Value": "Actividad Operacional||Adición de Barras||1105",
+                  "Time": "2023-01-08T05:34:21Z"
+              },
+              {
+                  "Value": "Actividad Operacional||Adición de Barras||1316",
+                  "Time": "2023-01-09T00:00:00Z"
+              }
+          ]
+          2. [
+              .
+              .
+              .
+              ,
+              {
+                  "Value": 4385.5,
+                  "Time": "2023-01-01T00:01:00Z"
+              },
+              {
+                  "Value": 4413,
+                  "Time": "2023-01-01T12:01:00Z"
+              },
+              {
+                  "Value": 1755.5,
+                  "Time": "2023-01-02T00:01:00Z"
+              }
+          ]
+          3. [
+              .
+              .
+              .
+              ,
+              {
+                  "Value": 4385.5,
+                  "Time": "2023-01-01T00:01:00Z"
+              },
+              {
+                  "Value": 4413,
+                  "Time": "2023-01-01T12:01:00Z"
+              },
+              {
+                  "Value": 1755.5,
+                  "Time": "2023-01-02T00:01:00Z"
+              }
+          ]
+          4. [
+              .
+              .
+              .
+              ,
+              {
+                  "Value": 4385.5,
+                  "Time": "2023-01-01T00:01:00Z"
+              },
+              {
+                  "Value": 4413,
+                  "Time": "2023-01-01T12:01:00Z"
+              },
+              {
+                  "Value": 1755.5,
+                  "Time": "2023-01-02T00:01:00Z"
+              }
+          ]
+          5. [
+              {
+                  "Value": 4700,
+                  "Time": "2023-01-01T00:00:00Z"
+              }
+          ]
+          6. [
+              {
+                  "Value": 4200,
+                  "Time": "2023-01-01T00:00:00Z"
+              }
+          ]
+          7. [
+              {
+                  "Value": 5200,
+                  "Time": "2023-01-01T00:00:00Z"
+              }
+          ]
+
+ * 
+ */
+
+(function (CS) {
   var myEDcolumnDefinition = {
     typeName: "barrasfallasv5",
     displayName: "Diagrama de Barras Eventos con tarjets",

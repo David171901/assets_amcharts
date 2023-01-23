@@ -1469,38 +1469,6 @@
       return daysOfMonth;
     }
 
-    function getDefaultArray(value) {
-      let todayDate =
-        timeProvider.displayTime.end != "*"
-          ? new Date(timeProvider.displayTime.end)
-          : new Date();
-      let daysOfMonth = getDaysOfMonth(
-        todayDate.getMonth() + 1,
-        todayDate.getFullYear
-      );
-      let month = todayDate.getMonth() + 1;
-      let year = todayDate.getFullYear();
-
-      let dataArray = [];
-      for (let index = 1; index <= daysOfMonth; index++) {
-        let indexString = index <= 9 ? `0${index}` : `${index}`;
-        let monthString = month <= 9 ? `0${month}` : `${month}`;
-        dataArray.push(
-          Object({
-            Value: value,
-            Time: `${year}-${monthString}-${indexString}T05:00:00Z`,
-          })
-        );
-      }
-      return Object({
-        StartTime: "2022-10-01T00:00:00Z",
-        EndTime: "2022-10-18T17:16:56.97Z",
-        Minimum: 0,
-        Maximum: 100,
-        Values: dataArray,
-      });
-    }
-
     // Funcion creacion del grafico
     function getNewChart(
       symbolContainerDiv,
