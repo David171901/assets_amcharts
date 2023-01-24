@@ -1,3 +1,71 @@
+/**
+ * Name: Cylinder Gauge
+ * File name: sym-cylinderGauge.js
+ * Atribute (1 atribute): 
+ *    example path: 
+         "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\00 EQUIPOS CRITICOS\\MOLINOS\\MOLINO PRIMARIO|DISPONIBILIDAD GUARDIA DIA (A)"
+          "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\00 EQUIPOS CRITICOS\\MOLINOS\\MOLINO PRIMARIO|DISPONIBILIDAD REAL GUARDIA DIAN (A)"
+ *    example data: 
+          1. [
+              {
+                  "Value": 100,
+                  "Time": "2023-01-01T00:00:00Z"
+              },
+              {
+                  "Value": 96.01396942138672,
+                  "Time": "2023-01-02T00:00:00Z"
+              },
+              {
+                  "Value": 100,
+                  "Time": "2023-01-03T00:00:00Z"
+              },
+              {
+                  "Value": 100,
+                  "Time": "2023-01-04T00:00:00Z"
+              }
+          ]
+
+          2. [
+                .
+                .
+                .
+                {
+                    "Value": 96.8391953,
+                    "Time": "2023-01-22T21:00:00Z"
+                },
+                {
+                    "Value": 96.95208,
+                    "Time": "2023-01-22T21:20:00Z"
+                },
+                {
+                    "Value": 97.05718,
+                    "Time": "2023-01-22T21:40:00Z"
+                },
+                {
+                    "Value": 97.15527,
+                    "Time": "2023-01-22T22:00:00Z"
+                },
+                {
+                    "Value": 97.24704,
+                    "Time": "2023-01-22T22:20:00Z"
+                },
+                {
+                    "Value": 97.33307,
+                    "Time": "2023-01-22T22:40:00Z"
+                },
+                {
+                    "Value": 97.41389,
+                    "Time": "2023-01-22T23:00:00Z"
+                },
+                {
+                    "Value": 97.48995,
+                    "Time": "2023-01-22T23:20:00Z"
+                }
+            ]
+
+ * 
+ */
+
 (function (BS) {
   function symbolVis() {}
   BS.deriveVisualizationFromBase(symbolVis);
@@ -51,7 +119,9 @@
     var dataArray = [];
     var dataNumber;
 
+    // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
+      console.log(" ~ file: sym-cylinderGauge.js:55 ~ myCustomDataUpdateFunction ~ data", data)
       scope.customTitle = scope.customTitle;
       if (data) {
         let static = data.Data[0];
@@ -67,11 +137,13 @@
       }
     }
 
+    // Funcion obtener ultimo valor real
     function getRealValue(data) {
       let Value = data.Values.at(-1).Value.toFixed(scope.config.decimalPlaces);
       return Value;
     }
 
+    // Funcion creacion de titulos
     function createArrayOfChartTitles(typeChart) {
       var titlesArray;
 
@@ -106,18 +178,20 @@
       }
     }
 
+    // Funcion parseo valores estaticos
     function getStaticValue(data) {
       let Values = data.Values;
       let array = Values.map((elem) =>
         Object({
           value: elem.Value.toFixed(scope.config.decimalPlaces),
-          date: elem.Time.split("T")[0].replace("2022-", ""),
+          date: elem.Time.split("T")[0].replace("2023-", ""),
         })
       );
 
       return array;
     }
 
+    // Funcion creacion de grafico
     function getNewChart(dataArray, dataNumber) {
       var chartCylinderGauge = AmCharts.makeChart(symbolContainerDiv1.id, {
         type: "serial",
@@ -223,6 +297,7 @@
       return { chartCylinderGauge, chartLineBase };
     }
 
+    // Funcion refresco de la grafica
     function refreshChart(chart, dataArray, dataNumber) {
       let { chartCylinderGauge, chartLineBase } = chart;
 
@@ -249,6 +324,7 @@
       }
     }
 
+    // Funcion configuracion de la grafica
     function myCustomConfigurationChangeFunction(data) {
       if (chart) {
         let { chartCylinderGauge, chartLineBase } = chart;

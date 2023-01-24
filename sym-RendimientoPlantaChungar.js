@@ -1,3 +1,22 @@
+/**
+ * Name: Rendiento Planta Chungar
+ * File name: sym-RendimientoPlantaChungar.js
+ * Atribute (10 atribute): 
+ *    example path: 
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA CHUNGAR"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA CHUNGAR G1"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA REAL CHUNGAR"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA REAL CHUNGAR G1"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|TONELAJE F12 GUARDIA 1 REAL"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS|Target"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS|TargetDown"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS|TargetUp"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS HUMEDAS DEPURADAS"
+
+ * 
+ */
+
 (function (CS) {
   var myEDcolumnDefinition = {
     typeName: "RendimientoPlantaChungar",
@@ -66,15 +85,10 @@
     var targetDown;
     var targetUP;
 
+    // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
-      console.log(
-        " ~ file: sym-RendimientoPlantaChungar.js:61 ~ myCustomDataUpdateFunction ~ data",
-        data
-      );
-
       if (data !== null && data.Data) {
         dataArray = [];
-        console.log(" [+] data: ", data.Data);
 
         let firstTurn = data.Data[0];
         // let secondTurn = data.Data[1];
@@ -165,9 +179,7 @@
 
         // TONELAJES ************************************
         let dryTonnage = data.Data[8];
-        console.log(" ~ file: sym-RendimientoPlantaChungar.js:164 ~ myCustomDataUpdateFunction ~ dryTonnage", dryTonnage)
         let wetTonnage = data.Data[9];
-        console.log(" ~ file: sym-RendimientoPlantaChungar.js:166 ~ myCustomDataUpdateFunction ~ wetTonnage", wetTonnage)
 
         let dryTonnageReal = {};
         dryTonnageReal.Values = [];
@@ -218,7 +230,7 @@
             dataArray
           );
         else refreshChart(chart, scope, monthNow);
-        }
+      }
     }
 
     function fillDataArray(
@@ -264,7 +276,7 @@
             currentHour,
             currentMonth
           );
-          
+
           let secondTurnValue = getTurnValue(
             secondTurn,
             iterableDate,
@@ -372,15 +384,15 @@
           : wetTonnage,
         // Dry Tonnage
         drytonnageup: dryTonnage
-        ? dryTonnage > 4800
+          ? dryTonnage > 5047
             ? dryTonnage.toFixed(scope.config.decimalPlaces)
             : null
-        : null,
+          : null,
         drytonnagedown: dryTonnage
-        ? dryTonnage < 4600
+          ? dryTonnage < 4753
             ? dryTonnage.toFixed(scope.config.decimalPlaces)
             : null
-        : null,
+          : null,
         total: total ? total.toFixed(scope.config.decimalPlaces) : total,
       };
     }
@@ -392,10 +404,6 @@
         } else {
           chart.titles = null;
         }
-        // chart.valueAxes[0].minimum = getCorrectChartMin();
-        // chart.valueAxes[0].maximum = 10000;
-        // chart.valueAxes[1].minimum = getCorrectChartMin();
-        // chart.valueAxes[1].maximum = 10000;
 
         chart.dataProvider = dataArray;
         chart.validateData();
@@ -459,91 +467,90 @@
     }
 
     function getSavedValue(turnValue, turnArray, itemIndex, iterableDate) {
-        let itemDate = new Date(turnArray.Values[itemIndex].Time);
-  
-        let itemDay = itemDate.getDate();
-        let itemMonth = itemDate.getMonth() + 1;
-  
-        let iterableDay = iterableDate.getDate();
-        let iterableMonth = iterableDate.getMonth() + 1;
-  
-        if (iterableDay == itemDay && itemMonth == iterableMonth)
-          turnValue = turnArray.Values[itemIndex].Value;
-        return turnValue;
-      }
+      let itemDate = new Date(turnArray.Values[itemIndex].Time);
+
+      let itemDay = itemDate.getDate();
+      let itemMonth = itemDate.getMonth() + 1;
+
+      let iterableDay = iterableDate.getDate();
+      let iterableMonth = iterableDate.getMonth() + 1;
+
+      if (iterableDay == itemDay && itemMonth == iterableMonth)
+        turnValue = turnArray.Values[itemIndex].Value;
+      return turnValue;
+    }
 
     function getTonnageValueForNews(
-        turnArray,
-        iterableDate,
-        isFirstTurn,
-        firstTurnReal,
-        secondTurnReal,
-        currentDay,
-        currentHour,
-        currentMonth
-      ) {
-        let turnValue = null;
-        let originalArrayLength = turnArray.Values.length;
-        let hasSavedValues = originalArrayLength != 0;
-        let arrayLength = hasSavedValues ? originalArrayLength : 1;
-  
-        for (let itemIndex = 0; itemIndex < arrayLength; itemIndex++) {
-          if (hasSavedValues)
-            turnValue = getSavedValue(
-                turnValue,
-                turnArray,
-                itemIndex,
-                iterableDate
-                );
-          if (turnValue != null) continue;
-          turnValue = getRealValue(
-              turnValue,
-              iterableDate,
-              currentDay,
-              currentHour,
-              firstTurnReal,
-              secondTurnReal,
-              isFirstTurn,
-              currentMonth
-              );
-          if (turnValue != null) break;
-        }
-        return turnValue != null
-          ? turnValue.toString().replace(",", ".")
-          : turnValue;
-      }
-  
+      turnArray,
+      iterableDate,
+      isFirstTurn,
+      firstTurnReal,
+      secondTurnReal,
+      currentDay,
+      currentHour,
+      currentMonth
+    ) {
+      let turnValue = null;
+      let originalArrayLength = turnArray.Values.length;
+      let hasSavedValues = originalArrayLength != 0;
+      let arrayLength = hasSavedValues ? originalArrayLength : 1;
 
-      function getRealValue(
-        turnValue,
-        iterableDate,
-        currentDay,
-        currentHour,
-        firstTurnReal,
-        secondTurnReal,
-        isFirstTurn,
-        currentMonth
-      ) {
-        if (isFirstTurn) {
-          return getFirstTurnRealValue(
+      for (let itemIndex = 0; itemIndex < arrayLength; itemIndex++) {
+        if (hasSavedValues)
+          turnValue = getSavedValue(
             turnValue,
-            iterableDate,
-            currentDay,
-            currentHour,
-            firstTurnReal,
-            currentMonth
+            turnArray,
+            itemIndex,
+            iterableDate
           );
-        } else {
-          return getSecondTurnRealValue(
-            turnValue,
-            iterableDate,
-            currentDay,
-            currentHour,
-            secondTurnReal,
-            currentMonth
-          );
-        }
+        if (turnValue != null) continue;
+        turnValue = getRealValue(
+          turnValue,
+          iterableDate,
+          currentDay,
+          currentHour,
+          firstTurnReal,
+          secondTurnReal,
+          isFirstTurn,
+          currentMonth
+        );
+        if (turnValue != null) break;
       }
+      return turnValue != null
+        ? turnValue.toString().replace(",", ".")
+        : turnValue;
+    }
+
+    function getRealValue(
+      turnValue,
+      iterableDate,
+      currentDay,
+      currentHour,
+      firstTurnReal,
+      secondTurnReal,
+      isFirstTurn,
+      currentMonth
+    ) {
+      if (isFirstTurn) {
+        return getFirstTurnRealValue(
+          turnValue,
+          iterableDate,
+          currentDay,
+          currentHour,
+          firstTurnReal,
+          currentMonth
+        );
+      } else {
+        return getSecondTurnRealValue(
+          turnValue,
+          iterableDate,
+          currentDay,
+          currentHour,
+          secondTurnReal,
+          currentMonth
+        );
+      }
+    }
 
     function getLastUnsavedTemporal(
       firstTurnReal,
@@ -556,64 +563,64 @@
     }
 
     function getFirstTurnRealValue(
-        turnValue,
-        iterableDate,
-        currentDay,
-        currentHour,
-        firstTurnReal,
-        currentMonth
+      turnValue,
+      iterableDate,
+      currentDay,
+      currentHour,
+      firstTurnReal,
+      currentMonth
+    ) {
+      let iterableDay = iterableDate.getDate();
+
+      if (
+        iterableDay == currentDay &&
+        currentHour >= 0 &&
+        currentHour < 7 &&
+        iterableDate.getMonth() + 1 == currentMonth
+      )
+        return firstTurnReal.Values[firstTurnReal.Values.length - 1].Value;
+      else if (
+        iterableDay - 1 == currentDay &&
+        currentHour >= 19 &&
+        currentHour < 24 &&
+        iterableDate.getMonth() + 1 == currentMonth
+      )
+        return firstTurnReal.Values[firstTurnReal.Values.length - 1].Value;
+      else return turnValue;
+    }
+
+    function getSecondTurnRealValue(
+      turnValue,
+      iterableDate,
+      currentDay,
+      currentHour,
+      secondTurnReal,
+      currentMonth
+    ) {
+      let iterableDay = iterableDate.getDate();
+
+      if (
+        iterableDay == currentDay &&
+        currentHour >= 7 &&
+        currentHour < 19 &&
+        iterableDate.getMonth() + 1 == currentMonth
       ) {
-        let iterableDay = iterableDate.getDate();
-  
-        if (
-          iterableDay == currentDay &&
-          currentHour >= 0 &&
-          currentHour < 7 &&
-          iterableDate.getMonth() + 1 == currentMonth
-        )
-          return firstTurnReal.Values[firstTurnReal.Values.length - 1].Value;
-        else if (
-          iterableDay - 1 == currentDay &&
-          currentHour >= 19 &&
-          currentHour < 24 &&
-          iterableDate.getMonth() + 1 == currentMonth
-        )
-          return firstTurnReal.Values[firstTurnReal.Values.length - 1].Value;
-        else return turnValue;
-      }
-  
-      function getSecondTurnRealValue(
-        turnValue,
-        iterableDate,
-        currentDay,
-        currentHour,
-        secondTurnReal,
-        currentMonth
-      ) {
-        let iterableDay = iterableDate.getDate();
-  
-        if (
-          iterableDay == currentDay &&
-          currentHour >= 7 &&
-          currentHour < 19 &&
-          iterableDate.getMonth() + 1 == currentMonth
-        ) {
-          if (secondTurnReal.Values.length > 0) {
-            return secondTurnReal.Values[secondTurnReal.Values.length - 1].Value;
-          } else {
-            return 0;
-          }
-        } else if (
-          iterableDay - 1 == currentDay &&
-          currentHour >= 19 &&
-          currentHour < 24 &&
-          iterableDate.getMonth() + 1 == currentMonth
-        ) {
-          return 0;
+        if (secondTurnReal.Values.length > 0) {
+          return secondTurnReal.Values[secondTurnReal.Values.length - 1].Value;
         } else {
-          return turnValue;
+          return 0;
         }
+      } else if (
+        iterableDay - 1 == currentDay &&
+        currentHour >= 19 &&
+        currentHour < 24 &&
+        iterableDate.getMonth() + 1 == currentMonth
+      ) {
+        return 0;
+      } else {
+        return turnValue;
       }
+    }
 
     function getTotalTurns(firstTurnValue, secondTurnValue) {
       let firstTurn = firstTurnValue || 0;
@@ -622,26 +629,7 @@
       return total != 0 ? total : null;
     }
 
-    function getCorrectChartMin() {
-      let result = undefined;
-      if (scope.config.yAxisRange == "customRange") {
-        result = scope.config.minimumYValue;
-      } else {
-        result = undefined;
-      }
-      return result;
-    }
-
-    function getCorrectChartMax() {
-      let result = undefined;
-      if (scope.config.yAxisRange == "customRange") {
-        result = scope.config.maximumYValue;
-      } else {
-        result = undefined;
-      }
-      return result;
-    }
-
+    // Funcion obtener dias del mes
     function getDaysOfMonth(numMonth, numYear) {
       let daysOfMonth = 31;
       numMonth = parseInt(numMonth);
@@ -658,6 +646,7 @@
       return daysOfMonth;
     }
 
+    // Funcion inicializadora del grafico
     function getNewChart(
       symbolContainerDiv,
       monthNow,
@@ -666,13 +655,13 @@
       stringUnitsSecond,
       dataArray
     ) {
-      console.log(" ~ file: sym-RendimientoPlantaChungar.js:602 ~ dataArray", dataArray)
       return AmCharts.makeChart(symbolContainerDiv.id, {
         type: "serial",
+        theme: "none",
         hideCredits: true,
         creditsPosition: "bottom-right",
         addClassNames: true,
-        depth3D: 0,
+        depth3D: 20,
         angle: 0,
         marginRight: 1,
         marginLeft: 1,
@@ -695,9 +684,9 @@
             gridAlpha: 0,
             axisColor: scope.config.seriesColor2,
             position: "left",
-            minimum: 0,//scope.config.minimumYValue,
-            maximum: 10000,//scope.config.maximumYValue,
-            labelsEnabled: true,
+            minimum: 0, //scope.config.minimumYValue,
+            maximum: 15000, //scope.config.maximumYValue,
+            labelsEnabled: false,
           },
           {
             id: "Axis1",
@@ -705,8 +694,8 @@
             gridAlpha: 0,
             axisColor: scope.config.seriesColor2,
             position: "left",
-            minimum: 0,//scope.config.minimumYValue,
-            maximum: 10000,//scope.config.maximumYValue,
+            minimum: 0, //scope.config.minimumYValue,
+            maximum: 15000, //scope.config.maximumYValue,
             labelsEnabled: false,
           },
           {
@@ -714,7 +703,7 @@
             axisAlpha: 1,
             position: "right",
             gridAlpha: 0.1,
-            maximum: 5500,//scope.config.maximumYValueAxisv2,
+            maximum: 6000, //scope.config.maximumYValueAxisv2,
             minimum: 3000,
             labelsEnabled: true,
           },
@@ -728,7 +717,7 @@
             lineColor: "#0084ff",
             //tipe: "smoothedLine",
             lineThickness: 5,
-            balloonText: "Límite superior +3%" + " (" + targetUP + ")",
+            balloonText: "Limite superior +3%" + " (" + targetUP + ")",
             //labelText: 5733 + "Tn",
             valueAxis: "Axis2",
           },
@@ -739,7 +728,7 @@
             initialValue: targetDown,
             lineColor: "#f58e8e",
             lineThickness: 5,
-            balloonText: "Límite inferior -3%" + " (" + targetDown + ")",
+            balloonText: "Limite inferior -3%" + " (" + targetDown + ")",
             //labelText: 5187 + "Tn",
             valueAxis: "Axis2",
           },
@@ -773,7 +762,7 @@
         categoryAxis: {
           axisColor: scope.config.seriesColor2,
           minPeriod: "ss",
-          gridAlpha: 0,
+          gridAlpha: 0.5,
           gridPosition: "start",
           autoWrap: true,
         },
@@ -786,7 +775,7 @@
             fillAlphas: 0.8,
             lineAlpha: 0.3,
             lineColor: scope.config.seriesColor1,
-            fontSize: scope.config.fontSize,
+            fontSize: scope.config.fontSize + 15,
             opacity: 1,
             labelText: "[[turno1]]",
             showAllValueLabels: true,
@@ -873,7 +862,7 @@
             bulletBorderAlpha: 2,
             useLineColorForBulletBorder: true,
             bulletBorderThickness: 4,
-            title: "Produccion encima del límite esperado",
+            title: "Produccion encima del l�mite esperado",
             valueField: "drytonnageup",
             showBalloon: true,
             balloncolor: "#001BFF",
@@ -893,7 +882,7 @@
             bulletBorderAlpha: 2,
             useLineColorForBulletBorder: true,
             bulletBorderThickness: 4,
-            title: "Produccion debajo del límite esperado",
+            title: "Produccion debajo del l�mite esperado",
             valueField: "drytonnagedown",
             showBalloon: true,
             linecolor: "#FF0000",
@@ -917,38 +906,41 @@
       });
     }
 
+    // Funcion seteo de trends
     function setTrendCategory() {
-        let endCategory =
-          timeProvider.displayTime.end != "*"
-            ? new Date(timeProvider.displayTime.end)
-            : new Date();
-        let startCategory = new Date(timeProvider.displayTime.start);
-        startCategory = addDays(startCategory, 1);
-        chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${
-          endCategory.getMonth() + 1
-        }`;
-        chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${
-          startCategory.getMonth() + 1
-        }`;
-        chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${
-          endCategory.getMonth() + 1
-        }`;
-        chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${
-          startCategory.getMonth() + 1
-        }`;
-        chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${
-          endCategory.getMonth() + 1
-        }`;
-        chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${
-          startCategory.getMonth() + 1
-        }`;
-      }
+      let endCategory =
+        timeProvider.displayTime.end != "*"
+          ? new Date(timeProvider.displayTime.end)
+          : new Date();
+      let startCategory = new Date(timeProvider.displayTime.start);
+      startCategory = addDays(startCategory, 1);
+      chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${
+        endCategory.getMonth() + 1
+      }`;
+      chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${
+        startCategory.getMonth() + 1
+      }`;
+      chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${
+        endCategory.getMonth() + 1
+      }`;
+      chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${
+        startCategory.getMonth() + 1
+      }`;
+      chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${
+        endCategory.getMonth() + 1
+      }`;
+      chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${
+        startCategory.getMonth() + 1
+      }`;
+    }
 
-      function addDays(fecha, dias) {
-        fecha.setDate(fecha.getDate() + dias);
-        return fecha;
-      }
+    // Funcion añadir dias
+    function addDays(fecha, dias) {
+      fecha.setDate(fecha.getDate() + dias);
+      return fecha;
+    }
 
+    // Funcion creacion de titulos
     function createArrayOfChartTitles() {
       var titlesArray = null;
       if (scope.config.useCustomTitle) {
@@ -962,13 +954,10 @@
       return titlesArray;
     }
 
+    // Funcion de configuracion
     function myCustomConfigurationChangeFunction() {
       if (chart) {
         setTrendCategory();
-        // chart.valueAxes[0].minimum = getCorrectChartMin();
-        // chart.valueAxes[0].maximum = 10000;
-        // chart.valueAxes[1].minimum = getCorrectChartMin();
-        // chart.valueAxes[1].maximum = 10000;
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
         } else {
@@ -989,24 +978,6 @@
         if (chart.graphs[0].lineThickness !== scope.config.lineThick) {
           chart.graphs[0].lineThickness = scope.config.lineThick;
         }
-        // if (chart.graphs[0].lineColor !== scope.config.seriesColor1) {
-        //   chart.graphs[0].lineColor = scope.config.seriesColor1;
-        // }
-        // if (chart.graphs[1].lineColor !== scope.config.seriesColor2) {
-        //   chart.graphs[1].lineColor = scope.config.seriesColor2;
-        // }
-        // if (chart.graphs[2].lineColor !== scope.config.seriesColor3) {
-        //   chart.graphs[2].lineColor = scope.config.seriesColor3;
-        // }
-        // if (chart.graphs[3].lineColor !== scope.config.seriesColor4) {
-        //   chart.graphs[3].lineColor = scope.config.seriesColor4;
-        // }
-        // if (chart.graphs[4].lineColor !== scope.config.seriesColor5) {
-        //   chart.graphs[4].lineColor = scope.config.seriesColor5;
-        // }
-        // if (chart.graphs[5].lineColor !== scope.config.seriesColor6) {
-        //   chart.graphs[5].lineColor = scope.config.seriesColor6;
-        // }
         if (chart.chartScrollbar.enabled != scope.config.showChartScrollBar) {
           chart.chartScrollbar.enabled = scope.config.showChartScrollBar;
         }
