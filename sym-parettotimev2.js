@@ -22,7 +22,7 @@
           }
       ]
  * 
- */
+*/
 
 (function (BS) {
   function symbolVis() {}

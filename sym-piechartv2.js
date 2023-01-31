@@ -170,6 +170,7 @@
           };
           dataArray.push(newDataObject);
         }
+        console.log(" ~ file: sym-piechartv2.js:172 ~ myCustomDataUpdateFunction ~ dataArray", dataArray)
 
         if (!chart) chart = getNewChart(dataArray);
         else refreshChart(chart, dataArray);
