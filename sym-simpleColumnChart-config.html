@@ -1,0 +1,28 @@
+﻿<ul kendo-panel-bar class="t-side-panel-bgcolor" style="font-size: 14px;">
+    <li class="k-state-active">
+        <span class="panel-bar-label-no-wrap">Display Options</span>
+        <div style="margin: 8px 0;">
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 35px;font-size:14px;">
+                <label>Tamaño texto</label>
+                <input type="number" class="" style="margin-left:8px" ng-model="config.fontSize">
+            </label>
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 15px;font-size:14px;">
+                <input type="checkbox" class="c-config-checkbox" ng-model="config.useCustomTitle">Usar título personalizado<br />
+            </label>
+            <label style="margin-top:8px; margin-left: 20px;font-size:14px;" ng-show="config.useCustomTitle">
+                <br />
+                <input type="text" style="text-align:center;margin-left:15px;" ng-model="config.customTitle">
+                <br />
+            </label>
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 14px;font-size:14px;">
+                <input type="number" style="margin-right:8px;text-align:center" ng-model="config.decimalPlaces">Número de decimales<br />
+            </label>
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 15px;font-size:14px;">
+                <input type="checkbox" class="c-config-checkbox" ng-model="config.showLegend">Show Legend<br />
+            </label>
+            <label class="flex-align-center" style="margin-top:8px; margin-left: 15px;font-size:14px;">
+                <input type="checkbox" class="c-config-checkbox" ng-model="config.rotate">Rotate<br />
+            </label>
+        </div>
+    </li>
+</ul>

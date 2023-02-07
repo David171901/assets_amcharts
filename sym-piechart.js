@@ -6,9 +6,9 @@
     var definition = {
 
         typeName: 'piechart',
-        displayName: 'Pie Chart',
+        displayName: 'Diagrama circular',
         datasourceBehavior: BS.Extensibility.Enums.DatasourceBehaviors.Multiple,
-        iconUrl: '/Scripts/app/editor/symbols/ext/icons/comm.png',
+        iconUrl: '/Scripts/app/editor/symbols/ext/icons/pieChartCOMM.png',
         visObjectType: symbolVis,
 
         getDefaultConfig: function () {
@@ -100,7 +100,6 @@
                 "outlineThickness": 1,
                 "innerRadius": 0,
                 "fontSize": scope.config.fontSize,
-                "colors": ["#3AB8A8","#34A496","#2F9084","#297C72", "#236960","#1D554F", "#17423D", "#102F2B",  "#0A1C1A", "#030908"],
                 "legend": {
                     "enabled": scope.config.showLegend,
                     "color": scope.config.textColor,

@@ -3,10 +3,10 @@
   BS.deriveVisualizationFromBase(symbolVis);
 
   var definition = {
-    typeName: "parettochart",
-    displayName: "Diagrama Paretto",
+    typeName: "simpleColumnChart",
+    displayName: "Diagrama simple column",
     datasourceBehavior: BS.Extensibility.Enums.DatasourceBehaviors.Multiple,
-    iconUrl: "/Scripts/app/editor/symbols/ext/icons/parettoChartCOMM.png",
+    iconUrl: "/Scripts/app/editor/symbols/ext/icons/simpleColumnChartCOMM.png",
     visObjectType: symbolVis,
 
     getDefaultConfig: function () {
@@ -28,7 +28,7 @@
         labels: [],
         units: [],
         decimalPlaces: 0,
-        href: "",
+        rotate: false,
       };
     },
 
@@ -43,7 +43,7 @@
   };
 
   symbolVis.prototype.init = function (scope, elem) {
-    console.log("\t[+]Diagrama Paretto");
+    console.log("\t[+]Diagrama simple columnas");
     scope.config.FormatType = null;
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
@@ -103,6 +103,7 @@
           color: scope.config.textColor1,
           depth3D: 20,
           angle: 35,
+          rotate: scope.config.rotate,
           valueAxes: [
             {
               id: "v1",
@@ -131,26 +132,7 @@
               labelText: "[[Value]]",
               fontSize: scope.config.fontSize + 10,
               balloonText: "[[Label]]:[[Value]]",
-            },
-            {
-              valueAxis: "v2",
-              bullet: "round",
-              lineThickness: 3,
-              bulletSize: 7,
-              bulletBorderAlpha: 1,
-              bulletColor: "#FFFFFF",
-              useLineColorForBulletBorder: true,
-              fillAlphas: 0,
-              lineAlpha: 1,
-              title: "Percent",
-              valueField: "Percent",
-              labelText: "[[Percent]]%",
-              fontSize: scope.config.fontSize + 10,
-              balloonText: "[[Label]]:[[Percent]]%",
-              precision: scope.config.decimalPlaces,
-              labelPosition: "bottom",
-              color: scope.config.textColor2,
-            },
+            }
           ],
           categoryField: "Label",
           categoryAxis: {
@@ -226,6 +208,8 @@
         else chart.titles = null;
 
         chart.legend.enabled = scope.config.showLegend;
+
+        chart.rotate = scope.config.rotate;
 
         chart.validateData();
         chart.validateNow();
