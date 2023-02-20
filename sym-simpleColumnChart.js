@@ -26,6 +26,16 @@
         decimalPlaces: 0,
         rotate: false,
         mode3D: false,
+        colorBar1: "#B4BABD",
+        colorBar2: "#B4BABD",
+        colorBar3: "#B4BABD",
+        colorBar4: "#B4BABD",
+        colorBar5: "#B4BABD",
+        colorBar6: "#B4BABD",
+        colorBar7: "#B4BABD",
+        colorBar8: "#B4BABD",
+        colorBar9: "#B4BABD",
+        colorBar10: "#B4BABD",
       };
     },
 
@@ -51,16 +61,16 @@
     var chart;
     var dataArray;
     let colors = [
-      "#2471A3",
-      "#17A589",
-      "#D4AC0D",
-      "#CA6F1E",
-      "#884EA0",
-      "#1BD2D8",
-      "#2E4053",
-      "#685858",
-      "#839192",
-      "#D0D3D4",
+      scope.config.colorBar1,
+      scope.config.colorBar2,
+      scope.config.colorBar3,
+      scope.config.colorBar4,
+      scope.config.colorBar5,
+      scope.config.colorBar6,
+      scope.config.colorBar7,
+      scope.config.colorBar8,
+      scope.config.colorBar9,
+      scope.config.colorBar10,
     ];
 
     // Funcion inicilizadora
