@@ -15,20 +15,17 @@
         FormatType: null,
         Height: 500,
         Width: 500,
-        fontSize: 22,
+        fontSize: 16,
         textColor1: "black",
-        textColor2: "#000000",
         colorfill2: "#FC0000",
-        backgroundColor: "transparent",
         outlineColor: "white",
         useCustomTitle: false,
         customTitle: "",
         showLegend: false,
         fontSizeInside: 12,
-        labels: [],
-        units: [],
         decimalPlaces: 0,
         rotate: false,
+        mode3D: false,
       };
     },
 
@@ -101,7 +98,7 @@
           colors: ["", scope.config.colorfill2],
           dataProvider: dataArray,
           color: scope.config.textColor1,
-          depth3D: 20,
+          depth3D: (scope.config.mode3D) ? 20 : 0,
           angle: 35,
           rotate: scope.config.rotate,
           valueAxes: [
@@ -130,7 +127,7 @@
               type: "column",
               valueField: "Value",
               labelText: "[[Value]]",
-              fontSize: scope.config.fontSize + 10,
+              fontSize: scope.config.fontSize,
               balloonText: "[[Label]]:[[Value]]",
             }
           ],
@@ -173,35 +170,19 @@
     }
 
     // Funcion de configuracion de estilos
-    function myCustomConfigurationChangeFunction(data) {
+    function myCustomConfigurationChangeFunction() {
       if (chart) {
         if (chart.fontSize !== scope.config.fontSize) {
           chart.titles = createArrayOfChartTitles();
           chart.fontSize = scope.config.fontSize;
-          chart.graphs[0].fontSize = scope.config.fontSize + 10;
-          chart.graphs[1].fontSize = scope.config.fontSize + 10;
+          chart.graphs[0].fontSize = scope.config.fontSize;
+          chart.graphs[1].fontSize = scope.config.fontSize;
           chart.legend.fontSize = scope.config.fontSize;
         }
 
         if (chart.graphs[1].precision != scope.config.decimalPlaces) {
           chart.graphs[1].precision = scope.config.decimalPlaces;
         }
-
-        if (chart.graphs[0].color !== scope.config.textColor1) {
-          chart.graphs[0].color = scope.config.textColor1;
-          chart.legend.color = scope.config.textColor1;
-        }
-
-        if (chart.graphs[1].color !== scope.config.textColor2) {
-          chart.graphs[1].color = scope.config.textColor2;
-        }
-
-        if (chart.colors[1] != scope.config.colorfill2) {
-          chart.colors[1] = scope.config.colorfill2;
-        }
-
-        if (chart.backgroundColor !== scope.config.backgroundColor)
-          chart.backgroundColor = scope.config.backgroundColor;
 
         if (scope.config.useCustomTitle)
           chart.titles = createArrayOfChartTitles();
@@ -210,6 +191,8 @@
         chart.legend.enabled = scope.config.showLegend;
 
         chart.rotate = scope.config.rotate;
+
+        chart.depth3D = (scope.config.mode3D) ? 20 : 0;
 
         chart.validateData();
         chart.validateNow();

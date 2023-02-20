@@ -15,20 +15,26 @@
         FormatType: null,
         Height: 500,
         Width: 500,
-        fontSize: 22,
+        fontSize: 16,
         textColor1: "black",
         textColor2: "#000000",
         colorfill2: "#FC0000",
         backgroundColor: "transparent",
-        outlineColor: "white",
         useCustomTitle: false,
         customTitle: "",
         showLegend: false,
-        fontSizeInside: 12,
-        labels: [],
-        units: [],
         decimalPlaces: 0,
-        href: "",
+        colorBar1: "#B4BABD",
+        colorBar2: "#B4BABD",
+        colorBar3: "#B4BABD",
+        colorBar4: "#B4BABD",
+        colorBar5: "#B4BABD",
+        colorBar6: "#B4BABD",
+        colorBar7: "#B4BABD",
+        colorBar8: "#B4BABD",
+        colorBar9: "#B4BABD",
+        colorBar10: "#B4BABD",
+        mode3D: false,
       };
     },
 
@@ -54,16 +60,16 @@
     var chart;
     var dataArray;
     let colors = [
-      "#2471A3",
-      "#17A589",
-      "#D4AC0D",
-      "#CA6F1E",
-      "#884EA0",
-      "#1BD2D8",
-      "#2E4053",
-      "#685858",
-      "#839192",
-      "#D0D3D4",
+      scope.config.colorBar1,
+      scope.config.colorBar2,
+      scope.config.colorBar3,
+      scope.config.colorBar4,
+      scope.config.colorBar5,
+      scope.config.colorBar6,
+      scope.config.colorBar7,
+      scope.config.colorBar8,
+      scope.config.colorBar9,
+      scope.config.colorBar10,
     ];
 
     // Funcion inicilizadora
@@ -101,7 +107,7 @@
           colors: ["", scope.config.colorfill2],
           dataProvider: dataArray,
           color: scope.config.textColor1,
-          depth3D: 20,
+          depth3D: (scope.config.mode3D) ? 20 : 0,
           angle: 35,
           valueAxes: [
             {
@@ -129,7 +135,7 @@
               type: "column",
               valueField: "Value",
               labelText: "[[Value]]",
-              fontSize: scope.config.fontSize + 10,
+              fontSize: scope.config.fontSize,
               balloonText: "[[Label]]:[[Value]]",
             },
             {
@@ -145,7 +151,7 @@
               title: "Percent",
               valueField: "Percent",
               labelText: "[[Percent]]%",
-              fontSize: scope.config.fontSize + 10,
+              fontSize: scope.config.fontSize,
               balloonText: "[[Label]]:[[Percent]]%",
               precision: scope.config.decimalPlaces,
               labelPosition: "bottom",
@@ -196,8 +202,8 @@
         if (chart.fontSize !== scope.config.fontSize) {
           chart.titles = createArrayOfChartTitles();
           chart.fontSize = scope.config.fontSize;
-          chart.graphs[0].fontSize = scope.config.fontSize + 10;
-          chart.graphs[1].fontSize = scope.config.fontSize + 10;
+          chart.graphs[0].fontSize = scope.config.fontSize;
+          chart.graphs[1].fontSize = scope.config.fontSize;
           chart.legend.fontSize = scope.config.fontSize;
         }
 
@@ -218,14 +224,13 @@
           chart.colors[1] = scope.config.colorfill2;
         }
 
-        if (chart.backgroundColor !== scope.config.backgroundColor)
-          chart.backgroundColor = scope.config.backgroundColor;
-
         if (scope.config.useCustomTitle)
           chart.titles = createArrayOfChartTitles();
         else chart.titles = null;
 
         chart.legend.enabled = scope.config.showLegend;
+
+        chart.depth3D = (scope.config.mode3D) ? 20 : 0;
 
         chart.validateData();
         chart.validateNow();

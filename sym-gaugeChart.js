@@ -20,9 +20,8 @@
         fontSize: 16,
         customTitle: "",
         //color para las bandas
-        bandColor1: "#ea3838",
-        bandColor2: "#ffac29",
-        bandColor3: "#00CC00",
+        bandColor1: "#CBCCCD",
+        bandColor2: "#3cd3a3",
         bulletSize: 8,
       };
     },
@@ -68,8 +67,7 @@
     }
 
     function refreshChart(chart, dataArray) {
-      var value = Math.round(Math.random() * 100);
-      // let value = dataArray.at(-1);
+      var value = dataArray.at(-1);
 
       chart.arrows[0].setValue(value);
       chart.axes[0].setTopText(value + " %");
@@ -104,17 +102,29 @@
           chart.axes[0].bottomTextFontSize = scope.config.fontSize;
         }
 
+        // set colors
+        if (chart.axes[0].bands[0].color !== scope.config.bandColor1)
+          chart.axes[0].bands[0].color = scope.config.bandColor1;
+        if (chart.axes[0].bands[1].color !== scope.config.bandColor2)
+          chart.axes[0].bands[1].color = scope.config.bandColor2;
+
         chart.validateData();
         chart.validateNow();
       }
     }
 
     function generateChart(dataArray, scope) {
-      console.log(" ~ file: sym-gaugeChart.js:130 ~ generateChart ~ dataArray", dataArray)
-      chart =  AmCharts.makeChart(symbolContainerDiv1.id, {
+      console.log(" ~ file: sym-gaugeChart.js:117 ~ generateChart ~ dataArray", dataArray)
+      chart = AmCharts.makeChart(symbolContainerDiv1.id, {
         theme: "none",
         type: "gauge",
-        "hideCredits": true,
+        hideCredits: true,
+        titles: [
+          {
+            text: scope.config.customTitle,
+            size: scope.config.fontSize + 10,
+          },
+        ],
         axes: [
           {
             topTextFontSize: scope.config.fontSize,
@@ -131,16 +141,17 @@
             endAngle: 90,
             unit: "%",
             bandOutlineAlpha: 0,
+            fontSize: scope.config.fontSize,
             bands: [
               {
-                color: "#CBCCCD",
+                color: scope.config.bandColor1,
                 endValue: 100,
                 innerRadius: "105%",
                 radius: "170%",
                 startValue: 0,
               },
               {
-                color: "#3cd3a3",
+                color: scope.config.bandColor2,
                 endValue: 0,
                 innerRadius: "105%",
                 radius: "170%",
@@ -155,10 +166,10 @@
             innerRadius: "35%",
             nailRadius: 0,
             radius: "170%",
+            value: dataArray.at(-1),
           },
         ],
       });
-
 
       refreshChart(chart, dataArray);
       return chart;
