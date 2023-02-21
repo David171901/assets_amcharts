@@ -5,7 +5,7 @@
   var definition = { 
     typeName: "menudash",
     displayName: 'Menu Dash',
-	iconUrl: '/Scripts/app/editor/symbols/ext/Icons/comm.png',
+	  iconUrl: '/Scripts/app/editor/symbols/ext/Icons/comm.png',
     visObjectType: symbolVis,
     datasourceBehavior: PV.Extensibility.Enums.DatasourceBehaviors.Single,
     getDefaultConfig: function(){ 

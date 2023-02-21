@@ -38,6 +38,7 @@
                 numberOfSigmas: '5',
                 showCategoryAxisLabels: true,
                 decimalPlaces: 2,
+                targetValue: 0,
             };
         },
 
@@ -63,13 +64,11 @@
         var chart = false;
         const startDate = timeProvider.displayTime.start;
         var isFirtLoad = true;
-        
+        var targetValue = scope.config.targetValue;
 
         function myCustomDataUpdateFunction(data) {
-            
-        console.log('conjuntos', data)    
-	if (data !== null) {
-                
+             
+	        if (data !== null) {
                 fillDataObject(data, dataArray);
                 
                 if (!chart) chart = getNewChart(dataArray);
@@ -97,7 +96,6 @@
         };
 
         function getDataPasDays(iterableDate, todayDate,data, dataArray, target){
-            
             while(iterableDate.getTime() <= todayDate.getTime())
             {  
                 getDailyData(iterableDate, data, dataArray, target);
@@ -107,7 +105,6 @@
 
 
         function getDailyData(iterableDate, data, dataArray, target){
-           
             let arrayOfTms = []; 
             
             let tmsDaily = data.Data[0].Values.filter(
@@ -124,10 +121,10 @@
             if (iterableDate.getDate() == new Date().getDate() &&
                 iterableDate.getMonth() == new Date().getMonth() && 
                 isFirtLoad == false ){
-                dataArray[dataArray.length-1].columnOne = accumulated;
+                // dataArray[dataArray.length-1].columnOne = accumulated;
             
             }else{
-                let newObject = getDataArray(iterableDate.getDate(), accumulated, target);
+                let newObject = getDataArray(iterableDate.getDate(), accumulated, target, targetValue);
                 dataArray.push(newObject);
             }
         };
@@ -151,11 +148,11 @@
         };
 
         
-        function getDataArray(labelCategory, tonelaje, target) {
+        function getDataArray(labelCategory, tonelaje, target, lineValue) {
             return {
                     "category": 'D'+ labelCategory,
-                    "columnOne": tonelaje,
-                    "columnTwo": target
+                    "columnOne": (labelCategory == new Date().getDate()) ? target.toString() : tonelaje,
+                    "columnTwo": lineValue,
                 }
         };
 

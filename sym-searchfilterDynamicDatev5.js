@@ -284,9 +284,49 @@
                         endTime = `2023-01-28T19:00:00`;
                         break;                      
                     case '1-2023':
-                        startTime = `2023-01-27T19:00:00`;
+                        startTime = `2023-01-29T19:00:00`;
                         endTime = `2023-02-25T19:00:00`;
                         break;      
+                    case '2-2023':
+                        startTime = `2023-02-26T19:00:00`;
+                        endTime = `2023-03-28T19:00:00`;
+                        break;                      
+                    case '3-2023':
+                        startTime = `2023-03-29T19:00:00`;
+                        endTime = `2023-04-27T19:00:00`;
+                        break;  
+                    case '4-2023':
+                        startTime = `2023-04-28T19:00:00`;
+                        endTime = `2023-05-28T19:00:00`;
+                        break;                      
+                    case '5-2023':
+                        startTime = `2023-05-29T19:00:00`;
+                        endTime = `2023-06-27T19:00:00`;
+                        break;   
+                    case '6-2023':
+                        startTime = `2023-06-28T19:00:00`;
+                        endTime = `2023-07-28T19:00:00`;
+                        break;      
+                    case '7-2023':
+                        startTime = `2023-07-29T19:00:00`;
+                        endTime = `2023-08-28T19:00:00`;
+                        break;                      
+                    case '8-2023':
+                        startTime = `2023-08-29T19:00:00`;
+                        endTime = `2023-09-27T19:00:00`;
+                        break;  
+                    case '9-2023':
+                        startTime = `2023-09-28T19:00:00`;
+                        endTime = `2023-10-28T19:00:00`;
+                        break;                      
+                    case '10-2023':
+                        startTime = `2023-10-29T19:00:00`;
+                        endTime = `2023-11-27T19:00:00`;
+                        break; 
+                    case '11-2023':
+                        startTime = `2023-11-28T19:00:00`;
+                        endTime = `2023-12-31T19:00:00`;
+                        break;                                                                
                     default:
                         break;
                 }

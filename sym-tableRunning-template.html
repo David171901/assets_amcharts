@@ -1,0 +1,61 @@
+<div style="width:100%;height:100%;display:block;">
+	<!-- overflow-y:auto;overflow-x:hidden-->
+	<table id="container" style="width:100%;height:100%;color:white;text-align:left;overflow-y:auto;padding:5px;display:block; display:table; border:3px solid {{config.outsideBorderColor}};" >
+	</table>
+	
+<div>
+	
+<style>
+
+	.headerAPCellClass {
+		font-size: {{config.fontSize}}{{config.unitFontSize}};
+		text-align: center;
+		border: 2px solid white;
+		background: {{config.headerBackgroundColor}}; 
+		color: {{config.headerTextColor}};
+		vertical-align: middle;
+	}
+	.rowAPClass:nth-child(even) {
+		
+		background: {{config.evenRowColor}}
+	}
+	.rowAPClass:nth-child(odd) {
+		background: {{config.oddRowColor}}
+	}
+	.rowAPClass:hover { 
+		background: {{config.hoverColor}}; 
+	}
+	
+	.cellAPClass {
+		padding-Left:  5px;
+		padding-Right: 5px;
+		padding-Top:   3px;
+		padding-Bottom:3px;
+		text-align: center;
+		vertical-align: middle;
+	}
+
+	
+	.myCustomDataItemAPCellClass {
+		color: {{config.dataItemColumnColor}};
+		display: {{config.showDataItemNameCheckboxStyle}};
+	}
+
+	.myValueCellClass {
+		font-size: {{config.fontSize}}{{config.unitFontSize}};
+		color: {{config.valueColumnColor}};
+		text-align:center;
+		vertical-align: middle;
+	}
+
+	.myCustomRightHeaderCellClass  {
+		font-size: {{config.fontSize}}{{config.unitFontSize}};
+		text-align: center;
+		color: {{config.headerRightTextColor}};
+		background: {{config.headerRightColumnColor}};
+		display: {{config.showHeaderRightCheckboxStyle}};
+	}
+	
+		
+
+</style>
