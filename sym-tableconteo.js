@@ -58,14 +58,19 @@
 
     function myCustomDataUpdateFunction(data) {
       if (data) {
+        console.log(" ~ file: sym-tableconteo.js:61 ~ myCustomDataUpdateFunction ~ data:", data)
+        let url = obtenerURL();
+        let urlChungar = "https://pivision.volcan.com.pe/PIVision/#/Displays/50644/RENDIMIENTO-PLANTA-CHUNGAR";
         // Datos iniciales
-        let dataDryTons = data.Data[0].Values;
-        dataDryTons.shift();
-        dataDryTons.shift();
+        let dataDryTons = (url == urlChungar) ? formatTwoArraysInOne(data.Data[0],data.Data[1]).Values : data.Data[0].Values;
+        if (url != urlChungar) {
+          dataDryTons.shift();
+          dataDryTons.shift();
+        }
         dataDryTons = dataDryTons.filter((el) => el.Value != 0);
         dataDryTons = dataDryTons.map((el) => el.Value.replace(",", ""));
-        let dataTargetUp = 5623; // data.Data[1].Values[0].Value
-        let dataTargetDown = 5296; // data.Data[2].Values[0].Value
+        let dataTargetUp = (url == urlChungar) ? 5047 : 5623; // data.Data[1].Values[0].Value
+        let dataTargetDown = (url == urlChungar) ? 4753 : 5296; // data.Data[2].Values[0].Value
 
         let dataDryTonsUp = dataDryTons.filter((el) => el > dataTargetUp);
         let dataDryTonsDown = dataDryTons.filter((el) => el < dataTargetDown && el > 100);
@@ -154,6 +159,21 @@
         // 'cellAPClass myValueCellClass', 'center', false);
         //    // generatedRow('Total', headersRow, totalMINE, 'myCustomRightHeaderCellClass cellAPClass myValueCellClass', 'center', true);
       }
+    }
+
+    function formatTwoArraysInOne (value1, value2) {
+      // value1 Estatico
+      // value2 Real
+      let lastValue2 = value2.Values.at(-1);
+      return {
+        ...value1,
+        Values: [...value1.Values, lastValue2]
+      }
+    }
+
+    function obtenerURL() {
+      var url = window.location.href;
+      return url;
     }
 
     function getTotalData(totalOfArrays, arrayUnitOne, arrayUnitTwo) {

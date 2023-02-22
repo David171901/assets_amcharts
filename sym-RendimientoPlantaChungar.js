@@ -90,7 +90,7 @@
       if (data !== null && data.Data) {
         dataArray = [];
 
-        let firstTurn = data.Data[0];
+        let firstTurn = formatTwoArraysInOne(data.Data[10],data.Data[11]);
         // let secondTurn = data.Data[1];
         let secondTurn = {
           DataType: "Float",
@@ -178,7 +178,7 @@
         targetUP = data.Data[7].Values[0].Value;
 
         // TONELAJES ************************************
-        let dryTonnage = data.Data[8];
+        let dryTonnage = formatTwoArraysInOne(data.Data[10],data.Data[11]);
         let wetTonnage = data.Data[9];
 
         let dryTonnageReal = {};
@@ -230,6 +230,14 @@
             dataArray
           );
         else refreshChart(chart, scope, monthNow);
+      }
+    }
+
+    function formatTwoArraysInOne (value1, value2) {
+      let lastValue2 = value2.Values.at(-1);
+      return {
+        ...value1,
+        Values: [...value1.Values, lastValue2]
       }
     }
 
@@ -703,16 +711,17 @@
             axisAlpha: 1,
             position: "right",
             gridAlpha: 0.1,
-            maximum: 6000, //scope.config.maximumYValueAxisv2,
-            minimum: 3000,
+            maximum: 5400, //scope.config.maximumYValueAxisv2,
+            minimum: 1000,
             labelsEnabled: true,
+            step: 1000,
           },
         ],
         trendLines: [
           {
-            finalCategory: "31/1",
+            finalCategory: "28/2",
             finalValue: targetUP,
-            initialCategory: "1/1",
+            initialCategory: "29/1",
             initialValue: targetUP,
             lineColor: "#0084ff",
             //tipe: "smoothedLine",
@@ -722,9 +731,9 @@
             valueAxis: "Axis2",
           },
           {
-            finalCategory: "31/1",
+            finalCategory: "28/2",
             finalValue: targetDown,
-            initialCategory: "1/1",
+            initialCategory: "29/1",
             initialValue: targetDown,
             lineColor: "#f58e8e",
             lineThickness: 5,
@@ -733,9 +742,9 @@
             valueAxis: "Axis2",
           },
           {
-            finalCategory: "31/1",
+            finalCategory: "28/2",
             finalValue: targetDefault,
-            initialCategory: "1/1",
+            initialCategory: "29/1",
             initialValue: targetDefault,
             lineColor: "#57f76c",
             lineThickness: 5,
@@ -785,25 +794,6 @@
               "</b><br />[[timestamp]]</b><br />[[turno1]] " +
               stringUnitsFirst,
             valueField: "turno1",
-            valueAxis: "Axis0",
-          },
-          {
-            id: "GAcumulado2",
-            title: "TOTAL",
-            lineColor: scope.config.seriesColor2,
-            type: "smoothedLine",
-            bullet: "bubble",
-            bulletBorderThickness: 1,
-            balloonText:
-              "[[title]]" +
-              "</b><br />[[timestamp]]</b><br />[[total]] " +
-              stringUnitsFirst,
-            valueField: "total",
-            labelRotation: -45,
-            fontSize: 20,
-            bold: true,
-            fillAlphas: 0,
-            animationPlayed: true,
             valueAxis: "Axis0",
           },
           {
@@ -866,10 +856,10 @@
             valueField: "drytonnageup",
             showBalloon: true,
             balloncolor: "#001BFF",
-            linecolor: "#0027FF",
             color: "#000000",
             bulletSize: 30,
             lineAlpha: 0,
+            lineColor: "#3f48cc"
           },
           {
             id: "Line4",
@@ -885,10 +875,10 @@
             title: "Produccion debajo del l�mite esperado",
             valueField: "drytonnagedown",
             showBalloon: true,
-            linecolor: "#FF0000",
             color: "#000000",
             bulletSize: 30,
             lineAlpha: 0,
+            lineColor: "#ed1c24"
           },
         ],
         legend: {

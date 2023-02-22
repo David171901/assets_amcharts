@@ -79,8 +79,6 @@
             if (!data || !chart) return;
 
             if (data !== null && data.Data) {
-                
-                console.log(data)
                 dataArray = [];
                 var hasSecondData = data.Data[1] ? true : false;
                 var firstData = data.Data[0];
@@ -111,8 +109,6 @@
                     getMinDay(getDayFromItem(firstData.Values[0]), getDayFromItem(secondData.Values[0])) :
                     getDayFromItem(firstData.Values[0]);
                 
-
-                console.log('start day: ',startDay);
                 var endDay = hasSecondData ?
                     getMaxDay(getDayFromItem(firstData.Values[firstData.Values.length - 1]), getDayFromItem(secondData.Values[secondData.Values.length - 1])) :
                     getDayFromItem(firstData.Values[firstData.Values.length - 1]);
@@ -164,9 +160,6 @@
 
                     startDate.setDate(startDate.getDate()+1);
                 };
-                console.log(tiempo1);
-                console.log(firstValue)
-
 
                 chart.dataProvider = dataArray;
                 chart.validateData();
