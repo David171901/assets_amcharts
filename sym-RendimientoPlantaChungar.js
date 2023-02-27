@@ -90,7 +90,7 @@
       if (data !== null && data.Data) {
         dataArray = [];
 
-        let firstTurn = formatTwoArraysInOne(data.Data[10],data.Data[11]);
+        let firstTurn = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11]);
         // let secondTurn = data.Data[1];
         let secondTurn = {
           DataType: "Float",
@@ -178,7 +178,7 @@
         targetUP = data.Data[7].Values[0].Value;
 
         // TONELAJES ************************************
-        let dryTonnage = formatTwoArraysInOne(data.Data[10],data.Data[11]);
+        let dryTonnage = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11]);
         let wetTonnage = data.Data[9];
 
         let dryTonnageReal = {};
@@ -239,6 +239,61 @@
         ...value1,
         Values: [...value1.Values, lastValue2]
       }
+    }
+
+    function generarFechasIntermedias(fechaInicio, fechaFin) {
+      const fechas = [];
+    
+      // Convertir las fechas a objetos Date
+      const fechaInicioObj = new Date(fechaInicio);
+      const fechaFinObj = new Date(fechaFin);
+    
+      // Iterar sobre el rango de fechas y agregar cada fecha al array
+      let fechaActual = new Date(fechaInicioObj);
+      while (fechaActual <= fechaFinObj) {
+        fechas.push(new Date(fechaActual));
+        fechaActual.setDate(fechaActual.getDate() + 1);
+      }
+    
+      // Convertir las fechas en formato ISO 8601
+      const fechasISO = fechas.map((fecha) => fecha.toISOString().split('T')[0]);
+      return fechasISO;
+    }
+
+    function sumatoriaDosDataArrayPorFecha (data1, data2) {
+      let startDate = timeProvider.displayTime.start;
+      let endDate = timeProvider.displayTime.end != "*"
+        ? new Date(timeProvider.displayTime.end)
+        : new Date();
+      const fechasIntermedias = generarFechasIntermedias(startDate, endDate);
+      let arrayValues = [];
+      fechasIntermedias.forEach(el => {
+        let dataValue1 = data1.filter(elem => elem.Time.includes(el))[0] ? data1.filter(elem => elem.Time.includes(el))[0].Value : 0;
+        let dataValue2 = data2.filter(elem => elem.Time.includes(el))[0] ? data2.filter(elem => elem.Time.includes(el))[0].Value : 0;
+        
+        arrayValues.push({
+          Value: (el == '2023-01-29') ? 0 : dataValue1 + dataValue2,
+          Time: `${el}T19:00:00.000Z`,
+        })
+      })
+      
+      return {
+        DataType: "Float",
+        DisplayDigits: -5,
+        EndTime: "2023-01-12T19:11:51.857Z",
+        Label: "03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+        Maximum: 0,
+        Minimum: 0,
+        Path: "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 KPIs CLAVE\\03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+        StartTime: "2023-01-01T00:00:00Z",
+        Values: arrayValues,
+      };
+    }
+
+    function restarCincoHoras (date) {
+      const fecha = new Date(date);
+      fecha.setHours(fecha.getHours() - 5);
+      return fecha
     }
 
     function fillDataArray(
@@ -392,12 +447,12 @@
           : wetTonnage,
         // Dry Tonnage
         drytonnageup: dryTonnage
-          ? dryTonnage > 5047
+          ? dryTonnage > 5775
             ? dryTonnage.toFixed(scope.config.decimalPlaces)
             : null
           : null,
         drytonnagedown: dryTonnage
-          ? dryTonnage < 4753
+          ? dryTonnage < 5238
             ? dryTonnage.toFixed(scope.config.decimalPlaces)
             : null
           : null,
@@ -711,8 +766,8 @@
             axisAlpha: 1,
             position: "right",
             gridAlpha: 0.1,
-            maximum: 5400, //scope.config.maximumYValueAxisv2,
-            minimum: 1000,
+            maximum: 6000, //scope.config.maximumYValueAxisv2,
+            minimum: 3000,
             labelsEnabled: true,
             step: 1000,
           },
@@ -726,7 +781,7 @@
             lineColor: "#0084ff",
             //tipe: "smoothedLine",
             lineThickness: 5,
-            balloonText: "Limite superior +3%" + " (" + targetUP + ")",
+            balloonText: "Limite superior +5%" + " (" + targetUP + ")",
             //labelText: 5733 + "Tn",
             valueAxis: "Axis2",
           },
@@ -737,7 +792,7 @@
             initialValue: targetDown,
             lineColor: "#f58e8e",
             lineThickness: 5,
-            balloonText: "Limite inferior -3%" + " (" + targetDown + ")",
+            balloonText: "Limite inferior -5%" + " (" + targetDown + ")",
             //labelText: 5187 + "Tn",
             valueAxis: "Axis2",
           },

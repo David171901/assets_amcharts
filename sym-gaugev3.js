@@ -76,6 +76,8 @@
             let eventArray = data.Data[0].Values || [];
             // Operating Time (OT) - Disponibilidad por dias
             let availabilityPerDayArray = data.Data[1].Values || [];
+            availabilityPerDayArray = eliminarValoresEnListaRepetidas(availabilityPerDayArray);
+
             // PROCESSED VARIABLES
             // Time Models Vars
             let { IE, IM, IO, IP, MP, RE, RG, RM, RnP, RP, TF, TnP } = timeModels ( eventArray );
@@ -93,11 +95,10 @@
             switch (scope.config.type) {
                 case 'utilizacion':
                     result = availabilityPerDay / (TC - TnP);
-                    console.log(" ~ file: sym-gaugev3.js ~ line 96 ~ getDataProvider ~ result", result)
                     break;
   
                 case 'disponibilidad_fisica':
-                    result = (TC - TnP - TRE - TM) * 100 / (TC - TnP - TRE);
+                    result = ((TC - TnP - TRE - TM) * 100) / (TC - TnP - TRE);
                     
                     break;
                 case 'disponibilidad_mecanica':
@@ -111,6 +112,42 @@
   
             return result;
         };
+
+        function generarFechasIntermedias(fechaInicio, fechaFin) {
+            const fechas = [];
+            
+            // Convertir las fechas a objetos Date
+            const fechaInicioObj = new Date(fechaInicio);
+            const fechaFinObj = new Date(fechaFin);
+            
+            // Iterar sobre el rango de fechas y agregar cada fecha al array
+            let fechaActual = new Date(fechaInicioObj);
+            while (fechaActual <= fechaFinObj) {
+                fechas.push(new Date(fechaActual));
+                fechaActual.setDate(fechaActual.getDate() + 1);
+            }
+            
+            // Convertir las fechas en formato ISO 8601
+            const fechasISO = fechas.map((fecha) => fecha.toISOString().split('T')[0]);
+            return fechasISO;
+        }
+
+        function eliminarValoresEnListaRepetidas (value) {
+            console.log(" ~ file: sym-gaugev3.js:136 ~ eliminarValoresEnListaRepetidas ~ value:", value)
+            let startDate = timeProvider.displayTime.start;
+            let endDate = timeProvider.displayTime.end != "*"
+              ? new Date(timeProvider.displayTime.end)
+              : new Date();
+            const fechasIntermedias = generarFechasIntermedias(startDate, endDate);
+            let arrayValues = [];
+            fechasIntermedias.forEach(el => {
+                arrayValues.push({
+                    Value: Math.max(...value.filter(elem => elem.Time.includes(el)).map(elem => elem.Value)),
+                    Time: `${el}T19:00:00Z`
+                })
+            })
+            return arrayValues;
+        }
   
         function timeModels ( data ) {
             return {
@@ -140,12 +177,9 @@
             let startDay = new Date(timeProvider.displayTime.start);   
             let endDay = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
             let firtsDay = addDay(startDay, 1).getDate();
-            console.log(" ~ file: sym-gaugev3.js ~ line 144 ~ getCalendarTime ~ firtsDay", firtsDay)
             let numberOfDays = endDay.getDate();
-            console.log(" ~ file: sym-gaugev3.js ~ line 145 ~ getCalendarTime ~ numberOfDays", numberOfDays)
             let numberOfHours = endDay.getHours();
-            console.log(" ~ file: sym-gaugev3.js ~ line 146 ~ getCalendarTime ~ numberOfHours", numberOfHours)
-            return ((numberOfDays - firtsDay + 1 ) * 24 + numberOfHours)*60;
+            return ((numberOfDays - (31 - firtsDay) + 1 ) * 24 + numberOfHours)*60;
         }
   
         function refreshChart(chart, dataArray){

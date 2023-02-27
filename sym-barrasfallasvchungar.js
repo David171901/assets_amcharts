@@ -269,7 +269,7 @@
                   // Tonelaje seco
                   let twelfthTurn = data.Data[2];
                   // Tonelaje humedo
-                  let thirteenthTurn = formatTwoArraysInOne(data.Data[7],data.Data[8]);
+                  let thirteenthTurn = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[9].Values,data.Data[10].Values),data.Data[8]);
                   // Target
                   let targetDefault = data.Data[4]?.Values[0]?.Value || -10;
                   // Target Down
@@ -375,6 +375,55 @@
                   ...value1,
                   Values: [...value1.Values, lastValue2]
                 }
+              }
+
+              function generarFechasIntermedias(fechaInicio, fechaFin) {
+                const fechas = [];
+              
+                // Convertir las fechas a objetos Date
+                const fechaInicioObj = new Date(fechaInicio);
+                const fechaFinObj = new Date(fechaFin);
+              
+                // Iterar sobre el rango de fechas y agregar cada fecha al array
+                let fechaActual = new Date(fechaInicioObj);
+                while (fechaActual <= fechaFinObj) {
+                  fechas.push(new Date(fechaActual));
+                  fechaActual.setDate(fechaActual.getDate() + 1);
+                }
+              
+                // Convertir las fechas en formato ISO 8601
+                const fechasISO = fechas.map((fecha) => fecha.toISOString().split('T')[0]);
+                return fechasISO;
+              }
+          
+              function sumatoriaDosDataArrayPorFecha (data1, data2) {
+                let startDate = timeProvider.displayTime.start;
+                let endDate = timeProvider.displayTime.end != "*"
+                  ? new Date(timeProvider.displayTime.end)
+                  : new Date();
+                const fechasIntermedias = generarFechasIntermedias(startDate, endDate);
+                let arrayValues = [];
+                fechasIntermedias.forEach(el => {
+                  let dataValue1 = data1.filter(elem => elem.Time.includes(el))[0] ? data1.filter(elem => elem.Time.includes(el))[0].Value : 0;
+                  let dataValue2 = data2.filter(elem => elem.Time.includes(el))[0] ? data2.filter(elem => elem.Time.includes(el))[0].Value : 0;
+                  
+                  arrayValues.push({
+                    Value: (el == '2023-01-29') ? 0 : dataValue1 + dataValue2,
+                    Time: `${el}T19:00:00.000Z`,
+                  })
+                })
+                
+                return {
+                  DataType: "Float",
+                  DisplayDigits: -5,
+                  EndTime: "2023-01-12T19:11:51.857Z",
+                  Label: "03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+                  Maximum: 0,
+                  Minimum: 0,
+                  Path: "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 KPIs CLAVE\\03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+                  StartTime: "2023-01-01T00:00:00Z",
+                  Values: arrayValues,
+                };
               }
           
               // Funcion añadir dias 
@@ -1525,7 +1574,7 @@
                         lineColor: "#ffcccc",
                         //tipe: "smoothedLine",
                         lineThickness: 5,
-                        balloonText: "Límite superior +3%" + " (" + targetUP + ")",
+                        balloonText: "Límite superior +5%" + " (" + targetUP + ")",
                         //labelText: 5733 + "Tn",
                         valueAxis: "Axis2",
                         fillAlphas: 0.5,
@@ -1537,7 +1586,7 @@
                         initialValue: targetDown,
                         lineColor: "#ffcccc",
                         lineThickness: 5,
-                        balloonText: "Límite inferior -3%" + " (" + targetDown + ")",
+                        balloonText: "Límite inferior -5%" + " (" + targetDown + ")",
                         //labelText: 5187 + "Tn",
                         valueAxis: "Axis2",
                         fillAlphas: 0.5,
@@ -1584,8 +1633,8 @@
                         position: "right",
                         gridAlpha: 0.05,
                         // maximum: scope.config.maximumYValueAxisv2,
-                        maximum: 5500,
-                        minimum: 0,
+                        maximum: 6000,
+                        minimum: 3000,
                         step: 5000,
                       },
                     ],
@@ -2003,4 +2052,4 @@
           
             CS.symbolCatalog.register(myEDcolumnDefinition);
           })(window.PIVisualization);
-          
+          	
