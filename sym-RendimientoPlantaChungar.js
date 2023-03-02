@@ -87,10 +87,16 @@
 
     // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
+      console.log(" ~ file: sym-RendimientoPlantaChungar.js:90 ~ myCustomDataUpdateFunction ~ data:", data)
       if (data !== null && data.Data) {
+        
+        let endDateConditional = timeProvider.displayTime.end != "*"
+        ? new Date(timeProvider.displayTime.end)
+        : new Date();
+        let conditionalJoin = (endDateConditional.getMonth() == new Date().getMonth())
         dataArray = [];
 
-        let firstTurn = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11]);
+        let firstTurn = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11],conditionalJoin);
         // let secondTurn = data.Data[1];
         let secondTurn = {
           DataType: "Float",
@@ -153,7 +159,20 @@
           ],
         };
 
-        let firstTurnReal = data.Data[2];
+        let firstTurnReal = {
+          DataType: "Float",
+          DisplayDigits: -5,
+          EndTime: "2023-01-12T19:11:51.857Z",
+          Label: "03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+          Maximum: 0,
+          Minimum: 0,
+          Path: "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 KPIs CLAVE\\03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+          StartTime: "2023-01-01T00:00:00Z",
+          Values: [
+            { Value: 0, Time: "2023-01-01T00:00:00Z" },
+            { Value: 0, Time: "2023-01-12T19:10:47.315414Z" },
+          ],
+        };
         // let secondTurnReal = data.Data[3];
         let secondTurnReal = {
           DataType: "Float",
@@ -178,7 +197,8 @@
         targetUP = data.Data[7].Values[0].Value;
 
         // TONELAJES ************************************
-        let dryTonnage = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11]);
+        let dryTonnage = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11],conditionalJoin);
+        console.log(" ~ file: sym-RendimientoPlantaChungar.js:183 ~ myCustomDataUpdateFunction ~ dryTonnage:", dryTonnage)
         let wetTonnage = data.Data[9];
 
         let dryTonnageReal = {};
@@ -233,11 +253,16 @@
       }
     }
 
-    function formatTwoArraysInOne (value1, value2) {
+    function formatTwoArraysInOne (value1, value2, conditional) {
       let lastValue2 = value2.Values.at(-1);
-      return {
-        ...value1,
-        Values: [...value1.Values, lastValue2]
+      if(conditional) { return {
+          ...value1,
+          Values: [...value1.Values, lastValue2]
+      }} else {
+        return {
+          ...value1,
+          Values: [...value1.Values]
+        }
       }
     }
 
@@ -261,6 +286,7 @@
     }
 
     function sumatoriaDosDataArrayPorFecha (data1, data2) {
+      console.log(" ~ file: sym-RendimientoPlantaChungar.js:264 ~ sumatoriaDosDataArrayPorFecha ~ data1, data2:", data1, data2)
       let startDate = timeProvider.displayTime.start;
       let endDate = timeProvider.displayTime.end != "*"
         ? new Date(timeProvider.displayTime.end)
@@ -277,6 +303,7 @@
         })
       })
       
+      console.log(" ~ file: sym-RendimientoPlantaChungar.js:272 ~ sumatoriaDosDataArrayPorFecha ~ arrayValues:", arrayValues)
       return {
         DataType: "Float",
         DisplayDigits: -5,
@@ -468,6 +495,7 @@
           chart.titles = null;
         }
 
+        setTrendCategory();
         chart.dataProvider = dataArray;
         chart.validateData();
         chart.validateNow();
@@ -774,9 +802,9 @@
         ],
         trendLines: [
           {
-            finalCategory: "28/2",
+            finalCategory: "30/3",
             finalValue: targetUP,
-            initialCategory: "29/1",
+            initialCategory: "29/2",
             initialValue: targetUP,
             lineColor: "#0084ff",
             //tipe: "smoothedLine",
@@ -786,9 +814,9 @@
             valueAxis: "Axis2",
           },
           {
-            finalCategory: "28/2",
+            finalCategory: "30/3",
             finalValue: targetDown,
-            initialCategory: "29/1",
+            initialCategory: "29/2",
             initialValue: targetDown,
             lineColor: "#f58e8e",
             lineThickness: 5,
@@ -797,9 +825,9 @@
             valueAxis: "Axis2",
           },
           {
-            finalCategory: "28/2",
+            finalCategory: "30/3",
             finalValue: targetDefault,
-            initialCategory: "29/1",
+            initialCategory: "29/2",
             initialValue: targetDefault,
             lineColor: "#57f76c",
             lineThickness: 5,
@@ -962,19 +990,19 @@
       chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${
         endCategory.getMonth() + 1
       }`;
-      chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${
+      chart.trendLines[0].initialCategory = `${startCategory.getDate() + 1}/${
         startCategory.getMonth() + 1
       }`;
       chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${
         endCategory.getMonth() + 1
       }`;
-      chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${
+      chart.trendLines[1].initialCategory = `${startCategory.getDate() + 1}/${
         startCategory.getMonth() + 1
       }`;
       chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${
         endCategory.getMonth() + 1
       }`;
-      chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${
+      chart.trendLines[2].initialCategory = `${startCategory.getDate() + 1}/${
         startCategory.getMonth() + 1
       }`;
     }
@@ -1002,7 +1030,6 @@
     // Funcion de configuracion
     function myCustomConfigurationChangeFunction() {
       if (chart) {
-        setTrendCategory();
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
         } else {

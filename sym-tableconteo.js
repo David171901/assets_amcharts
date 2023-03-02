@@ -2,12 +2,9 @@
   var myCustomSymbolDefinition = {
     typeName: "tableconteo",
     displayName: "Table Conteo",
+    inject: ["timeProvider"],
     datasourceBehavior: CS.Extensibility.Enums.DatasourceBehaviors.Multiple,
     visObjectType: symbolVis,
-    inject: ["timeProvider"],
-    supportsCollections: true,
-    supportsDynamicSearchCriteria: true,
-
     getDefaultConfig: function () {
       return {
         DataShape: "TimeSeries",
@@ -15,7 +12,6 @@
         Height: 300,
         Width: 400,
         Intervals: 1000,
-        Mode: "Compressed",
         showDataItemNameCheckboxValue: true,
         showHeaderRightCheckboxValue: true,
         showDataItemNameCheckboxStyle: "table-cell",
@@ -63,15 +59,19 @@
         let urlChungar = "https://pivision.volcan.com.pe/PIVision/#/Displays/50644/RENDIMIENTO-PLANTA-CHUNGAR";
         // Datos iniciales
         // formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11]);
-        console.log(sumatoriaDosDataArrayPorFecha(data.Data[0].Values,data.Data[1].Values))
-        let dataDryTons = (url == urlChungar) ? formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[0].Values,data.Data[1].Values),data.Data[2]).Values : data.Data[0].Values;
-        console.log(" ~ file: sym-tableconteo.js:66 ~ myCustomDataUpdateFunction ~ dataDryTons:", dataDryTons)
+        let endDateConditional = timeProvider.displayTime.end != "*"
+        ? new Date(timeProvider.displayTime.end)
+        : new Date();
+        let conditionalJoin = (endDateConditional.getMonth() == new Date().getMonth())
+        let dataDryTons = (url == urlChungar) ? formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[0].Values,data.Data[1].Values),data.Data[2], conditionalJoin).Values : data.Data[0].Values;
+        console.log(" ~ file: sym-tableconteo.js:63 ~ myCustomDataUpdateFunction ~ dataDryTons:", dataDryTons)
+        
         if (url != urlChungar) {
           dataDryTons.shift();
           dataDryTons.shift();
         } else {
-          dataDryTons.shift();
-          dataDryTons.pop();
+          // dataDryTons.shift();
+          // dataDryTons.pop();
         }
         let lengthDataDryTons = dataDryTons.length;
         dataDryTons = dataDryTons.filter((el) => el.Value != 0);
@@ -106,10 +106,10 @@
           0
         ) / dataDryTonsDown.length;
         if(isNaN(cellB3)) cellB3 = 0;
-        let cellC1 = cellB1 - cellB2;
+        let cellC1 = cellB1 - dataTargetUp;
         if(cellC1 < 0) cellC1 = 0;
         let cellC2 = 0;
-        let cellC3 = cellB2 - cellB3;
+        let cellC3 = dataTargetDown - cellB3;
 
         let cellB4 = cellC3 * cellA3 - cellC1 * cellA1;
 
@@ -169,6 +169,7 @@
     }
 
     function generarFechasIntermedias(fechaInicio, fechaFin) {
+      console.log(" ~ file: sym-tableconteo.js:171 ~ generarFechasIntermedias ~ fechaInicio, fechaFin:", fechaInicio, fechaFin)
       const fechas = [];
     
       // Convertir las fechas a objetos Date
@@ -177,8 +178,9 @@
     
       // Iterar sobre el rango de fechas y agregar cada fecha al array
       let fechaActual = new Date(fechaInicioObj);
+      fechaActual.setDate(fechaActual.getDate() + 1);
       while (fechaActual <= fechaFinObj) {
-        const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth()+1}/${fechaActual.getFullYear()}`
+        const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth()+1}/${fechaActual.getFullYear()}` + ' 00:00:00' 
         fechas.push(fechaFormateada);
         fechaActual.setDate(fechaActual.getDate() + 1);
       }
@@ -187,26 +189,26 @@
     }
 
     function sumatoriaDosDataArrayPorFecha (data1, data2) {
-      console.log(" ~ file: sym-tableconteo.js:191 ~ sumatoriaDosDataArrayPorFecha ~ data1, data2:", data1, data2)
       let startDate = timeProvider.displayTime.start;
       let endDate = timeProvider.displayTime.end != "*"
         ? new Date(timeProvider.displayTime.end)
         : new Date();
       const fechasIntermedias = generarFechasIntermedias(startDate, endDate);
-      console.log(" ~ file: sym-tableconteo.js:196 ~ sumatoriaDosDataArrayPorFecha ~ fechasIntermedias:", fechasIntermedias)
       let arrayValues = [];
       fechasIntermedias.forEach(el => {
-        let dataValue1 = data1.filter(elem => elem.Time.includes(el))[0] ? data1.filter(elem => elem.Time.includes(el))[0].Value.replace(',','') : 0;
-        console.log(" ~ file: sym-tableconteo.js:200 ~ sumatoriaDosDataArrayPorFecha ~ dataValue1:", dataValue1)
-        let dataValue2 = data2.filter(elem => elem.Time.includes(el))[0] ? data2.filter(elem => elem.Time.includes(el))[0].Value.replace(',','') : 0;
-        console.log(" ~ file: sym-tableconteo.js:202 ~ sumatoriaDosDataArrayPorFecha ~ dataValue2:", dataValue2)
+        let dataValue1 = data1.filter(elem => elem.Time.split(' ')[0] == el.split(' ')[0])[0] ? data1.filter(elem => {
+          return elem.Time.split(' ')[0] == el.split(' ')[0]
+        })[0].Value.replace(',','') : 0;
+        let dataValue2 = data2.filter(elem => elem.Time.split(' ')[0] == el.split(' ')[0])[0] ? data2.filter(elem => elem.Time.split(' ')[0] == el.split(' ')[0])[0].Value.replace(',','') : 0;
         
         arrayValues.push({
-          Value: (el == '2023-01-29') ? 0 : (parseInt(dataValue1) + parseInt(dataValue2)).toString(),
+          Value: (el == '2023-01-29') ? 0 : (parseFloat(dataValue1) + parseFloat(dataValue2)).toString(),
           Time: `${el}T19:00:00.000Z`,
         })
       })
-      
+
+      console.log(" ~ file: sym-tableconteo.js:199 ~ sumatoriaDosDataArrayPorFecha ~ arrayValues:", arrayValues)
+          
       return {
         DataType: "Float",
         DisplayDigits: -5,
@@ -228,13 +230,18 @@
       return `${day}/${month}/${year}`;
     }
 
-    function formatTwoArraysInOne (value1, value2) {
+    function formatTwoArraysInOne (value1, value2, conditional) {
       // value1 Estatico
       // value2 Real
       let lastValue2 = value2.Values.at(-1);
-      return {
+      if(conditional) { return {
         ...value1,
         Values: [...value1.Values, lastValue2]
+      }} else {
+        return {
+          ...value1,
+          Values: [...value1.Values]
+        }
       }
     }
 
