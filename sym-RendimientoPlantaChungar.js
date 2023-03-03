@@ -198,7 +198,6 @@
 
         // TONELAJES ************************************
         let dryTonnage = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11],conditionalJoin);
-        console.log(" ~ file: sym-RendimientoPlantaChungar.js:183 ~ myCustomDataUpdateFunction ~ dryTonnage:", dryTonnage)
         let wetTonnage = data.Data[9];
 
         let dryTonnageReal = {};
@@ -286,7 +285,6 @@
     }
 
     function sumatoriaDosDataArrayPorFecha (data1, data2) {
-      console.log(" ~ file: sym-RendimientoPlantaChungar.js:264 ~ sumatoriaDosDataArrayPorFecha ~ data1, data2:", data1, data2)
       let startDate = timeProvider.displayTime.start;
       let endDate = timeProvider.displayTime.end != "*"
         ? new Date(timeProvider.displayTime.end)
@@ -297,13 +295,14 @@
         let dataValue1 = data1.filter(elem => elem.Time.includes(el))[0] ? data1.filter(elem => elem.Time.includes(el))[0].Value : 0;
         let dataValue2 = data2.filter(elem => elem.Time.includes(el))[0] ? data2.filter(elem => elem.Time.includes(el))[0].Value : 0;
         
+        console.log(el)
+
         arrayValues.push({
-          Value: (el == '2023-01-29') ? 0 : dataValue1 + dataValue2,
+          Value: (el == '2023-01-29' || el == '2023-02-28') ? 0 : dataValue1 + dataValue2,
           Time: `${el}T19:00:00.000Z`,
         })
       })
       
-      console.log(" ~ file: sym-RendimientoPlantaChungar.js:272 ~ sumatoriaDosDataArrayPorFecha ~ arrayValues:", arrayValues)
       return {
         DataType: "Float",
         DisplayDigits: -5,

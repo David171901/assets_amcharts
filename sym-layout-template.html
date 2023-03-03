@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="./Scripts/app/editor/symbols/ext/content/bootstrap-4.4.1/css/bootstrap.min.css">
@@ -17,19 +17,90 @@
 >
     <!-- SIDEBAR -->
     <div style="grid-row: span 12; grid-column: 1 / 2; background-color: #2F9084;display: grid; grid-template-rows: repeat(12, 1fr); grid-template-columns: 1fr;">
-      <div style="grid-row: 1 / 4; background-color: red; display: flex; justify-content: center; align-items: center;">logo</div>
-      <div style="grid-row: 4 / 5; background-color: purple; display: flex; justify-content: center; align-items: center;">option 1</div>
-      <div style="grid-row: 5 / 6; background-color: blue; display: flex; justify-content: center; align-items: center;">option 2</div>
-      <div style="grid-row: 6 / 7; background-color: yellow; display: flex; justify-content: center; align-items: center;">option 3</div>
-      <div style="grid-row: 7 / 8; background-color: pink; display: flex; justify-content: center; align-items: center;">option 4</div>
+      <div style="grid-row: 1 / 4; display: flex; justify-content: center; align-items: center;">
+        <div>
+          <img src="https://www.volcan.com.pe/wp-content/themes/volcan_seek/img/logo-volcan-blanco.svg" alt="Compañia Volcan " height="100px">
+        </div>
+      </div>
+      <div style="grid-row: 4 / 5; display: flex; justify-content: center; align-items: center; padding: 0 15px;">
+        <button type="button" class="btn btn-info btn-lg btn-block" style="font-size: 1.5em;"><a style="color: #ffffff;" href={{config.linkSidebarItem1}} >Inicio</a></button>
+      </div>
+      <div style="grid-row: 5 / 6;display: flex; justify-content: center; align-items: center; padding: 0 15px;">
+        <button type="button" class="btn btn-info btn-lg btn-block" style="font-size: 1.5em;"><a style="color: #ffffff;" href={{config.linkSidebarItem2}}>KPIS</a></button>
+      </div>
+      <div style="grid-row: 6 / 7; display: flex; justify-content: center; align-items: center; padding: 0 15px;">
+        <button type="button" class="btn btn-info btn-lg btn-block" style="font-size: 1.5em;"><a style="color: #ffffff;" href={{config.linkSidebarItem3}}>Disponibilidad</a></button>
+      </div>
+      <div style="grid-row: 7 / 8; display: flex; justify-content: center; align-items: center; padding: 0 15px;">
+        <button type="button" class="btn btn-info btn-lg btn-block" style="font-size: 1.5em;"><a style="color: #ffffff;" href={{config.linkSidebarItem4}}>Eventos</a></button>
+      </div>
     </div>
     <!-- NAVBAR -->
-    <div style="grid-row: 1 / 2; grid-column: 2 / 11; background-color: #2F9084;">
-      navbar
+    <div style="grid-row: 1 / 2; grid-column: 2 / 11; background-color: #2F9084; width: 100%; height: 100%;">
+      
+      <nav class="navbar-expand-md d-flex justify-content-between" style="background:#2F9084;color: white; display: grid; grid-template-columns: repeat(2,50%); width: 100%; height: 100%;">
+        <a class="navbar-brand text-light" href="/" style="font-size: 3em;font-weight: bold;text-decoration: underline;" id="navbar__title"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" onclick="mainToggleFuntion()">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div style="width: 100%;"> 
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">      
+            <li class="nav-item dropdown" style="font-size: 1.5em;">
+              <a class="nav-link comm-navbar dropdown-toggle text-light" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                CHANCADORAS
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item w-auto" href={{config.linkNavbarItem1Subitem1}} style="font-size: 1.5em;">CHANCADORA PRIMARIA C110</a>
+                <a class="dropdown-item w-auto" href={{config.linkNavbarItem1Subitem2}} style="font-size: 1.5em;">CHANCADORA SECUNDARIA HP400</a>
+                <a class="dropdown-item w-auto" href={{config.linkNavbarItem1Subitem3}} style="font-size: 1.5em;">CHANCADORA SECUNDARIA SYMONS</a>
+                <a class="dropdown-item w-auto" href={{config.linkNavbarItem1Subitem4}} style="font-size: 1.5em;">CHANCADORA TERCIARIA HP500</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" style="font-size: 1.5em;">
+              <a class="nav-link comm-navbar dropdown-toggle text-light" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 MOLINOS
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item w-auto" style="font-size: 1.5em;" href={{config.linkNavbarItem2Subitem1}}>MOLINO BARRAS 1</a>
+                <a class="dropdown-item w-auto" style="font-size: 1.5em;" href={{config.linkNavbarItem2Subitem2}}>MOLINO BARRAS 2</a>
+                <a class="dropdown-item w-auto" style="font-size: 1.5em;" href={{config.linkNavbarItem2Subitem3}}>MOLINO BOLAS 7X8</a>
+                <a class="dropdown-item w-auto" style="font-size: 1.5em;" href={{config.linkNavbarItem2Subitem4}}>MOLINO BOLAS 8X10</a>
+                <a class="dropdown-item w-auto" style="font-size: 1.5em;" href={{config.linkNavbarItem2Subitem5}}>MOLINO BOLAS 9 12X12</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>   
     </div>
     <!-- SEARCHER -->
-    <div style="grid-row: 1 / 2; grid-column: 11 / 13; background-color: #2F9084;">
-      searcher
+    <div style="grid-row: 1 / 2; grid-column: 11 / 13; background-color: #2F9084; display: flex; justify-content: center; align-items: center; height: 100%; width: 100%;">
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <label for="" style="font-size: 1.5em; color: white; font-weight: 700; font-family: 'segoe UI', serif; margin-bottom: 0; margin-left: 0.5em;">Mes: 
+          <select id="monthSelector" ng-model="timeED.month" ng-model-options="{ getterSetter: true }" class="ng-pristine ng-valid form-select" style="background-color: white; text-align: center; ">
+              <option style="font-size: 0.5em;" id="month1" value="1">Enero</option>
+              <option style="font-size: 0.5em;" id="month2" value="2">Febrero</option>
+              <option style="font-size: 0.5em;" id="month3" value="3">Marzo</option>
+              <option style="font-size: 0.5em;" id="month4" value="4">Abril</option>
+              <option style="font-size: 0.5em;" id="month5" value="5">Mayo</option>
+              <option style="font-size: 0.5em;" id="month6" value="6">Junio</option>
+              <option style="font-size: 0.5em;" id="month7" value="7">Julio</option>
+              <option style="font-size: 0.5em;" id="month8" value="8">Agosto</option>
+              <option style="font-size: 0.5em;" id="month9" value="9">Setiembre</option>
+              <option style="font-size: 0.5em;" id="month10" value="10">Octubre</option>
+              <option style="font-size: 0.5em;" id="month11" value="11">Noviembre</option>
+              <option style="font-size: 0.5em;" id="month12" value="12">Diciembre</option>
+          </select>
+        </label>
+        <label for="" style="font-size: 1.5em; color: white; font-weight: 700; font-family: 'segoe UI', serif; margin-bottom: 0; margin-left: 0.5em;">A&ntilde;o:
+          <select id="yearSelector" ng-model="timeED.year" ng-model-options="{ getterSetter: true }" class="ng-pristine ng-valid form-select" style="background-color: white; text-align: center; ">
+              <option style="font-size: 0.5em;" id="month1" value="2022">2022</option>
+              <option style="font-size: 0.5em;" id="month2" value="2023">2023</option>
+          </select>
+        </label>
+        <button type="button" ng-click="search()" class="btn btn-info" style="margin-left: 0.5em;"> <b>BUSCAR</b></button>
+      </div>
     </div>
 </div>
 </body>
