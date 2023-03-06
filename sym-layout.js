@@ -76,20 +76,82 @@
         this.onDataUpdate = myCustomDataUpdateFunction;
         
         var isLoaded = 'primero';
+        var isQuery = false;
         var initialTime = 'T19:00:00';
         var currentStringTimeED = null;
         var dataTotal = null;
         var dataTotal_ = null;
         var count = 0;
-        
+        var querys = {}
+
         function myCustomDataUpdateFunction(data) {
+            querys = getQueryParamsFromString(window.location.href)
+            if (querys.montandyear) isQuery = true;
             
-            console.log(getQueryParamsFromString(window.location.href))
-            console.log(scope.config.linkSidebarItem1)
-            if(isLoaded == 'primero'){
+            if (isQuery && isLoaded == 'primero') {
+
+                let month = querys.montandyear.split('-')[0];
+                let year = querys.montandyear.split('-')[1];
+
+                currentStringTimeED = getStartEndTimeForQueryParam(querys.montandyear);
+                timeProvider.requestNewTime(currentStringTimeED.startTimeED, currentStringTimeED.endTimeED, true);
+
+                scope.timeED = { month: "", year: "" };
+                scope.timeED.month = (parseInt(month) + 1).toString();
+                scope.timeED.year = year.toString();
+
+                // new
                 dataTotal = data;
                 dataTotal_ = data;
 
+                let ultimoValue =  dataTotal.Data[0].Values[dataTotal.Data[0].Values.length-1].Value;
+            
+                let initialDate = dataTotal.Data[0].Values.filter(item => item.Value == ultimoValue);
+                initialDate = initialDate[0].Time;
+
+
+                isLoaded = 'stop';
+
+                scope.search = function() {
+                    var stringTimeED = {
+                        start: "",
+                        end: ""
+                    };
+
+                    count++;
+                    
+                    if(count == 1){
+                        dataTotal = data;
+                    }
+
+                    let searchInterval = new Date(scope.timeED.year, parseInt(scope.timeED.month)-1, 1);
+
+                    if(scope.timeED.month != (new Date().getMonth() + 1) || scope.timeED.year != (new Date().getFullYear())){
+                        stringTimeED = getStartEndTimeForSearch(parseInt(searchInterval.getMonth()), parseInt(searchInterval.getFullYear()), 1);
+                    } else {
+                        let initialDate = dataTotal_.Data[0].Values.filter(item => item.Value == ultimoValue);
+                        initialDate = initialDate[0].Time;
+                        let initialDay = parseInt(initialDate.split('/')[0]) - 1;
+                        let initialMonth = parseInt(initialDate.split('/')[1]);
+                        let yearNow = parseInt(initialDate.split('/')[2]);
+                        stringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
+                    }
+
+                    timeProvider.requestNewTime(stringTimeED.startTimeED, stringTimeED.endTimeED, true);
+                    
+                    isLoaded = 'stop';
+                }
+
+                scope.link1 = function() {
+                    console.log('Click Link 1')
+                    window.location.href = "https://github.com/";
+
+                }
+            }
+
+            if(isLoaded == 'primero' && isQuery == false){
+                dataTotal = data;
+                dataTotal_ = data;
 
                 let ultimoValue =  dataTotal.Data[0].Values[dataTotal.Data[0].Values.length-1].Value;
             
@@ -143,41 +205,20 @@
             }
 
             if(isLoaded == 'stop'){
-                if(data.Data[0].Values) {
-                    data  = {
-                        Data: [
-                            {
-                                "Values": [
-                                    {
-                                        "Value": "11",
-                                        "Time": "25/11/2022 00:00:00"
-                                    },
-                                    {
-                                        "Value": "11",
-                                        "Time": "26/11/2022 00:00:00"
-                                    },
-                                    {
-                                        "Value": "12",
-                                        "Time": "30/11/2022 00:00:00"
-                                    }
-                                ],
-                                "StartTime": "31/10/2022 19:00:00",
-                                "EndTime": "1/12/2022 09:28:48.977",
-                                "Minimum": "0",
-                                "Maximum": "100",
-                                "DisplayDigits": -5,
-                                "Label": "BALANZAS|CODIGO MES",
-                                "Path": "af:\\\\YAUMS26\\BASE DE DATOS  PIAF - UM YAULI\\PLANTA CONCENTRADORA VICTORIA\\02 MOLIENDA\\BALANZAS|CODIGO MES"
-                            }
-                        ]
-                    }
-                }
+                console.log(" ~ file: sym-layout.js:147 ~ myCustomDataUpdateFunction ~ isLoaded:", isLoaded)
+                
+                console.log(" ~ file: sym-layout.js:151 ~ myCustomDataUpdateFunction ~ data:", data)
 
                 let initialDate = data.Data[0];
                 
+                console.log((parseInt(initialDate.Values[initialDate.Values.length-1].Time.split('/')[1])))
+                console.log(parseInt(currentStringTimeED.startTimeED.split('-')[1]))
+
                 let monthChange = (parseInt(initialDate.Values[initialDate.Values.length-1].Time.split('/')[1]))
                 - parseInt(currentStringTimeED.startTimeED.split('-')[1]) == 2? true : false;
                 
+                console.log(monthChange)
+
                 monthChange ? isLoaded='primero' : isLoaded;
             }
 
@@ -294,6 +335,116 @@
                 let idSearch = `${month}-${year}`;
 
                 switch (idSearch) {
+                    case '0-2022':
+                        startTime = `2022-01-01T19:00:00`;
+                        endTime = `2022-01-28T19:00:00`;
+                        break;
+                    case '1-2022':
+                        startTime = `2022-01-28T19:00:00`;
+                        endTime = `2022-02-25T19:00:00`;
+                        break;
+                    case '2-2022':
+                        startTime = `2022-02-25T19:00:00`;
+                        endTime = `2022-03-28T19:00:00`;
+                        break;
+                    case '3-2022':
+                        startTime = `2022-03-28T19:00:00`;
+                        endTime = `2022-04-27T19:00:00`;
+                        break;
+                    case '4-2022':
+                        startTime = `2022-04-27T19:00:00`;
+                        endTime = `2022-05-28T19:00:00`;
+                        break;
+                    case '5-2022':
+                        startTime = `2022-05-28T19:00:00`;
+                        endTime = `2022-06-27T19:00:00`;
+                        break;
+                    case '6-2022':
+                        startTime = `2022-06-27T19:00:00`;
+                        endTime = `2022-07-28T19:00:00`;
+                        break;
+                    case '7-2022':
+                        startTime = `2022-07-28T19:00:00`;
+                        endTime = `2022-08-28T19:00:00`;
+                        break;
+                    case '8-2022':
+                        startTime = `2022-08-28T19:00:00`;
+                        endTime = `2022-09-27T19:00:00`;
+                        break;
+                    case '9-2022':
+                        startTime = `2022-09-27T19:00:00`;
+                        endTime = `2022-10-28T19:00:00`;
+                        break;
+                    case '10-2022':
+                        startTime = `2022-10-28T19:00:00`;
+                        endTime = `2022-11-27T19:00:00`;
+                        break;
+                    case '11-2022':
+                        startTime = `2022-11-27T19:00:00`;
+                        endTime = `2022-12-31T19:00:00`;
+                        break;
+                    case '0-2023':
+                        startTime = `2022-12-31T19:00:00`;
+                        endTime = `2023-01-28T19:00:00`;
+                        break;                      
+                    case '1-2023':
+                        startTime = `2023-01-28T19:00:00`;
+                        endTime = `2023-02-25T19:00:00`;
+                        break;      
+                    case '2-2023':
+                        startTime = `2023-02-25T19:00:00`;
+                        endTime = `2023-03-28T19:00:00`;
+                        break;                      
+                    case '3-2023':
+                        startTime = `2023-03-28T19:00:00`;
+                        endTime = `2023-04-27T19:00:00`;
+                        break;  
+                    case '4-2023':
+                        startTime = `2023-04-27T19:00:00`;
+                        endTime = `2023-05-28T19:00:00`;
+                        break;                      
+                    case '5-2023':
+                        startTime = `2023-05-28T19:00:00`;
+                        endTime = `2023-06-27T19:00:00`;
+                        break;   
+                    case '6-2023':
+                        startTime = `2023-06-27T19:00:00`;
+                        endTime = `2023-07-28T19:00:00`;
+                        break;      
+                    case '7-2023':
+                        startTime = `2023-07-28T19:00:00`;
+                        endTime = `2023-08-28T19:00:00`;
+                        break;                      
+                    case '8-2023':
+                        startTime = `2023-08-28T19:00:00`;
+                        endTime = `2023-09-27T19:00:00`;
+                        break;  
+                    case '9-2023':
+                        startTime = `2023-09-27T19:00:00`;
+                        endTime = `2023-10-28T19:00:00`;
+                        break;                      
+                    case '10-2023':
+                        startTime = `2023-10-28T19:00:00`;
+                        endTime = `2023-11-27T19:00:00`;
+                        break; 
+                    case '11-2023':
+                        startTime = `2023-11-27T19:00:00`;
+                        endTime = `2023-12-31T19:00:00`;
+                        break;                                                                
+                    default:
+                        break;
+                }
+
+                return {
+                    startTimeED: startTime,
+                    endTimeED: endTime
+                };
+            }
+
+
+            function getStartEndTimeForQueryParam(montAndYear) {
+
+                switch (montAndYear) {
                     case '0-2022':
                         startTime = `2022-01-01T19:00:00`;
                         endTime = `2022-01-28T19:00:00`;
