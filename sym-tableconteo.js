@@ -53,7 +53,6 @@
     syContElement1.id = newUniqueIDString1;
 
     function myCustomDataUpdateFunction(data) {
-      console.log(" ~ file: sym-tableconteo.js:60 ~ myCustomDataUpdateFunction ~ data:", data)
       if (data) {
         let url = obtenerURL();
         let urlChungar = "https://pivision.volcan.com.pe/PIVision/#/Displays/50644/RENDIMIENTO-PLANTA-CHUNGAR";
@@ -71,7 +70,7 @@
           dataDryTons.shift();
         } else {
           // dataDryTons.shift();
-          // dataDryTons.pop();
+          dataDryTons.pop();
         }
         let lengthDataDryTons = dataDryTons.length;
         dataDryTons = dataDryTons.filter((el) => el.Value != 0);
@@ -169,7 +168,6 @@
     }
 
     function generarFechasIntermedias(fechaInicio, fechaFin) {
-      console.log(" ~ file: sym-tableconteo.js:171 ~ generarFechasIntermedias ~ fechaInicio, fechaFin:", fechaInicio, fechaFin)
       const fechas = [];
     
       // Convertir las fechas a objetos Date
@@ -207,7 +205,6 @@
         })
       })
 
-      console.log(" ~ file: sym-tableconteo.js:199 ~ sumatoriaDosDataArrayPorFecha ~ arrayValues:", arrayValues)
           
       return {
         DataType: "Float",

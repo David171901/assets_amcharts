@@ -1567,9 +1567,9 @@
                     },
                     trendLines: [
                       {
-                        finalCategory: "25/2",
+                        finalCategory: "28/3",
                         finalValue: targetUP,
-                        initialCategory: "29/1",
+                        initialCategory: "28/2",
                         initialValue: targetUP,
                         lineColor: "#ffcccc",
                         //tipe: "smoothedLine",
@@ -1580,9 +1580,9 @@
                         fillAlphas: 0.5,
                       },
                       {
-                        finalCategory: "25/2",
+                        finalCategory:  "28/3",
                         finalValue: targetDown,
-                        initialCategory: "29/1",
+                        initialCategory: "28/2",
                         initialValue: targetDown,
                         lineColor: "#ffcccc",
                         lineThickness: 5,
@@ -1592,9 +1592,9 @@
                         fillAlphas: 0.5,
                       },
                       {
-                        finalCategory: "25/2",
+                        finalCategory: "28/3",
                         finalValue: targetDefault,
-                        initialCategory: "29/1",
+                        initialCategory: "28/2",
                         initialValue: targetDefault,
                         lineColor: "#5e8dff",
                         lineThickness: 5,

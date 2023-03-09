@@ -87,7 +87,6 @@
 
     // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
-      console.log(" ~ file: sym-RendimientoPlantaChungar.js:90 ~ myCustomDataUpdateFunction ~ data:", data)
       if (data !== null && data.Data) {
         
         let endDateConditional = timeProvider.displayTime.end != "*"
@@ -295,8 +294,6 @@
         let dataValue1 = data1.filter(elem => elem.Time.includes(el))[0] ? data1.filter(elem => elem.Time.includes(el))[0].Value : 0;
         let dataValue2 = data2.filter(elem => elem.Time.includes(el))[0] ? data2.filter(elem => elem.Time.includes(el))[0].Value : 0;
         
-        console.log(el)
-
         arrayValues.push({
           Value: (el == '2023-01-29' || el == '2023-02-28') ? 0 : dataValue1 + dataValue2,
           Time: `${el}T19:00:00.000Z`,
@@ -493,8 +490,6 @@
         } else {
           chart.titles = null;
         }
-
-        setTrendCategory();
         chart.dataProvider = dataArray;
         chart.validateData();
         chart.validateNow();
@@ -803,7 +798,7 @@
           {
             finalCategory: "30/3",
             finalValue: targetUP,
-            initialCategory: "29/2",
+            initialCategory: "28/2",
             initialValue: targetUP,
             lineColor: "#0084ff",
             //tipe: "smoothedLine",
@@ -815,7 +810,7 @@
           {
             finalCategory: "30/3",
             finalValue: targetDown,
-            initialCategory: "29/2",
+            initialCategory: "28/2",
             initialValue: targetDown,
             lineColor: "#f58e8e",
             lineThickness: 5,
@@ -826,7 +821,7 @@
           {
             finalCategory: "30/3",
             finalValue: targetDefault,
-            initialCategory: "29/2",
+            initialCategory: "28/2",
             initialValue: targetDefault,
             lineColor: "#57f76c",
             lineThickness: 5,
@@ -981,27 +976,27 @@
     // Funcion seteo de trends
     function setTrendCategory() {
       let endCategory =
-        timeProvider.displayTime.end != "*"
-          ? new Date(timeProvider.displayTime.end)
-          : new Date();
+      timeProvider.displayTime.end != "*"
+      ? new Date(timeProvider.displayTime.end)
+      : new Date();
       let startCategory = new Date(timeProvider.displayTime.start);
       startCategory = addDays(startCategory, 1);
       chart.trendLines[0].finalCategory = `${endCategory.getDate()}/${
         endCategory.getMonth() + 1
       }`;
-      chart.trendLines[0].initialCategory = `${startCategory.getDate() + 1}/${
+      chart.trendLines[0].initialCategory = `${startCategory.getDate()}/${
         startCategory.getMonth() + 1
       }`;
       chart.trendLines[1].finalCategory = `${endCategory.getDate()}/${
         endCategory.getMonth() + 1
       }`;
-      chart.trendLines[1].initialCategory = `${startCategory.getDate() + 1}/${
+      chart.trendLines[1].initialCategory = `${startCategory.getDate()}/${
         startCategory.getMonth() + 1
       }`;
       chart.trendLines[2].finalCategory = `${endCategory.getDate()}/${
         endCategory.getMonth() + 1
       }`;
-      chart.trendLines[2].initialCategory = `${startCategory.getDate() + 1}/${
+      chart.trendLines[2].initialCategory = `${startCategory.getDate()}/${
         startCategory.getMonth() + 1
       }`;
     }
@@ -1029,6 +1024,9 @@
     // Funcion de configuracion
     function myCustomConfigurationChangeFunction() {
       if (chart) {
+
+        setTrendCategory();
+
         if (scope.config.showTitle) {
           chart.titles = createArrayOfChartTitles();
         } else {

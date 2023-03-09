@@ -75,12 +75,12 @@
       // );
       if (data !== null && data.Data) {
         dataArray = [];
-
+	console.log(data.Data);
         // Asignacion de targetDefaults
         targetDefault = data.Data[10].Values[0].Value;
         targetDown = data.Data[11].Values[0].Value;
         targetUP = data.Data[12].Values[0].Value;
-
+	
         let firstTurn = data.Data[0];
 
         let firstTurnDepuredValues = firstTurn.Values.filter(
@@ -840,9 +840,9 @@
         marginLeft: 1,
         trendLines: [
           {
-            finalCategory: "29/11",
+            finalCategory: "28/3",
             finalValue: targetUP,
-            initialCategory: "31/12",
+            initialCategory: "28/2",
             initialValue: targetUP,
             lineColor: "#0084ff",
             //tipe: "smoothedLine",
@@ -852,9 +852,9 @@
             valueAxis: "Axis2",
           },
           {
-            finalCategory: "29/11",
+            finalCategory: "28/3",
             finalValue: targetDown,
-            initialCategory: "31/12",
+            initialCategory: "28/2",
             initialValue: targetDown,
             lineColor: "#f58e8e",
             lineThickness: 5,
@@ -863,9 +863,9 @@
             valueAxis: "Axis2",
           },
           {
-            finalCategory: "29/11",
+            finalCategory: "28/3",
             finalValue: targetDefault,
-            initialCategory: "31/12",
+            initialCategory: "28/2",
             initialValue: targetDefault,
             lineColor: "#57f76c",
             lineThickness: 5,
