@@ -69,10 +69,6 @@
     var maxLabelRight = 12000;
 
     function myCustomDataUpdateFunction(data) {
-      // console.log(
-      //   " ~ file: sym-RendimientoPlantaBarras.js:70 ~ myCustomDataUpdateFunction ~ data",
-      //   data
-      // );
       if (data !== null && data.Data) {
         dataArray = [];
 	console.log(data.Data);
@@ -206,7 +202,6 @@
       timeProvider.displayTime.end != "*"
       ? new Date(timeProvider.displayTime.end)
       : new Date();
-      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:206 ~ todayDate", todayDate)
       let currentDay = todayDate.getDate();
       let currentHour = todayDate.getHours();
       let currentMonth = todayDate.getMonth() + 1;
@@ -219,14 +214,11 @@
       todayDate.setDate(todayDate.getDate() + 1);
 
       let daysOfMonth_ = setDaysCalendarMine(currentMonth);
-      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:221 ~ daysOfMonth_", daysOfMonth_)
       
       if((new Date(timeProvider.displayTime.start).getMonth() == 0) && (new Date(timeProvider.displayTime.start).getDate() == 1) ) {
         daysOfMonth_ = 0;
         moreDays = 27;
       };
-      
-      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:226 ~ moreDays", moreDays)
 
       for (let dayIndex = 1; dayIndex <= daysOfMonth_ + moreDays; dayIndex++) {
         iterableDate.setDate(iterableDate.getDate() + 1);
@@ -340,7 +332,6 @@
     }
 
     function setDaysCalendarMine(month) {
-      console.log("🚀 ~ file: sym-RendimientoPlantaBarrasv2.js:342 ~ setDaysCalendarMine ~ month", month)
       let dayCalendar;
       month = month -1;
       switch (month) {
@@ -425,6 +416,9 @@
       dryTonnage,
       wetTonnage
     ) {
+ 
+      let dryTonnagev2 = (firstTurnValue ? firstTurnValue : 0) + (secondTurnValue ? secondTurnValue : 0);
+
       return {
         timestamp: dayIndex.getDate() + "/" + (dayIndex.getMonth() + 1),
         turno1: firstTurnValue
@@ -443,21 +437,21 @@
         totalnew: totalnew
           ? totalnew.toFixed(scope.config.decimalPlaces)
           : totalnew,
-        drytonnage: dryTonnage
-          ? dryTonnage.toFixed(scope.config.decimalPlaces)
-          : dryTonnage,
+        drytonnage: dryTonnagev2
+          ? dryTonnagev2.toFixed(scope.config.decimalPlaces)
+          : dryTonnagev2,
         wettonnage: wetTonnage
           ? wetTonnage.toFixed(scope.config.decimalPlaces)
           : wetTonnage,
         // Dry Tonnage
-        drytonnageup: dryTonnage
-          ? dryTonnage > 5623.8
-            ? dryTonnage.toFixed(scope.config.decimalPlaces)
+        drytonnageup: dryTonnagev2
+          ? dryTonnagev2 > 5460
+            ? dryTonnagev2.toFixed(scope.config.decimalPlaces)
             : null
           : null,
-        drytonnagedown: dryTonnage
-          ? dryTonnage < 5296.2
-            ? dryTonnage.toFixed(scope.config.decimalPlaces)
+        drytonnagedown: dryTonnagev2
+          ? dryTonnagev2 < 4952
+            ? dryTonnagev2.toFixed(scope.config.decimalPlaces)
             : null
           : null,
       };

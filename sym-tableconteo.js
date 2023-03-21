@@ -57,17 +57,16 @@
         let url = obtenerURL();
         let urlChungar = "https://pivision.volcan.com.pe/PIVision/#/Displays/50644/RENDIMIENTO-PLANTA-CHUNGAR";
         // Datos iniciales
-        // formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11]);
         let endDateConditional = timeProvider.displayTime.end != "*"
-        ? new Date(timeProvider.displayTime.end)
+        ? new Date(timeProvider.displayTime.end)  
         : new Date();
         let conditionalJoin = (endDateConditional.getMonth() == new Date().getMonth())
-        let dataDryTons = (url == urlChungar) ? formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[0].Values,data.Data[1].Values),data.Data[2], conditionalJoin).Values : data.Data[0].Values;
+        let dataDryTons = (url == urlChungar) ? formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[0].Values,data.Data[1].Values),data.Data[2], conditionalJoin).Values : formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[0].Values,data.Data[1].Values),data.Data[1], conditionalJoin, false).Values;
         console.log(" ~ file: sym-tableconteo.js:63 ~ myCustomDataUpdateFunction ~ dataDryTons:", dataDryTons)
         
         if (url != urlChungar) {
-          dataDryTons.shift();
-          dataDryTons.shift();
+          // dataDryTons.shift();
+          dataDryTons.pop();
         } else {
           // dataDryTons.shift();
           dataDryTons.pop();
@@ -75,8 +74,8 @@
         let lengthDataDryTons = dataDryTons.length;
         dataDryTons = dataDryTons.filter((el) => el.Value != 0);
         dataDryTons = dataDryTons.map((el) => el.Value.replace(",", ""));
-        let dataTargetUp = (url == urlChungar) ? 5775 : 5623; // data.Data[1].Values[0].Value
-        let dataTargetDown = (url == urlChungar) ? 5238 : 5296; // data.Data[2].Values[0].Value
+        let dataTargetUp = (url == urlChungar) ? 5775 : 5460; // data.Data[1].Values[0].Value
+        let dataTargetDown = (url == urlChungar) ? 5238 : 4952; // data.Data[2].Values[0].Value
 
         let dataDryTonsUp = dataDryTons.filter((el) => el > dataTargetUp);
         let dataDryTonsDown = dataDryTons.filter((el) => el < dataTargetDown && el > 100);
