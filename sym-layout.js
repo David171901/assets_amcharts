@@ -1,47 +1,4 @@
-// (function (PV) {
-
-//     PV.deriveVisualizationFromBase(symbolVis);
-  
-//       var definition = { 
-//           typeName: "layout",
-//           displayName: 'Layout',
-//           iconUrl: '/Scripts/app/editor/symbols/ext/Icons/navbarCOMM.png',
-//           visObjectType: symbolVis,
-//           datasourceBehavior: PV.Extensibility.Enums.DatasourceBehaviors.Single,
-//           getDefaultConfig: function(){ 
-//               return { 
-//                   Height: 1024,
-//                   Width: 1440,
-//               } 
-//           },
-          
-//           configOptions: function () {
-//               return [{
-//                   title: 'Format Symbol',
-//                   mode: 'format'
-//               }];
-//           }
-//       }
-//       function symbolVis() { };
-//       symbolVis.prototype.init = function(scope, elem) {
-//           console.log('\t[+]Layout');
-  
-//           this.onDataUpdate = myCustomDataUpdateFunction;
-//           this.onConfigChange = myCustomConfigurationChangeFunction;
-  
-//           function myCustomDataUpdateFunction(data) {
-//             return true
-//           }
-  
-//           function myCustomConfigurationChangeFunction() {
-//             return true
-//           }
-//       };
-     
-//     PV.symbolCatalog.register(definition); 
-//   })(window.PIVisualization); 
-  
-  (function(BS) {
+(function(BS) {
         
     function symbolVis() {};
     BS.deriveVisualizationFromBase(symbolVis);
@@ -78,6 +35,7 @@
         var isLoaded = 'primero';
         var isQuery = false;
         var initialTime = 'T19:00:00';
+        var montandyear = '';
         var currentStringTimeED = null;
         var dataTotal = null;
         var dataTotal_ = null;
@@ -92,6 +50,8 @@
 
                 let month = querys.montandyear.split('-')[0];
                 let year = querys.montandyear.split('-')[1];
+
+                montandyear = updateQueryParam(month, year)
 
                 currentStringTimeED = getStartEndTimeForQueryParam(querys.montandyear);
                 timeProvider.requestNewTime(currentStringTimeED.startTimeED, currentStringTimeED.endTimeED, true);
@@ -113,6 +73,9 @@
                 isLoaded = 'stop';
 
                 scope.search = function() {
+
+                    montandyear = updateQueryParam( scope.timeED.month-1, scope.timeED.year)
+
                     var stringTimeED = {
                         start: "",
                         end: ""
@@ -142,10 +105,20 @@
                     isLoaded = 'stop';
                 }
 
-                scope.link1 = function() {
-                    console.log('Click Link 1')
-                    window.location.href = "https://github.com/";
+                scope.handleLink1 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem1}${montandyear}`;
+                }
 
+                scope.handleLink2 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem2}${montandyear}`;
+                }
+
+                scope.handleLink3 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem3}${montandyear}`;
+                }
+
+                scope.handleLink4 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem4}${montandyear}`;
                 }
             }
 
@@ -174,6 +147,9 @@
                 isLoaded = 'stop';
 
                 scope.search = function() {
+
+                    montandyear = updateQueryParam( scope.timeED.month-1, scope.timeED.year)
+
                     var stringTimeED = {
                         start: "",
                         end: ""
@@ -202,24 +178,36 @@
                     
                     isLoaded = 'stop';
                 }
+
+                scope.handleLink1 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem1}${montandyear}`;
+                }
+
+                scope.handleLink2 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem2}${montandyear}`;
+                }
+
+                scope.handleLink3 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem3}${montandyear}`;
+                }
+
+                scope.handleLink4 = function() {
+                    window.location.href = `${scope.config.linkSidebarItem4}${montandyear}`;
+                }
             }
 
             if(isLoaded == 'stop'){
-                console.log(" ~ file: sym-layout.js:147 ~ myCustomDataUpdateFunction ~ isLoaded:", isLoaded)
-                
-                console.log(" ~ file: sym-layout.js:151 ~ myCustomDataUpdateFunction ~ data:", data)
 
                 let initialDate = data.Data[0];
-                
-                console.log((parseInt(initialDate.Values[initialDate.Values.length-1].Time.split('/')[1])))
-                console.log(parseInt(currentStringTimeED.startTimeED.split('-')[1]))
 
                 let monthChange = (parseInt(initialDate.Values[initialDate.Values.length-1].Time.split('/')[1]))
                 - parseInt(currentStringTimeED.startTimeED.split('-')[1]) == 2? true : false;
                 
-                console.log(monthChange)
-
                 monthChange ? isLoaded='primero' : isLoaded;
+            }
+
+            function updateQueryParam (month,year) {
+                return `?montandyear=${month}-${year}`;
             }
 
             function getQueryParamsFromString(url) {
