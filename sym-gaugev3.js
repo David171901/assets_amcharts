@@ -71,7 +71,7 @@
         }
   
         function getDataProvider(data){
-            console.log(" ~ file: sym-gaugev3.js ~ line 73 ~ getDataProvider ~ data", data)
+            console.log(" ~ file: sym-gaugev3.js:74 ~ getDataProvider ~ data:", data)
             // Events - Lista de eventos
             let eventArray = data.Data[0].Values || [];
             // Operating Time (OT) - Disponibilidad por dias
@@ -95,6 +95,8 @@
             switch (scope.config.type) {
                 case 'utilizacion':
                     result = availabilityPerDay / (TC - TnP);
+                    console.log(" ~ file: sym-gaugev3.js:98 ~ getDataProvider ~ availabilityPerDay:", availabilityPerDay)
+                    console.log(" ~ file: sym-gaugev3.js:98 ~ getDataProvider ~ (TC - TnP):", (TC - TnP))
                     break;
   
                 case 'disponibilidad_fisica':
@@ -133,7 +135,6 @@
         }
 
         function eliminarValoresEnListaRepetidas (value) {
-            console.log(" ~ file: sym-gaugev3.js:136 ~ eliminarValoresEnListaRepetidas ~ value:", value)
             let startDate = timeProvider.displayTime.start;
             let endDate = timeProvider.displayTime.end != "*"
               ? new Date(timeProvider.displayTime.end)
@@ -174,12 +175,15 @@
         }
   
         function getCalendarTime () {
-            let startDay = new Date(timeProvider.displayTime.start);   
-            let endDay = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
-            let firtsDay = addDay(startDay, 1).getDate();
-            let numberOfDays = endDay.getDate();
-            let numberOfHours = endDay.getHours();
-            return ((numberOfDays - (31 - firtsDay) + 1 ) * 24 + numberOfHours)*60;
+            let fechaInicio = new Date(timeProvider.displayTime.start);
+            fechaInicio.setHours(0, 0, 0, 0)
+            console.log(" ~ file: sym-gaugev3.js:179 ~ getCalendarTime ~ fechaInicio:", fechaInicio)
+            let fechaFin = timeProvider.displayTime.end != "*" ? new Date(timeProvider.displayTime.end) : new Date();
+            console.log(" ~ file: sym-gaugev3.js:181 ~ getCalendarTime ~ fechaFin:", fechaFin)
+            const diferenciaEnMilisegundos = fechaFin.getTime() - fechaInicio.getTime();
+            const minutos = Math.floor(diferenciaEnMilisegundos / 1000 / 60);
+            return minutos;
+          
         }
   
         function refreshChart(chart, dataArray){
