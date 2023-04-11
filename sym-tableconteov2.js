@@ -1,7 +1,26 @@
-﻿(function (CS) {
+﻿/**
+ * Name: Rendiento Planta Chungar
+ * File name: sym-RendimientoPlantaChungar.js
+ * Atribute (10 atribute): 
+ *    example path: 
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA CHUNGAR"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA CHUNGAR G1"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA REAL CHUNGAR"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|SUMA REAL CHUNGAR G1"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|TONELAJE F12 GUARDIA 1 REAL"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS|Target"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS|TargetDown"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS|TargetUp"
+        "af:\\CDPMS16\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\PLANTA CONCENTRADORA CHUNGAR\00 EQUIPOS CRITICOS\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS SECAS DEPURADAS"
+        "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 EQUIPOS CRITICOS\\DASHBOARD GERENCIAL MANTENIMIENTO|TONELADAS HUMEDAS DEPURADAS"
+
+ * 
+ */
+
+(function (CS) {
   var myEDcolumnDefinition = {
-    typeName: "tableconteo",
-    displayName: "Table Conteo",
+    typeName: "tableconteov2",
+    displayName: "Tabla conteo v2",
     inject: ["timeProvider"],
     datasourceBehavior: CS.Extensibility.Enums.DatasourceBehaviors.Multiple,
     visObjectType: symbolVis,
@@ -12,23 +31,6 @@
         Height: 300,
         Width: 400,
         Intervals: 1000,
-        showDataItemNameCheckboxValue: true,
-        showHeaderRightCheckboxValue: true,
-        showDataItemNameCheckboxStyle: "table-cell",
-        showTimestampCheckboxStyle: "table-cell",
-        numberOfDecimalPlaces: 0,
-        dataItemColumnColor: "black",
-        headerRightTextColor: "black",
-        headerRightColumnColor: "white",
-        valueColumnColor: "black",
-        hoverColor: "lightgreen",
-        evenRowColor: "darkgray",
-        oddRowColor: "none",
-        outsideBorderColor: "none",
-        headerBackgroundColor: "black",
-        headerTextColor: "white",
-        fontSize: "16",
-        unitFontSize: "px",
       };
     },
     configOptions: function () {
@@ -44,9 +46,10 @@
   function symbolVis() {}
   CS.deriveVisualizationFromBase(symbolVis);
   symbolVis.prototype.init = function (scope, elem, timeProvider) {
+
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
-    console.log("\t[+]Table Conteo");
+    console.log("\t[+]Table Conteo v2");
     var syContElement1 = elem.find("#container")[0];
     var newUniqueIDString1 =
       "myCustomSymbol_1" + Math.random().toString(36).substr(2, 16);
@@ -87,10 +90,6 @@
                 conditionalJoin,
                 false
               ).Values;
-        console.log(
-          " ~ file: sym-tableconteo.js:66 ~ myCustomDataUpdateFunction ~ dataDryTons:",
-          dataDryTons
-        );
 
         if (url != urlChungar) {
           // dataDryTons.shift();
@@ -220,18 +219,10 @@
 
       // Convertir las fechas a objetos Date
       const fechaInicioObj = new Date(fechaInicio);
-      console.log(
-        " ~ file: sym-tableconteo.js:175 ~ generarFechasIntermedias ~ fechaInicioObj:",
-        fechaInicioObj
-      );
       const fechaFinObj = new Date(fechaFin);
 
       // Iterar sobre el rango de fechas y agregar cada fecha al array
       let fechaActual = new Date(fechaInicioObj);
-      console.log(
-        " ~ file: sym-tableconteo.js:180 ~ generarFechasIntermedias ~ fechaActual:",
-        fechaActual
-      );
       // fechaActual.setDate(fechaActual.getDate() + 1);
       while (fechaActual <= fechaFinObj) {
         const fechaFormateada =
@@ -354,5 +345,6 @@
       }
     }
   };
+
   CS.symbolCatalog.register(myEDcolumnDefinition);
 })(window.PIVisualization);

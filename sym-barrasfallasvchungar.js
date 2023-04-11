@@ -198,6 +198,7 @@
 
     // Funcion inicializadora
     function myCustomDataUpdateFunction(data) {
+      console.log("🚀 ~ file: sym-barrasfallasvchungar.js:201 ~ myCustomDataUpdateFunction ~ data:", data)
       let dataFormat = data.Data[0].Values;
       let arrayData = [
         ...new Set(dataFormat.map((el) => el.Value.split("||")[0])),
@@ -267,10 +268,6 @@
         // Tonelaje seco
         let twelfthTurn = data.Data[2];
         // Tonelaje humedo
-        console.log(data.Data[11])
-        console.log(data.Data[11])
-        console.log(data.Data[11])
-        console.log(!data.Data[11])
         let thirteenthTurn;
         if(!data.Data[11]) {
           thirteenthTurn = formatTwoArraysInOne(
