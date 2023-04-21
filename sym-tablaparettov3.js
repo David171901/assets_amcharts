@@ -91,7 +91,6 @@
         let gearEight = data.Data[7];
         // CHANCADORA TERCIARIA HP500
         let gearNine = data.Data[8];
-         
 
         let arrayFilterZeros = filterZeros(
           gearOne,
@@ -153,8 +152,6 @@
             false
           );
         }
-
-        console.log($("#" + syContElement1.id + ":first-child"));
       }
     }
 

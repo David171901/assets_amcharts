@@ -1,7 +1,7 @@
 ﻿(function (CS) {
   var myEDcolumnDefinition = {
     typeName: "tableconteo",
-    displayName: "Table Conteo",
+    displayName: "Tabla Conteo",
     inject: ["timeProvider"],
     datasourceBehavior: CS.Extensibility.Enums.DatasourceBehaviors.Multiple,
     visObjectType: symbolVis,
@@ -46,17 +46,13 @@
   symbolVis.prototype.init = function (scope, elem, timeProvider) {
     this.onDataUpdate = myCustomDataUpdateFunction;
     this.onConfigChange = myCustomConfigurationChangeFunction;
-    console.log("\t[+]Table Conteo");
+    console.log("\t[+]Tabla Conteo");
     var syContElement1 = elem.find("#container")[0];
     var newUniqueIDString1 =
       "myCustomSymbol_1" + Math.random().toString(36).substr(2, 16);
     syContElement1.id = newUniqueIDString1;
 
     function myCustomDataUpdateFunction(data) {
-      console.log(
-        " ~ file: sym-tableconteo.js:56 ~ myCustomDataUpdateFunction ~ data:",
-        data
-      );
       if (data) {
         let url = obtenerURL();
         let urlChungar =
@@ -87,10 +83,6 @@
                 conditionalJoin,
                 false
               ).Values;
-        console.log(
-          " ~ file: sym-tableconteo.js:66 ~ myCustomDataUpdateFunction ~ dataDryTons:",
-          dataDryTons
-        );
 
         if (url != urlChungar) {
           // dataDryTons.shift();
@@ -220,18 +212,10 @@
 
       // Convertir las fechas a objetos Date
       const fechaInicioObj = new Date(fechaInicio);
-      console.log(
-        " ~ file: sym-tableconteo.js:175 ~ generarFechasIntermedias ~ fechaInicioObj:",
-        fechaInicioObj
-      );
       const fechaFinObj = new Date(fechaFin);
 
       // Iterar sobre el rango de fechas y agregar cada fecha al array
       let fechaActual = new Date(fechaInicioObj);
-      console.log(
-        " ~ file: sym-tableconteo.js:180 ~ generarFechasIntermedias ~ fechaActual:",
-        fechaActual
-      );
       // fechaActual.setDate(fechaActual.getDate() + 1);
       while (fechaActual <= fechaFinObj) {
         const fechaFormateada =
