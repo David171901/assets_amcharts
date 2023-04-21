@@ -197,7 +197,7 @@
                 targetUP = data.Data[7].Values[0].Value;
         
                 // TONELAJES ************************************
-                let dryTonnage = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[12].Values,data.Data[13].Values),data.Data[11],conditionalJoin);
+                let dryTonnage = formatTwoArraysInOne(sumatoriaDosDataArrayPorFecha(data.Data[14].Values,data.Data[15].Values),data.Data[11],conditionalJoin);
                 let wetTonnage = data.Data[9];
         
                 let dryTonnageReal = {};
