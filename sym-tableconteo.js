@@ -66,10 +66,10 @@
           endDateConditional.getMonth() == new Date().getMonth();
         let dataDryTons =
           url == urlChungar
-            ? formatTwoArraysInOne(
-                sumatoriaDosDataArrayPorFecha(
-                  data.Data[0].Values,
-                  data.Data[1].Values
+            ? formatTwoArraysInOneV2(
+                sumatoriaDosDataArrayPorFechaV2(
+                  convertList(data.Data[0].Values),
+                  convertList(data.Data[1].Values)
                 ),
                 data.Data[2],
                 conditionalJoin
@@ -85,15 +85,14 @@
               ).Values;
 
         if (url != urlChungar) {
-          // dataDryTons.shift();
           dataDryTons.pop();
         } else {
-          // dataDryTons.shift();
           dataDryTons.pop();
         }
+
         let lengthDataDryTons = dataDryTons.length;
         dataDryTons = dataDryTons.filter((el) => el.Value != 0);
-        dataDryTons = dataDryTons.map((el) => el.Value.replace(",", ""));
+        dataDryTons = dataDryTons.map((el) => el.Value);
         let dataTargetUp = url == urlChungar ? 5775 : 5460; // data.Data[1].Values[0].Value
         let dataTargetDown = url == urlChungar ? 5238 : 4952; // data.Data[2].Values[0].Value
 
@@ -107,7 +106,9 @@
 
         let cellA1 = dataDryTonsUp.length;
         let cellA2 = dataDryTonsRegular.length;
-        let cellA3 = dataDryTonsDown.length;
+        let cellA3 = dataDryTons.filter(
+          (el) => el < dataTargetDown
+        ).length;
         let cellB1 =
           dataDryTonsUp.reduce(
             (accumulator, currentValue, currentIndex, array) =>
@@ -205,6 +206,135 @@
         // 'cellAPClass myValueCellClass', 'center', false);
         //    // generatedRow('Total', headersRow, totalMINE, 'myCustomRightHeaderCellClass cellAPClass myValueCellClass', 'center', true);
       }
+    }
+
+    function convertList(list) {
+      const convertedList = [];
+
+      for (const element of list) {
+        const value = parseFloat(element.Value.replace(",", ""));
+
+        const fechaOriginal = element.Time;
+        const fechaParts = fechaOriginal.split("/");
+        const dia = fechaParts[0];
+        const mes = fechaParts[1] - 1;
+        const anio = fechaParts[2].substr(0, 4);
+        const hora = fechaParts[2].substr(5, 2);
+        const minutos = fechaParts[2].substr(8, 2);
+
+        const fechaISO = new Date(
+          anio,
+          mes,
+          dia,
+          hora,
+          minutos,
+          0,
+          0
+        ).toISOString();
+
+        convertedList.push({
+          Value: value,
+          Time: fechaISO,
+        });
+      }
+
+      return convertedList;
+    }
+
+    function generarFechasIntermediasV2(fechaInicio, fechaFin) {
+      const fechas = [];
+
+      // Convertir las fechas a objetos Date
+      const fechaInicioObj = new Date(fechaInicio);
+      const fechaFinObj = new Date(fechaFin);
+
+      // Iterar sobre el rango de fechas y agregar cada fecha al array
+      let fechaActual = new Date(fechaInicioObj);
+      while (fechaActual <= fechaFinObj) {
+        fechas.push(new Date(fechaActual));
+        fechaActual.setDate(fechaActual.getDate() + 1);
+      }
+
+      // Convertir las fechas en formato ISO 8601
+      const fechasISO = fechas.map(
+        (fecha) => fecha.toISOString().split("T")[0]
+      );
+      return fechasISO;
+    }
+
+    function formatTwoArraysInOneV2(value1, value2, conditional) {
+      const fechaOriginal = value2.Values.at(-1).Time;
+      const fechaParts = fechaOriginal.split("/");
+      const dia = fechaParts[0];
+      const mes = fechaParts[1] - 1;
+      const anio = fechaParts[2].substr(0, 4);
+      const hora = fechaParts[2].substr(5, 2);
+      const minutos = fechaParts[2].substr(8, 2);
+
+      const fechaISO = new Date(
+        anio,
+        mes,
+        dia,
+        hora,
+        minutos,
+        0,
+        0
+      ).toISOString();
+
+      let lastValue2 = {
+        Value: parseFloat(value2.Values.at(-1).Value.replace(",", "")),
+        Time: fechaISO,
+      };
+
+      if (conditional) {
+        return {
+          ...value1,
+          Values: [...value1.Values, lastValue2],
+        };
+      } else {
+        return {
+          ...value1,
+          Values: [...value1.Values],
+        };
+      }
+    }
+
+    function sumatoriaDosDataArrayPorFechaV2(data1, data2) {
+      let startDate = timeProvider.displayTime.start;
+      let endDate =
+        timeProvider.displayTime.end != "*"
+          ? new Date(timeProvider.displayTime.end)
+          : new Date();
+      const fechasIntermedias = generarFechasIntermediasV2(startDate, endDate);
+      let arrayValues = [];
+      fechasIntermedias.forEach((el) => {
+        let dataValue1 = data1.filter((elem) => elem.Time.includes(el))[0]
+          ? data1.filter((elem) => elem.Time.includes(el))[0].Value
+          : 0;
+        let dataValue2 = data2.filter((elem) => elem.Time.includes(el))[0]
+          ? data2.filter((elem) => elem.Time.includes(el))[0].Value
+          : 0;
+
+        arrayValues.push({
+          Value:
+            el == "2023-01-29" || el == "2023-02-28"
+              ? 0
+              : dataValue1 + dataValue2,
+          Time: `${el}T19:00:00.000Z`,
+        });
+      });
+
+      return {
+        DataType: "Float",
+        DisplayDigits: -5,
+        EndTime: "2023-01-12T19:11:51.857Z",
+        Label: "03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+        Maximum: 0,
+        Minimum: 0,
+        Path: "af:\\\\CDPMS16\\BASE DE DATOS PI ASSET FRAMEWORK - PLANTA DE OXIDOS\\PLANTA CONCENTRADORA CHUNGAR\\00 KPIs CLAVE\\03 PLANTA CONCENTRADORA|SUMA TONELAJE G2",
+        StartTime: "2023-01-01T00:00:00Z",
+        Values: arrayValues,
+      };
     }
 
     function generarFechasIntermedias(fechaInicio, fechaFin) {
