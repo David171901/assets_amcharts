@@ -1,6 +1,6 @@
-(function(BS) {
-        
-    function symbolVis() {};
+(function (BS) {
+
+    function symbolVis() { };
     BS.deriveVisualizationFromBase(symbolVis);
 
     var definition = {
@@ -10,7 +10,7 @@
         iconUrl: '/Scripts/app/editor/symbols/ext/Icons/comm.png',
         inject: ['timeProvider', '$interval'],
         visObjectType: symbolVis,
-        getDefaultConfig: function() {
+        getDefaultConfig: function () {
             return {
                 DataShape: 'TimeSeries',
                 Height: 75,
@@ -20,58 +20,55 @@
         }
     }
 
-    symbolVis.prototype.init = function(scope, elem, timeProvider, $interval) {
+    symbolVis.prototype.init = function (scope, elem, timeProvider, $interval) {
         console.log('[+] Buscador de fechas (Corte de Planta)');
         this.onDataUpdate = myCustomDataUpdateFunction;
-        
+
         var isLoaded = 'primero';
-        var initialTime = 'T19:00:00';
         var currentStringTimeED = null;
         var dataTotal = null;
         var dataTotal_ = null;
         var count = 0;
-        
+
         function myCustomDataUpdateFunction(data) {
-            if(isLoaded == 'primero'){
+            if (isLoaded == 'primero') {
                 dataTotal = data;
                 dataTotal_ = data;
 
-
-                let ultimoValue =  dataTotal.Data[0].Values[dataTotal.Data[0].Values.length-1].Value;
-            
+                let ultimoValue = dataTotal.Data[0].Values[dataTotal.Data[0].Values.length - 1].Value;
                 let initialDate = dataTotal.Data[0].Values.filter(item => item.Value == ultimoValue);
                 initialDate = initialDate[0].Time;
-                
+
                 let initialDay = parseInt(initialDate.split('/')[0]) - 1;
                 let initialMonth = parseInt(initialDate.split('/')[1]);
-                
+
                 let yearNow = parseInt(initialDate.split('/')[2]);
-                
+
                 scope.timeED = { month: "", year: "" };
-            
+
                 currentStringTimeED = getStartEndTimeForLoad(initialMonth, yearNow, initialDay);
                 timeProvider.requestNewTime(currentStringTimeED.startTimeED, currentStringTimeED.endTimeED, true);
-                
+
                 scope.timeED.month = ultimoValue.toString();
                 scope.timeED.year = yearNow.toString();
 
                 isLoaded = 'stop';
 
-                scope.search = function() {
+                scope.search = function () {
                     var stringTimeED = {
                         start: "",
                         end: ""
                     };
 
                     count++;
-                    
-                    if(count == 1){
+
+                    if (count == 1) {
                         dataTotal = data;
                     }
 
-                    let searchInterval = new Date(scope.timeED.year, parseInt(scope.timeED.month)-1, 1);
+                    let searchInterval = new Date(scope.timeED.year, parseInt(scope.timeED.month) - 1, 1);
 
-                    if(scope.timeED.month != (new Date().getMonth() + 1) || scope.timeED.year != (new Date().getFullYear())){
+                    if (scope.timeED.month != (new Date().getMonth() + 1) || scope.timeED.year != (new Date().getFullYear())) {
                         stringTimeED = getStartEndTimeForSearch(parseInt(searchInterval.getMonth()), parseInt(searchInterval.getFullYear()), 1);
                     } else {
                         let initialDate = dataTotal_.Data[0].Values.filter(item => item.Value == ultimoValue);
@@ -83,14 +80,14 @@
                     }
 
                     timeProvider.requestNewTime(stringTimeED.startTimeED, stringTimeED.endTimeED, true);
-                    
+
                     isLoaded = 'stop';
                 }
             }
 
-            if(isLoaded == 'stop'){
-                if(data.Data[0].Values) {
-                    data  = {
+            if (isLoaded == 'stop') {
+                if (data.Data[0].Values) {
+                    data = {
                         Data: [
                             {
                                 "Values": [
@@ -120,32 +117,32 @@
                 }
 
                 let initialDate = data.Data[0];
-                
-                let monthChange = (parseInt(initialDate.Values[initialDate.Values.length-1].Time.split('/')[1]))
-                - parseInt(currentStringTimeED.startTimeED.split('-')[1]) == 2? true : false;
-                
-                monthChange ? isLoaded='primero' : isLoaded;
+
+                let monthChange = (parseInt(initialDate.Values[initialDate.Values.length - 1].Time.split('/')[1]))
+                    - parseInt(currentStringTimeED.startTimeED.split('-')[1]) == 2 ? true : false;
+
+                monthChange ? isLoaded = 'primero' : isLoaded;
             }
 
             function getStartEndTimeForLoad(month, year, day) {
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
-                
-                let startDate = new Date(year, month-1, day);
-                
+
+                let startDate = new Date(year, month - 1, day);
+
                 if (month - 1 == 1 && day == 29 && year % 4 > 0) {
                     startDate = new Date(year, month - 1, 28);
                 }
-                
+
                 let startMonth = startDate.getMonth() + 1;
                 let startStringMonth = startMonth > 9 ? `${startMonth}` : `0${startMonth}`;
-                
+
                 let startTime;
                 month = new Date().getMonth();
-                
+
                 switch (month) {
                     case 0:
-                        startTime = `${new Date().getFullYear()-1}-12-31T19:00:00`;
+                        startTime = `${new Date().getFullYear() - 1}-12-31T19:00:00`;
                         break;
                     case 1:
                         startTime = `${new Date().getFullYear()}-01-28T19:00:00`;
@@ -197,16 +194,16 @@
 
                 let currentDate = new Date();
                 if (!year) year = currentDate.getFullYear();
-                
-                if (month == 12){
-                    year-=1;
+
+                if (month == 12) {
+                    year -= 1;
                 }
-                
-                let startDate ;
+
+                let startDate;
 
                 if (month == 0) startDate = new Date(year, month, day);
                 else startDate = new Date(year, month, day);
-                
+
                 if (month - 1 == 1 && day == 29 && year % 4 > 0) {
                     startDate = new Date(year, month - 1, 28);
                 }
@@ -223,7 +220,7 @@
                 let endMonth = endDate.getMonth() + 1;
                 let endStringMonth = endMonth > 9 ? `${endMonth}` : `0${endMonth}`;
 
-                let daysOfMonth = getDaysOfMonth(endMonth,endDate.getFullYear());
+                let daysOfMonth = getDaysOfMonth(endMonth, endDate.getFullYear());
 
                 let startTime;
                 let endTime;
@@ -282,51 +279,99 @@
                     case '0-2023':
                         startTime = `2022-12-31T19:00:00`;
                         endTime = `2023-01-28T19:00:00`;
-                        break;                      
+                        break;
                     case '1-2023':
                         startTime = `2023-01-28T19:00:00`;
                         endTime = `2023-02-25T19:00:00`;
-                        break;      
+                        break;
                     case '2-2023':
                         startTime = `2023-02-25T19:00:00`;
                         endTime = `2023-03-28T19:00:00`;
-                        break;                      
+                        break;
                     case '3-2023':
                         startTime = `2023-03-28T19:00:00`;
                         endTime = `2023-04-27T19:00:00`;
-                        break;  
+                        break;
                     case '4-2023':
                         startTime = `2023-04-27T19:00:00`;
                         endTime = `2023-05-28T19:00:00`;
-                        break;                      
+                        break;
                     case '5-2023':
                         startTime = `2023-05-28T19:00:00`;
                         endTime = `2023-06-27T19:00:00`;
-                        break;   
+                        break;
                     case '6-2023':
                         startTime = `2023-06-27T19:00:00`;
                         endTime = `2023-07-28T19:00:00`;
-                        break;      
+                        break;
                     case '7-2023':
                         startTime = `2023-07-28T19:00:00`;
                         endTime = `2023-08-28T19:00:00`;
-                        break;                      
+                        break;
                     case '8-2023':
                         startTime = `2023-08-28T19:00:00`;
                         endTime = `2023-09-27T19:00:00`;
-                        break;  
+                        break;
                     case '9-2023':
                         startTime = `2023-09-27T19:00:00`;
                         endTime = `2023-10-28T19:00:00`;
-                        break;                      
+                        break;
                     case '10-2023':
                         startTime = `2023-10-28T19:00:00`;
                         endTime = `2023-11-27T19:00:00`;
-                        break; 
+                        break;
                     case '11-2023':
                         startTime = `2023-11-27T19:00:00`;
                         endTime = `2023-12-31T19:00:00`;
-                        break;                                                                
+                        break;
+                    case '0-2024':
+                        startTime = `2023-12-31T19:00:00`;
+                        endTime = `2024-01-28T19:00:00`;
+                        break;
+                    case '1-2024':
+                        startTime = `2024-01-28T19:00:00`;
+                        endTime = `2024-02-26T19:00:00`;
+                        break;
+                    case '2-2024':
+                        startTime = `2024-02-26T19:00:00`;
+                        endTime = `2024-03-28T19:00:00`;
+                        break;
+                    case '3-2024':
+                        startTime = `2024-03-28T19:00:00`;
+                        endTime = `2024-04-27T19:00:00`;
+                        break;
+                    case '4-2024':
+                        startTime = `2024-04-27T19:00:00`;
+                        endTime = `2024-05-28T19:00:00`;
+                        break;
+                    case '5-2024':
+                        startTime = `2024-05-28T19:00:00`;
+                        endTime = `2024-06-27T19:00:00`;
+                        break;
+                    case '6-2024':
+                        startTime = `2024-06-27T19:00:00`;
+                        endTime = `2024-07-28T19:00:00`;
+                        break;
+                    case '7-2024':
+                        startTime = `2024-07-28T19:00:00`;
+                        endTime = `2024-08-28T19:00:00`;
+                        break;
+                    case '8-2024':
+                        startTime = `2024-08-28T19:00:00`;
+                        endTime = `2024-09-27T19:00:00`;
+                        break;
+                    case '9-2024':
+                        startTime = `2024-09-27T19:00:00`;
+                        endTime = `2024-10-28T19:00:00`;
+                        break;
+                    case '10-2024':
+                        startTime = `2024-10-28T19:00:00`;
+                        endTime = `2024-11-27T19:00:00`;
+                        break;
+                    case '11-2024':
+                        startTime = `2024-11-27T19:00:00`;
+                        endTime = `2024-12-31T19:00:00`;
+                        break;
                     default:
                         break;
                 }

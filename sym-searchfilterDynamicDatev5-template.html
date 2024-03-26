@@ -1,29 +1,115 @@
-﻿<table style="background:#2F9084;color: white;padding: 20px;height: 100%;width: 100%;display: flex;justify-items: center;align-items: center;border-radius: 20px;">
+﻿<table style="
+    background:#101D2A;
+    color: white;
+    padding: 40px;
+    ">
     <tr>
-        <td style="background-color: transparent; text-align:left; font-size: 2.1em;">Mes:&nbsp;</td>
-        <td><select id="monthSelector" ng-model="timeED.month" ng-model-options="{ getterSetter: true }" class="ng-pristine ng-valid" style="background-color: white; text-align: center; font-size: 2.1em;">
-                <option style="font-size: .5em" id="month1" value="1">Enero</option>
-                <option style="font-size: .5em" id="month2" value="2">Febrero</option>
-                <option style="font-size: .5em" id="month3" value="3">Marzo</option>
-                <option style="font-size: .5em" id="month4" value="4">Abril</option>
-                <option style="font-size: .5em" id="month5" value="5">Mayo</option>
-                <option style="font-size: .5em" id="month6" value="6">Junio</option>
-                <option style="font-size: .5em" id="month7" value="7">Julio</option>
-                <option style="font-size: .5em" id="month8" value="8">Agosto</option>
-                <option style="font-size: .5em" id="month9" value="9">Setiembre</option>
-                <option style="font-size: .5em" id="month10" value="10">Octubre</option>
-                <option style="font-size: .5em" id="month11" value="11">Noviembre</option>
-                <option style="font-size: .5em" id="month12" value="12">Diciembre</option>
+        <td style="
+        background-color: transparent; 
+        text-align:left; 
+        font-size: 36px; 
+        padding-right: 20px;
+        font-weight: 700;
+        ">
+            DIA:
+        </td>
+        <td style="padding-right: 20px;">
+            <select id="daySelector" ng-model="timeED.day" ng-model-options="{ getterSetter: true }"
+                class="ng-pristine ng-valid" style="
+                background-color: white; 
+                text-align: center; 
+                font-size: 32px;
+                padding: 8px;
+                ">
+                <option style="font-size: 24px;" value="1">1</option>
+                <option style="font-size: 24px;" value="2">2</option>
+                <option style="font-size: 24px;" value="3">3</option>
+                <option style="font-size: 24px;" value="4">4</option>
+                <option style="font-size: 24px;" value="5">5</option>
+                <option style="font-size: 24px;" value="6">6</option>
+                <option style="font-size: 24px;" value="7">7</option>
+                <option style="font-size: 24px;" value="8">8</option>
+                <option style="font-size: 24px;" value="9">9</option>
+                <option style="font-size: 24px;" value="10">10</option>
+                <option style="font-size: 24px;" value="11">11</option>
+                <option style="font-size: 24px;" value="12">12</option>
+                <option style="font-size: 24px;" value="13">13</option>
+                <option style="font-size: 24px;" value="14">14</option>
+                <option style="font-size: 24px;" value="15">15</option>
+                <option style="font-size: 24px;" value="16">16</option>
+                <option style="font-size: 24px;" value="17">17</option>
+                <option style="font-size: 24px;" value="18">18</option>
+                <option style="font-size: 24px;" value="19">19</option>
+                <option style="font-size: 24px;" value="20">20</option>
+                <option style="font-size: 24px;" value="21">21</option>
+                <option style="font-size: 24px;" value="22">22</option>
+                <option style="font-size: 24px;" value="23">23</option>
+                <option style="font-size: 24px;" value="24">24</option>
+                <option style="font-size: 24px;" value="25">25</option>
+                <option style="font-size: 24px;" value="26">26</option>
+                <option style="font-size: 24px;" value="27">27</option>
+                <option style="font-size: 24px;" value="28">28</option>
+                <option style="font-size: 24px;" value="29">29</option>
+                <option style="font-size: 24px;" value="30">30</option>
+                <option style="font-size: 24px;" value="31">31</option>
             </select>
         </td>
-        <td style="background-color: transparent; color:transparent">In</td>
-        <td style="background-color: transparent; text-align:left; font-size: 30px;">Año:&nbsp;</td>
-        <td>
-            <input type="text" style="text-align: center; font-size: 1.9em;" class="text-input receiver" ng-model="timeED.year" maxlength="4" size="4" />
+        <td style="
+            background-color: transparent; 
+            text-align:left; 
+            font-size: 36px; 
+            padding-right: 20px;
+            font-weight: 700;
+            ">
+            MES:
         </td>
-        <td style="background-color: transparent; color:transparent">In</td>
+        <td style="padding-right: 20px;">
+            <select id="monthSelector" ng-model="timeED.month" ng-model-options="{ getterSetter: true }"
+                class="ng-pristine ng-valid" style="
+                background-color: white; 
+                text-align: center; 
+                font-size: 32px;
+                padding: 8px;
+                ">
+                <option style="font-size: 24px;" id="month1" value="1">Enero</option> <!-- .5em = 10px -->
+                <option style="font-size: 24px;" id="month2" value="2">Febrero</option>
+                <option style="font-size: 24px;" id="month3" value="3">Marzo</option>
+                <option style="font-size: 24px;" id="month4" value="4">Abril</option>
+                <option style="font-size: 24px;" id="month5" value="5">Mayo</option>
+                <option style="font-size: 24px;" id="month6" value="6">Junio</option>
+                <option style="font-size: 24px;" id="month7" value="7">Julio</option>
+                <option style="font-size: 24px;" id="month8" value="8">Agosto</option>
+                <option style="font-size: 24px;" id="month9" value="9">Setiembre</option>
+                <option style="font-size: 24px;" id="month10" value="10">Octubre</option>
+                <option style="font-size: 24px;" id="month11" value="11">Noviembre</option>
+                <option style="font-size: 24px;" id="month12" value="12">Diciembre</option>
+            </select>
+        </td>
+        <td style="
+            background-color: transparent; 
+            text-align:left; 
+            font-size: 36px; 
+            padding-right: 20px;
+            font-weight: 700;
+            ">AÑO:</td>
+        <td style="padding-right: 20px;">
+            <input type="text" class="text-input receiver" ng-model="timeED.year" maxlength="4" size="4" style="
+                text-align: center; 
+                font-size: 32px;
+                padding: 8px
+                " />
+        </td>
         <td>
-            <button type="button" ng-click="search()" style="text-align:center; background-color: #236960; border-color: #11967d; border-width: 3px; border-style: solid; border-radius:5px; font-size: 2em;color: white;padding: 5px;border-radius: 10px;"> <b>BUSCAR</b></button>
+            <button type="button" ng-click="search()" style="
+                text-align:center; 
+                background-color: #315070; 
+                border-style: none; 
+                color: white;
+                padding: 16px;
+                font-size: 20px;
+                ">
+                <b>BUSCAR</b>
+            </button>
         </td>
     </tr>
 </table>
